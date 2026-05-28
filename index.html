@@ -147,6 +147,10 @@ body::before {
   .hero h1 { font-size: 2.6rem; }
 }
 
+@media (max-width: 540px) {
+  .article-row .art-badge { display: none; }
+}
+
 @media (max-width: 480px) {
   .app { padding: 24px 14px 60px; }
   .hero { padding: 24px 0 32px; }
@@ -154,7 +158,10 @@ body::before {
   .card { padding: 20px 18px; }
   .module-card .module-arrow { right: 18px; font-size: 1.1rem; }
   .article-header h1 { font-size: 1.35rem; }
-  .article-row { padding: 12px 14px; }
+  .article-row { padding: 10px 10px; gap: 8px; }
+  .article-row .art-title { font-size: 0.92rem; }
+  .article-row .art-dot { margin-top: 0.45em; }
+  .article-row .art-check { margin-top: 0.05em; }
   html { font-size: 15px; }
 }
 </style>
@@ -359,7 +366,7 @@ const articles = {
     module: 'module1', moduleName: '即兴戏剧要学什么', subtopic: '核心原则',
     title: '自发性：即兴的源泉 —— 重新激活你与生俱来的创造本能',
     level: '基础', readTime: '约 8 分钟',
-    content: `<p>在即兴戏剧的所有原则中，<strong>自发性（Spontaneity）</strong>是最根本的一条。Keith Johnstone 在《Impro》中用一整章讨论它，认为它是所有创造力的源泉——但大多数成年人在成长过程中失去了它。</p>
+    content: `<p>在即兴戏剧的所有原则中，<strong>自发性（Spontaneity）</strong>是最根本的一条。Keith Johnstone 在《Improv》中用一整章讨论它，认为它是所有创造力的源泉——但大多数成年人在成长过程中失去了它。</p>
 <h2>什么是自发性？</h2>
 <p>自发性不是"想到什么就做什么"的冲动。它是<strong>在当下时刻，不被内心的评判者过滤掉你的第一反应，自然地做出回应</strong>。一个 3 岁的孩子看到水洼就踩进去——这不是故意捣乱，而是自发性在起作用。成人看到水洼，大脑在 0.3 秒内完成了"会弄湿鞋→别人会怎么看→算了"的运算，然后绕开了。</p>
 <h2>为什么成人失去了自发性？</h2>
@@ -953,7 +960,7 @@ const articles = {
     level: '资源', readTime: '约 8 分钟',
     content: `<h2>必读书单</h2>
 <ol>
-<li><strong>《Impro》（即兴）</strong>—— Keith Johnstone｜即兴戏剧的奠基之作。自发性（Spontaneity）、地位（Status）等核心概念都源自此书。必读。</li>
+<li><strong>《Improv》（即兴）</strong>—— Keith Johnstone｜即兴戏剧的奠基之作。自发性（Spontaneity）、地位（Status）等核心概念都源自此书。必读。</li>
 <li><strong>《Truth in Comedy》（喜剧中的真实）</strong>—— Charna Halpern, Del Close & Kim Johnson｜长即兴 Harold 格式的圣经。解释了"游戏"（The Game）和"群体意识"（Group Mind）。</li>
 <li><strong>《Improvise》（即兴表演）</strong>—— Mick Napier｜强调"不必遵守规则"的反叛视角。当你被规则束缚时，读这本书。</li>
 <li><strong>《The Upright Citizens Brigade Comedy Improvisation Manual》</strong>—— UCB ｜非常系统的即兴喜剧教材，从基础到长即兴分段讲解。</li>
