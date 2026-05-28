@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>即兴戏剧 · 从入门到高阶</title>
+<style>
+/* ===== CSS Variables ===== */
+:root {
+  --bg: #1a1a24;
+  --bg-alt: #1f1f2c;
+  --card: #252538;
+  --card-hover: #2a2a42;
+  --card-border: #2e2e48;
+  --text: #d0d0d8;
+  --text-dim: #8888a0;
+  --text-bright: #ececf0;
+  --accent: #e8b860;
+  --accent-dim: #a08040;
+  --accent-glow: rgba(232,184,96,0.12);
+  --shadow-dark: rgba(0,0,0,0.45);
+  --shadow-light: rgba(255,255,255,0.03);
+  --radius: 18px;
+  --radius-sm: 10px;
+  --gap: 24px;
+  --max-w: 820px;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+/* ===== Reset ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 17px; scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: "";
+  position: fixed; inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(232,184,96,0.04) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
+}
+
+/* ===== Layout ===== */
+.app { position: relative; z-index: 1; max-width: var(--max-w); margin: 0 auto; padding: 40px 20px 80px; }
+
+.view { display: none; }
+.view.active { display: block; animation: fadeIn 0.35s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 28px 30px;
+  box-shadow: 0 2px 4px var(--shadow-dark), 0 8px 24px var(--shadow-dark), inset 0 1px 0 var(--shadow-light);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+.card:hover {
+  transform: translateY(-2px);
+  background: var(--card-hover);
+  box-shadow: 0 4px 8px var(--shadow-dark), 0 12px 32px rgba(0,0,0,0.55), inset 0 1px 0 var(--shadow-light);
+}
+
+.hero { text-align: center; padding: 40px 0 50px; }
+.hero h1 { font-size: 2.2rem; font-weight: 700; color: var(--text-bright); letter-spacing: 0.04em; margin-bottom: 12px; }
+.hero .subtitle { font-size: 1.05rem; color: var(--text-dim); max-width: 480px; margin: 0 auto; line-height: 1.7; }
+.hero .accent-dot { color: var(--accent); }
+
+.module-grid { display: grid; grid-template-columns: 1fr; gap: var(--gap); margin-top: 10px; }
+
+.module-card { cursor: pointer; position: relative; overflow: hidden; }
+.module-card .module-num { font-size: 0.8rem; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 8px; }
+.module-card .module-title { font-size: 1.45rem; font-weight: 700; color: var(--text-bright); margin-bottom: 8px; }
+.module-card .module-desc { font-size: 0.95rem; color: var(--text-dim); line-height: 1.6; }
+.module-card .module-meta { margin-top: 14px; font-size: 0.82rem; color: var(--text-dim); display: flex; gap: 16px; }
+.module-card .module-arrow { position: absolute; right: 28px; top: 50%; transform: translateY(-50%); font-size: 1.4rem; color: var(--accent-dim); transition: transform 0.25s ease, color 0.25s ease; }
+.module-card:hover .module-arrow { transform: translateY(-50%) translateX(4px); color: var(--accent); }
+
+.back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); text-decoration: none; font-size: 0.9rem; cursor: pointer; margin-bottom: 20px; transition: opacity 0.2s; font-weight: 500; }
+.back-link:hover { opacity: 0.75; }
+
+.list-header { margin-bottom: 32px; }
+.list-header h2 { font-size: 1.7rem; color: var(--text-bright); margin-bottom: 6px; }
+.list-header .list-subtitle { color: var(--text-dim); font-size: 0.92rem; }
+
+.subtopic-group { margin-bottom: 28px; }
+.subtopic-title { font-size: 0.8rem; font-weight: 600; color: var(--accent-dim); letter-spacing: 0.06em; margin-bottom: 10px; padding-left: 4px; }
+
+.article-row { display: flex; align-items: flex-start; gap: 10px; padding: 12px 16px; border-radius: var(--radius-sm); cursor: pointer; transition: background 0.2s, transform 0.2s; margin-bottom: 2px; }
+.article-row:hover { background: var(--card); transform: translateX(4px); }
+.article-row .art-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-dim); flex-shrink: 0; margin-top: 0.55em; }
+.article-row .art-title { flex: 1; font-size: 0.98rem; color: var(--text); line-height: 1.55; padding-right: 4px; }
+.article-row .art-badge { font-size: 0.7rem; color: var(--text-dim); background: var(--bg-alt); padding: 2px 8px; border-radius: 20px; white-space: nowrap; line-height: 1.4; margin-top: 0.15em; }
+.article-row .art-check { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--card-border); flex-shrink: 0; cursor: pointer; transition: all 0.2s; position: relative; background: transparent; margin-top: 0.1em; }
+.article-row .art-check.done { background: var(--accent); border-color: var(--accent); }
+.article-row .art-check.done::after { content: "✓"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--bg); font-weight: 700; }
+
+.article-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; flex-wrap: wrap; gap: 12px; }
+.article-nav .nav-btn { font-size: 0.85rem; color: var(--accent); cursor: pointer; background: none; border: none; padding: 6px 0; font-family: var(--font); transition: opacity 0.2s; }
+.article-nav .nav-btn:hover { opacity: 0.7; }
+.article-nav .nav-btn:disabled { color: var(--text-dim); cursor: default; opacity: 0.4; }
+
+.article-header { margin-bottom: 32px; }
+.article-header .art-module-tag { font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+.article-header h1 { font-size: 1.7rem; color: var(--text-bright); margin-bottom: 8px; line-height: 1.35; }
+.article-header .art-meta { font-size: 0.85rem; color: var(--text-dim); }
+
+.article-body { font-size: 1rem; line-height: 1.85; color: var(--text); }
+.article-body h2 { font-size: 1.25rem; color: var(--text-bright); margin: 32px 0 12px; }
+.article-body h3 { font-size: 1.05rem; color: var(--text-bright); margin: 24px 0 8px; }
+.article-body p { margin-bottom: 14px; }
+.article-body ul, .article-body ol { margin: 0 0 14px 20px; }
+.article-body li { margin-bottom: 6px; }
+.article-body strong { color: var(--text-bright); }
+.article-body blockquote { border-left: 3px solid var(--accent); padding: 12px 18px; margin: 16px 0; background: var(--card); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; color: var(--text-dim); }
+
+.article-body table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.9rem; }
+.article-body table th { color: var(--accent); text-align: left; padding: 8px 12px; font-weight: 600; }
+.article-body table td { padding: 8px 12px; border-top: 1px solid var(--card-border); color: var(--text); }
+.article-body table tr:hover td { background: rgba(232,184,96,0.04); }
+.article-body .practice-box { background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius-sm); padding: 20px 22px; margin: 16px 0; }
+.article-body .practice-box h4 { color: var(--accent); margin-bottom: 8px; font-size: 0.9rem; }
+
+.generator { text-align: center; padding: 32px 24px; margin: 24px 0; }
+.generator .gen-btn { display: inline-block; padding: 12px 32px; background: var(--accent); color: var(--bg); border: none; border-radius: 30px; font-size: 1rem; font-weight: 600; cursor: pointer; font-family: var(--font); transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 16px var(--accent-glow); }
+.generator .gen-btn:hover { transform: scale(1.04); }
+.generator .gen-btn:active { transform: scale(0.97); }
+.generator .gen-result { margin-top: 20px; font-size: 1.1rem; color: var(--text-bright); min-height: 48px; display: flex; align-items: center; justify-content: center; padding: 16px; background: var(--card); border-radius: var(--radius-sm); }
+
+.footer { text-align: center; padding: 40px 0 20px; color: var(--text-dim); font-size: 0.8rem; }
+
+@media (min-width: 540px) {
+  .module-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero h1 { font-size: 2rem; }
+}
+
+@media (min-width: 740px) {
+  .module-grid { grid-template-columns: repeat(3, 1fr); }
+  .hero h1 { font-size: 2.6rem; }
+}
+
+@media (max-width: 480px) {
+  .app { padding: 24px 14px 60px; }
+  .hero { padding: 24px 0 32px; }
+  .hero h1 { font-size: 1.6rem; }
+  .card { padding: 20px 18px; }
+  .module-card .module-arrow { right: 18px; font-size: 1.1rem; }
+  .article-header h1 { font-size: 1.35rem; }
+  .article-row { padding: 12px 14px; }
+  html { font-size: 15px; }
+}
+</style>
+</head>
+<body>
+
+<div class="app" id="app">
+
+  <!-- ==================== 首页 ==================== -->
+  <section class="view active" id="view-home">
+    <div class="hero">
+      <h1>即兴戏剧<span class="accent-dot"> · </span>从入门到高阶</h1>
+      <p class="subtitle">覆盖即兴戏剧的核心原则、系统学习路径与实用练习清单。适合零基础新手，也适合有经验的即兴演员精进。</p>
+    </div>
+
+    <div class="module-grid">
+      <div class="card module-card" onclick="navTo('module1')">
+        <div class="module-num">模块一</div>
+        <div class="module-title">即兴戏剧要学什么</div>
+        <div class="module-desc">从自发性到群像戏——即兴戏剧所需掌握的全部核心概念与技巧。</div>
+        <div class="module-meta"><span>7 个主题</span><span>15 篇文章</span></div>
+        <div class="module-arrow">→</div>
+      </div>
+
+      <div class="card module-card" onclick="navTo('module2')">
+        <div class="module-num">模块二</div>
+        <div class="module-title">如何系统学习</div>
+        <div class="module-desc">入门 → 进阶 → 高阶，一条经过验证的即兴戏剧学习路径。</div>
+        <div class="module-meta"><span>3 个阶段</span><span>12 篇文章</span></div>
+        <div class="module-arrow">→</div>
+      </div>
+
+      <div class="card module-card" onclick="navTo('module3')">
+        <div class="module-num">模块三</div>
+        <div class="module-title">资源与行动清单</div>
+        <div class="module-desc">专项练习、融合练习、小组共学工具与推荐资源，可直接上手实践。</div>
+        <div class="module-meta"><span>6 个板块</span><span>8 篇文章</span></div>
+        <div class="module-arrow">→</div>
+      </div>
+    </div>
+
+    <div class="footer">共 3 个模块 · 16 个主题 · 35 篇文章 · 学习进度本地存储</div>
+  </section>
+
+  <!-- ==================== 模块一列表 ==================== -->
+  <section class="view" id="view-module1">
+    <div class="back-link" onclick="navTo('home')">← 返回首页</div>
+    <div class="list-header">
+      <h2>即兴戏剧要学什么</h2>
+      <p class="list-subtitle">从核心原则到高阶技巧，构建完整的即兴戏剧知识体系</p>
+    </div>
+
+    <div class="subtopic-group">
+      <div class="subtopic-title">核心原则</div>
+      <div class="article-row" onclick="openArticle('m1-1')"><div class="art-dot"></div><div class="art-title">自发性：即兴的源泉 —— 重新激活你与生俱来的创造本能</div><span class="art-badge">基础</span><div class="art-check" id="check-m1-1" onclick="event.stopPropagation();toggleCheck('m1-1')"></div></div>
+      <div class="article-row" onclick="openArticle('m1-2')"><div class="art-dot"></div><div class="art-title">Yes, And：接纳与添加 —— 即兴的第一行为准则</div><span class="art-badge">基础</span><div class="art-check" id="check-m1-2" onclick="event.stopPropagation();toggleCheck('m1-2')"></div></div>
+      <div class="article-row" onclick="openArticle('m1-3')"><div class="art-dot"></div><div class="art-title">Offer 与 Endowment：即兴的最小单位 —— 如何发出与接收舞台上的每一个信号</div><span class="art-badge">基础</span><div class="art-check" id="check-m1-3" onclick="event.stopPropagation();toggleCheck('m1-3')"></div></div>
+      <div class="article-row" onclick="openArticle('m1-4')"><div class="art-dot"></div><div class="art-title">积极聆听：听见而非等待 —— 场景中最重要的能力</div><span class="art-badge">基础</span><div class="art-check" id="check-m1-4" onclick="event.stopPropagation();toggleCheck('m1-4')"></div></div>
+      <div class="article-row" onclick="openArticle('m1-5')"><div class="art-dot"></div><div class="art-title">拥抱失败：活在当下 —— 把"错误"变成礼物</div><span class="art-badge">基础</span><div class="art-check" id="check-m1-5" onclick="event.stopPropagation();toggleCheck('m1-5')"></div></div>
+    </div>
+
+    <div class="subtopic-group">
+      <div class="subtopic-title">角色塑造</div>
+      <div class="article-row" onclick="openArticle('m1-6')"><div class="art-dot"></div><div class="art-title">30 秒建立角色 —— 用身体和声音快速进入人物</div><span class="art-badge">基础</span><div class="art-check" id="check-m1-6" onclick="event.stopPropagation();toggleCheck('m1-6')"></div></div>
+      <div class="article-row" onclick="openArticle('m1-7')"><div class="art-dot"></div><div class="art-title">身体语言、声音与展示而非讲述 —— 让你的行动替角色说话</div><span class="art-badge">进阶</span><div class="art-check" id="check-m1-7" onclick="event.stopPropagation();toggleCheck('m1-7')"></div></div>
+    </div>
+
+    <div class="subtopic-group">
+      <div class="subtopic-title">地位</div>
+      <div class="article-row" onclick="openArticle('m1-8')"><div class="art-dot"></div><div class="art-title">地位的高低：即兴中的权力游戏 —— 理解并运用地位变化推动场景</div><span class="art-badge">进阶</span><div class="art-check" id="check-m1-8" onclick="event.stopPropagation();toggleCheck('m1-8')"></div></div>
+    </div>
+
+    <div class="subtopic-group">
+      <div class="subtopic-title">空间与物件</div>
+      <div class="article-row" onclick="openArticle('m1-9')"><div class="art-dot"></div><div class="art-title">无实物表演与空间构建 —— 让观众"看到"不存在的世界</div><span class="art-badge">基础</span><div class="art-check" id="check-m1-9" onclick="event.stopPropagation();toggleCheck('m1-9')"></div></div>
+    </div>
+
+    <div class="subtopic-group">
+      <div class="subtopic-title">情绪与能量</div>
+      <div class="article-row" onclick="openArticle('m1-10')"><div class="art-dot"></div><div class="art-title">情绪表达与快速转换 —— 用情绪而不是台词驱动场景</div><span class="art-badge">进阶</span><div class="art-check" id="check-m1-10" onclick="event.stopPropagation();toggleCheck('m1-10')"></div></div>
+      <div class="article-row" onclick="openArticle('m1-11')"><div class="art-dot"></div><div class="art-title">能量的高低与节奏 —— 控制场景张力的秘密</div><span class="art-badge">进阶</span><div class="art-check" id="check-m1-11" onclick="event.stopPropagation();toggleCheck('m1-11')"></div></div>
+    </div>
+
+    <div class="subtopic-group">
+      <div class="subtopic-title">场景与叙事</div>
+      <div class="article-row" onclick="openArticle('m1-12')"><div class="art-dot"></div><div class="art-title">CROW：场景的骨架 —— 角色·关系·目标·地点四要素</div><span class="art-badge">基础</span><div class="art-check" id="check-m1-12" onclick="event.stopPropagation();toggleCheck('m1-12')"></div></div>
+      <div class="article-row" onclick="openArticle('m1-13')"><div class="art-dot"></div><div class="art-title">找到"游戏"并升番 —— 即兴喜剧中制造笑声的核心技巧</div><span class="art-badge">进阶</span><div class="art-check" id="check-m1-13" onclick="event.stopPropagation();toggleCheck('m1-13')"></div></div>
+    </div>
+
+    <div class="subtopic-group">
+      <div class="subtopic-title">高阶概念</div>
+      <div class="article-row" onclick="openArticle('m1-14')"><div class="art-dot"></div><div class="art-title">长即兴格式简介 —— 从短游戏到完整即兴演出的跨越</div><span class="art-badge">高阶</span><div class="art-check" id="check-m1-14" onclick="event.stopPropagation();toggleCheck('m1-14')"></div></div>
+      <div class="article-row" onclick="openArticle('m1-15')"><div class="art-dot"></div><div class="art-title">团体意识与群像戏 —— 不只做最好的自己，做最好的团队</div><span class="art-badge">高阶</span><div class="art-check" id="check-m1-15" onclick="event.stopPropagation();toggleCheck('m1-15')"></div></div>
+    </div>
+  </section>
+
+  <!-- ==================== 模块二列表（不变） ==================== -->
+  <section class="view" id="view-module2">
+    <div class="back-link" onclick="navTo('home')">← 返回首页</div>
+    <div class="list-header">
+      <h2>如何系统学习</h2>
+      <p class="list-subtitle">入门 → 进阶 → 高阶，一条循序渐进的即兴学习路径</p>
+    </div>
+
+    <div class="subtopic-group">
+      <div class="subtopic-title">入门阶段</div>
+      <div class="article-row" onclick="openArticle('m2-1')"><div class="art-dot"></div><div class="art-title">破冰与信任建立 —— 即兴表演团体的第一步</div><span class="art-badge">入门</span><div class="art-check" id="check-m2-1" onclick="event.stopPropagation();toggleCheck('m2-1')"></div></div>
+      <div class="article-row" onclick="openArticle('m2-2')"><div class="art-dot"></div><div class="art-title">初学者的第一个即兴游戏 —— 从哪里开始玩</div><span class="art-badge">入门</span><div class="art-check" id="check-m2-2" onclick="event.stopPropagation();toggleCheck('m2-2')"></div></div>
+      <div class="article-row" onclick="openArticle('m2-3')"><div class="art-dot"></div><div class="art-title">常见误区与心态 —— 初学者最容易踩的五个坑</div><span class="art-badge">入门</span><div class="art-check" id="check-m2-3" onclick="event.stopPropagation();toggleCheck('m2-3')"></div></div>
+    </div>
+
+    <div class="subtopic-group">
+      <div class="subtopic-title">进阶阶段</div>
+      <div class="article-row" onclick="openArticle('m2-4')"><div class="art-dot"></div><div class="art-title">让场景变深的技巧 —— 从表面冲突到真正的戏剧张力</div><span class="art-badge">进阶</span><div class="art-check" id="check-m2-4" onclick="event.stopPropagation();toggleCheck('m2-4')"></div></div>
+      <div class="article-row" onclick="openArticle('m2-5')"><div class="art-dot"></div><div class="art-title">拓展角色宽度 —— 跳出舒适区，尝试更多角色类型</div><span class="art-badge">进阶</span><div class="art-check" id="check-m2-5" onclick="event.stopPropagation();toggleCheck('m2-5')"></div></div>
+      <div class="article-row" onclick="openArticle('m2-6')"><div class="art-dot"></div><div class="art-title">进阶即兴游戏精选 —— 推荐给有基础玩家的游戏清单</div><span class="art-badge">进阶</span><div class="art-check" id="check-m2-6" onclick="event.stopPropagation();toggleCheck('m2-6')"></div></div>
+      <div class="article-row" onclick="openArticle('m2-7')"><div class="art-dot"></div><div class="art-title">场景编辑技巧：何时切入与切出 —— 即兴演出的"导演思维"</div><span class="art-badge">进阶</span><div class="art-check" id="check-m2-7" onclick="event.stopPropagation();toggleCheck('m2-7')"></div></div>
+      <div class="article-row" onclick="openArticle('m2-8')"><div class="art-dot"></div><div class="art-title">地位与关系在场景中的运用 —— 用地位变化让场景活起来</div><span class="art-badge">进阶</span><div class="art-check" id="check-m2-8" onclick="event.stopPropagation();toggleCheck('m2-8')"></div></div>
+    </div>
+
+    <div class="subtopic-group">
+      <div class="subtopic-title">高阶阶段</div>
+      <div class="article-row" onclick="openArticle('m2-9')"><div class="art-dot"></div><div class="art-title">长即兴格式实操 —— 如何驾驭 30 分钟以上的即兴演出</div><span class="art-badge">高阶</span><div class="art-check" id="check-m2-9" onclick="event.stopPropagation();toggleCheck('m2-9')"></div></div>
+      <div class="article-row" onclick="openArticle('m2-10')"><div class="art-dot"></div><div class="art-title">建立个人表演风格 —— 找到属于你自己的即兴声音</div><span class="art-badge">高阶</span><div class="art-check" id="check-m2-10" onclick="event.stopPropagation();toggleCheck('m2-10')"></div></div>
+      <div class="article-row" onclick="openArticle('m2-11')"><div class="art-dot"></div><div class="art-title">带领即兴团队的方法 —— 从演员到带领者的角色转变</div><span class="art-badge">高阶</span><div class="art-check" id="check-m2-11" onclick="event.stopPropagation();toggleCheck('m2-11')"></div></div>
+      <div class="article-row" onclick="openArticle('m2-12')"><div class="art-dot"></div><div class="art-title">即兴与剧本创作的交叉 —— 用即兴方法开发剧本与角色</div><span class="art-badge">高阶</span><div class="art-check" id="check-m2-12" onclick="event.stopPropagation();toggleCheck('m2-12')"></div></div>
+    </div>
+  </section>
+
+  <!-- ==================== 模块三列表（不变） ==================== -->
+  <section class="view" id="view-module3">
+    <div class="back-link" onclick="navTo('home')">← 返回首页</div>
+    <div class="list-header">
+      <h2>资源与行动清单</h2>
+      <p class="list-subtitle">可直接上手的练习库、共学工具与推荐资源</p>
+    </div>
+
+    <div class="subtopic-group">
+      <div class="subtopic-title">专项练习（A 类）—— 针对单一技能的精准训练</div>
+      <div class="article-row" onclick="openArticle('m3-1')"><div class="art-dot"></div><div class="art-title">专项练习全集 —— Yes And / 聆听 / 角色 / 空间 / 情绪 / 地位 专项练习</div><span class="art-badge">练习</span><div class="art-check" id="check-m3-1" onclick="event.stopPropagation();toggleCheck('m3-1')"></div></div>
+    </div>
+
+    <div class="subtopic-group">
+      <div class="subtopic-title">融合练习（B 类）—— 综合运用多项技能的场景练习</div>
+      <div class="article-row" onclick="openArticle('m3-2')"><div class="art-dot"></div><div class="art-title">融合练习全集 —— 短场景与长即兴的综合练习方法</div><span class="art-badge">练习</span><div class="art-check" id="check-m3-2" onclick="event.stopPropagation();toggleCheck('m3-2')"></div></div>
+    </div>
+
+    <div class="subtopic-group">
+      <div class="subtopic-title">单人日常练习</div>
+      <div class="article-row" onclick="openArticle('m3-3')"><div class="art-dot"></div><div class="art-title">单人每日练习 —— 不需要伙伴也能提升即兴能力的 6 个方法</div><span class="art-badge">练习</span><div class="art-check" id="check-m3-3" onclick="event.stopPropagation();toggleCheck('m3-3')"></div></div>
+    </div>
+
+    <div class="subtopic-group">
+      <div class="subtopic-title">共学功能</div>
+      <div class="article-row" onclick="openArticle('m3-4')"><div class="art-dot"></div><div class="art-title">学习进度清单 —— 用浏览器本地存储跟踪你的学习进度</div><span class="art-badge">工具</span><div class="art-check" id="check-m3-4" onclick="event.stopPropagation();toggleCheck('m3-4')"></div></div>
+      <div class="article-row" onclick="openArticle('m3-5')"><div class="art-dot"></div><div class="art-title">小组练习组织指南 —— 如何发起、筹备、带领一次即兴练习局</div><span class="art-badge">工具</span><div class="art-check" id="check-m3-5" onclick="event.stopPropagation();toggleCheck('m3-5')"></div></div>
+      <div class="article-row" onclick="openArticle('m3-6')"><div class="art-dot"></div><div class="art-title">每周练习计划模板 —— 可直接套用的 4 周训练计划</div><span class="art-badge">工具</span><div class="art-check" id="check-m3-6" onclick="event.stopPropagation();toggleCheck('m3-6')"></div></div>
+    </div>
+
+    <div class="subtopic-group">
+      <div class="subtopic-title">推荐资源</div>
+      <div class="article-row" onclick="openArticle('m3-7')"><div class="art-dot"></div><div class="art-title">书单、视频频道与播客 —— 即兴戏剧优质学习资源推荐</div><span class="art-badge">资源</span><div class="art-check" id="check-m3-7" onclick="event.stopPropagation();toggleCheck('m3-7')"></div></div>
+    </div>
+
+    <div class="subtopic-group">
+      <div class="subtopic-title">行动清单</div>
+      <div class="article-row" onclick="openArticle('m3-8')"><div class="art-dot"></div><div class="art-title">每日 15 分钟计划 + 加入社群指南 —— 从今天开始行动</div><span class="art-badge">行动</span><div class="art-check" id="check-m3-8" onclick="event.stopPropagation();toggleCheck('m3-8')"></div></div>
+    </div>
+
+    <div class="card generator" style="margin-top: 32px;">
+      <h3 style="color:var(--text-bright);margin-bottom:6px;">🎲 今日练习随机生成器</h3>
+      <p style="color:var(--text-dim);font-size:0.88rem;margin-bottom:16px;">不知道今天练什么？点一下随机推荐一个练习</p>
+      <button class="gen-btn" onclick="randomPractice()">随机抽取</button>
+      <div class="gen-result" id="gen-result">点击按钮获取练习建议 →</div>
+    </div>
+  </section>
+
+  <!-- ==================== 文章详情页 ==================== -->
+  <section class="view" id="view-article">
+    <div class="article-nav">
+      <button class="nav-btn" id="nav-prev" onclick="navArticle(-1)">← 上一篇</button>
+      <button class="nav-btn" onclick="navTo(currentArticle ? currentArticle.module : 'home')">↑ 返回列表</button>
+      <button class="nav-btn" id="nav-next" onclick="navArticle(1)">下一篇 →</button>
+    </div>
+    <div class="article-header">
+      <div class="art-module-tag" id="art-module-tag"></div>
+      <h1 id="art-title"></h1>
+      <div class="art-meta" id="art-meta"></div>
+    </div>
+    <div class="article-body card" id="art-body"></div>
+  </section>
+
+</div>
+
+<script>
+// ===== 文章数据 =====
+const articles = {
+
+  // ========== 模块一：即兴戏剧要学什么（15 篇） ==========
+
+  'm1-1': {
+    module: 'module1', moduleName: '即兴戏剧要学什么', subtopic: '核心原则',
+    title: '自发性：即兴的源泉 —— 重新激活你与生俱来的创造本能',
+    level: '基础', readTime: '约 8 分钟',
+    content: `<p>在即兴戏剧的所有原则中，<strong>自发性（Spontaneity）</strong>是最根本的一条。Keith Johnstone 在《Impro》中用一整章讨论它，认为它是所有创造力的源泉——但大多数成年人在成长过程中失去了它。</p>
+<h2>什么是自发性？</h2>
+<p>自发性不是"想到什么就做什么"的冲动。它是<strong>在当下时刻，不被内心的评判者过滤掉你的第一反应，自然地做出回应</strong>。一个 3 岁的孩子看到水洼就踩进去——这不是故意捣乱，而是自发性在起作用。成人看到水洼，大脑在 0.3 秒内完成了"会弄湿鞋→别人会怎么看→算了"的运算，然后绕开了。</p>
+<h2>为什么成人失去了自发性？</h2>
+<ol><li><strong>教育系统</strong>：我们被训练成"先想再做"、"做对才有奖励"。但即兴要求"先做再想"。</li><li><strong>社交压力</strong>：害怕看起来很傻、害怕被评判、害怕失控。这些恐惧在大脑中形成了一个"编辑者"，在每一个念头产生后立刻审查它。</li><li><strong>对确定性的依赖</strong>：成人习惯了一切可预测。但即兴的本质就是不确定。</li></ol>
+<h2>Johnstone 的核心洞见</h2>
+<p>Johnstone 发现，自发性的敌人不是"不想象"，而是<strong>"怕想象出来的东西不够好"</strong>。他的解决方案很极端：告诉学生"你的想象力是阻塞的，不是因为你想不出东西，而是因为你太擅长过滤掉'不够好'的东西。"</p>
+<p>重新激活自发性的关键是<strong>降低标准，而非提高标准</strong>。第一个浮现在脑海的东西就是最好的东西——不是因为它客观上最好，而是因为它是唯一<strong>真实</strong>的东西。</p>
+<h2>自发性与 Yes, And 的关系</h2>
+<p>Yes, And 是自发性的<strong>行为表达</strong>。当你拥有自发性时，Yes, And 是自然的，不需要刻意去想"我该怎么 Yes And"。反过来，练习 Yes, And 也是在训练自发性——通过行为反向重塑思维模式。</p>
+<p>一个更根本的顺序是：<strong>先恢复自发性 → 再学 Yes, And → 再学其他所有技巧</strong>。没有自发性的 Yes, And 是机械的；有了自发性，Yes, And 像呼吸一样自然。</p>
+<h2>训练方法</h2>
+<div class="practice-box"><h4>练习 1：流意识说话（单人）</h4><p>对着录音设备，选一个眼前的物品，开始不停地说话——关于这个物品，关于任何联想，关于你的感受。唯一规则：<strong>不能停、不能改、不能评判</strong>。说满 3 分钟。这个练习训练你绕过大脑的"编辑者"。</p></div>
+<div class="practice-box"><h4>练习 2：快速联想圈（4 人以上）</h4><p>围成圈。一个人说一个词，下一个人必须<strong>在 1 秒内</strong>说出联想到的另一个词，不能犹豫。如果有人犹豫，全组一起大声欢呼"太好了！你犹豫了！"然后继续。目标不是"说出好的联想"，而是<strong>在评判者反应过来之前已经说出口</strong>。</p></div>
+<div class="practice-box"><h4>练习 3：即刻反应场景（2 人）</h4><p>两人面对面。A 做一个随机的身体动作+声音（任何！），B 必须在 <strong>0.5 秒内</strong>以一个角色身份回应。不做对，只做快。连续 10 轮。这个练习让身体快过大脑。</p></div>
+<p style="margin-top:16px;color:var(--text-dim);">👉 读完这篇后，建议紧接着读下一篇「Yes, And」——你将理解为什么接纳与添加是自发性的自然延伸。</p>`
+  },
+
+  'm1-2': {
+    module: 'module1', moduleName: '即兴戏剧要学什么', subtopic: '核心原则',
+    title: 'Yes, And：接纳与添加 —— 即兴的第一行为准则',
+    level: '基础', readTime: '约 8 分钟',
+    content: `<p>Yes, And 是即兴戏剧最著名的原则。如果说<strong>自发性</strong>（上一篇）是内在引擎，那么 Yes, And 就是这个引擎驱动下的<strong>外在行为准则</strong>。</p>
+<h2>什么是 Yes, And？</h2>
+<p><strong>Yes（是的）</strong>：无条件接纳你的伙伴刚刚给出的任何信息。无论对方说"我们是一对在月球上开餐厅的宇航员"，还是一个微妙的眼神或姿态，你先说 Yes。</p>
+<p><strong>And（而且）</strong>：在接纳的基础上，增添新的信息。你不是被动接受，而是主动推动场景前进。</p>
+<h2>为什么 Yes 如此重要？</h2>
+<p>即兴戏剧没有剧本。如果演员 A 提出了一个想法，演员 B 拒绝了它，场景就死了。拒绝 = 堵住伙伴 = 场景崩塌。Yes 让你和伙伴站在同一条船上。</p>
+<h2>Yes 不等于同意一切</h2>
+<p>Yes 意味着你承认伙伴给出的"事实"。但你的角色完全可以不同意伙伴角色的意见。区分 <strong>"接纳事实"</strong> 和 <strong>"角色观点"</strong> 是重要的进阶理解。</p>
+<h2>训练方法</h2>
+<div class="practice-box"><h4>练习 1：Yes, And 接龙（2 人以上）</h4><p>两人面对面。A 说一句简单的提议（如"我们去海边吧"）。B 必须以"好，而且……"开头回应，然后加上一个新信息。再轮到 A，同样以"好，而且……"开头。连续 5 轮不中断。</p></div>
+<div class="practice-box"><h4>练习 2：Yes, But 对比体验（3 人以上）</h4><p>先做一轮只能用"Yes, But"回应的场景，感受场景如何迅速枯竭。再做一轮只用"Yes, And"的同样场景。对比两者的能量差异，讨论感受。</p></div>
+<div class="practice-box"><h4>练习 3：沉默 Yes（2 人）</h4><p>不允许说话。A 用一个动作开始在空间中做一件事，B 加入并支持 A 的动作（不是抢夺），A 接受并调整。全程用身体说 Yes。</p></div>
+<p style="margin-top:16px;color:var(--text-dim);">👉 更多专项练习见模块三「专项练习全集」。</p>`
+  },
+
+  'm1-3': {
+    module: 'module1', moduleName: '即兴戏剧要学什么', subtopic: '核心原则',
+    title: 'Offer 与 Endowment：即兴的最小单位 —— 如何发出与接收舞台上的每一个信号',
+    level: '基础', readTime: '约 7 分钟',
+    content: `<p>在掌握了自发性和 Yes, And 之后，我们需要理解即兴互动中最基本的"原子单位"：<strong>Offer（提议）</strong>和 <strong>Endowment（赋予）</strong>。理解了它们，你就理解了即兴场景是如何被一个瞬间一个瞬间地建造起来的。</p>
+<h2>什么是 Offer？</h2>
+<p>Offer 是你在舞台上<strong>给出的任何信息</strong>。它可以是台词（"爸，你今天好像不太开心"），可以是身体动作（后退一步、低下头），可以是声音（一声叹息），甚至可以是沉默。任何可以被伙伴<strong>接收到并用来构建场景</strong>的信号，都是一个 Offer。</p>
+<p>好的 Offer 具有三个特征：<strong>具体、可被感知、给伙伴留空间</strong>。模糊的 Offer（"我们来做什么呢"）比具体的 Offer（"我们把这张桌子搬到窗边去吧"）更难被接收和推进。</p>
+<h2>什么是 Endowment？</h2>
+<p>Endowment 是一种特殊的 Offer——你<strong>赋予伙伴或空间一个属性</strong>。比如你对伙伴说"亲爱的，你今天戴这条领带真好看"——你同时赋予了对方一个角色（你的伴侣）、一个特征（戴了领带）、一个情绪基调（被欣赏）。Endowment 是最高效的场景搭建工具，一句话就可以建立关系、环境和情绪。</p>
+<p>好的 Endowment 是<strong>礼物</strong>——它让伙伴有东西可以演。它不限制伙伴，而是给伙伴一个明确的起点。</p>
+<h2>接收 Offer 的三种方式</h2>
+<ol><li><strong>Yes（接纳但不添加）</strong>：你承认 Offer 但不推进。适用于你需要时间感知场景方向时。</li><li><strong>Yes, And（接纳并添加）</strong>：你接收 Offer 并增加新信息。这是最理想的场景驱动方式。</li><li><strong>忽视 / Block（阻断）</strong>：你没有接收 Offer。无论是有意拒绝还是无意忽视，结果都是场景停滞。</li></ol>
+<h2>发出好 Offer 的技巧</h2>
+<p>如果你想做"最好的即兴演员"，不要试图主导场景。做那个<strong>持续发出清晰 Offer 并慷慨地给伙伴 Endowment 的人</strong>。你给出一个明确的特征、关系或情绪，伙伴就有了抓手，场景就有了燃料。</p>
+<h2>训练方法</h2>
+<div class="practice-box"><h4>练习 1：Offer 接球（2 人）</h4><p>A 用一句话发出一个 Offer（"看，那边有艘船"）。B 必须明确地接收它（Yes 或 Yes, And），然后立刻发出一个新 Offer。来回 10 轮。目标是每个 Offer 都被清晰接收，没有被忽视的。</p></div>
+<div class="practice-box"><h4>练习 2：Endowment 炸弹（2 人）</h4><p>两人开始一个中性场景。在 60 秒内，每人必须至少给对方 3 个 Endowment——赋予角色一个属性、特征或情感状态（"哥，你每次都这样"、"你今天心情真好"）。注意这些 Endowment 如何快速丰富场景。</p></div>
+<div class="practice-box"><h4>练习 3：无声 Offer（全体）</h4><p>只用身体和空间中的动作发出 Offer——不用语言。一个人做一个动作（比如在空间中"打开一扇门"），其他人接收这个 Offer 并加入。感受非语言 Offer 的力量。</p></div>`
+  },
+
+  'm1-4': {
+    module: 'module1', moduleName: '即兴戏剧要学什么', subtopic: '核心原则',
+    title: '积极聆听：听见而非等待 —— 场景中最重要的能力',
+    level: '基础', readTime: '约 7 分钟',
+    content: `<p>如果说 Yes, And 是即兴的外在行为准则，那么<strong>积极聆听</strong>就是驱动这个准则的内在引擎。没有聆听，就没有真正的 Yes。没有聆听，你发出的每一个 Offer 也都是盲目的。</p>
+<h2>普通聆听 vs 积极聆听</h2>
+<p>普通聆听：你在听伙伴说话的同时，脑子里已经在构思自己下一句要说什么。这是即兴中最常见的错误。</p>
+<p><strong>积极聆听</strong>：你将自己的全部注意力放在伙伴身上——不仅听台词，还听语气、节奏、情绪、身体语言。你接收到全部信息后，才做出回应。</p>
+<h2>聆听的三个层次</h2>
+<ol><li><strong>字面聆听</strong>：听到对方说的词语本身</li><li><strong>意图聆听</strong>：理解对方想表达什么（可能和字面不同）</li><li><strong>潜能聆听</strong>：感知对方给出的信息中可以发展出什么</li></ol>
+<h2>聆听与 Offer 的关系</h2>
+<p>每一个 Offer 都是一份礼物——但只有你在认真听的时候才能收到它。很多新手场景失败的原因不是"没有好点子"，而是<strong>伙伴已经给出了绝佳的 Offer，但你因为在想自己的下一句而错过了它</strong>。</p>
+<h2>训练方法</h2>
+<div class="practice-box"><h4>练习 1：最后三个词（2 人）</h4><p>A 自由说话。B 在 A 说完每一句话后，必须用 A 说的<strong>最后三个词</strong>作为自己回应的开头。这迫使 B 真正听清 A 的每一个词。</p></div>
+<div class="practice-box"><h4>练习 2：一字一句故事（2-4 人）</h4><p>参与者轮流，每人只能说一个字，共同讲述一个故事。必须仔细听前面每一个字才能接下去。不能提前计划。</p></div>
+<div class="practice-box"><h4>练习 3：镜像聆听（2 人）</h4><p>A 讲一段 30 秒的真实经历。B 听完后不做评价，只做两件事：① 复述 A 说的事实 ② 说出 A 可能有的情绪。然后角色互换。</p></div>
+<p style="margin-top:16px;color:var(--text-dim);">👉 更多专项练习见模块三「专项练习全集」。</p>`
+  },
+
+  'm1-5': {
+    module: 'module1', moduleName: '即兴戏剧要学什么', subtopic: '核心原则',
+    title: '拥抱失败：活在当下 —— 把"错误"变成礼物',
+    level: '基础', readTime: '约 7 分钟',
+    content: `<p>即兴戏剧中有一个著名说法：<strong>"没有错误，只有礼物。"</strong> 这句话听起来很鸡汤，但它在即兴舞台上可以被反复验证。</p>
+<h2>为什么害怕失败？</h2>
+<p>我们从小被教育"要做对"、"不要出错"。但在即兴中，你无法预知下一秒会发生什么。对"正确"的执着会冻结你的直觉，让你在舞台上犹豫、退缩。</p>
+<h2>"失败"在即兴中的真正含义</h2>
+<p>当你说错台词、做了一个奇怪的举动、忘了一个已经建立的设定——这些"失误"实际上是给你的场景注入了<strong>意外性</strong>。而意外正是即兴的生命力来源。</p>
+<h2>如何将"错误"变成礼物？</h2>
+<ol><li><strong>承认它</strong>：别假装它没发生。让角色也意识到这个"异常"。</li><li><strong>合理化它</strong>：在现场给出一个解释。"我叫错你的名字是因为我太紧张了——这证明我对你的感情是真的。"</li><li><strong>用它推动剧情</strong>：让这个"失误"成为场景转折的契机。</li></ol>
+<h2>训练方法</h2>
+<div class="practice-box"><h4>练习 1：故意犯错（2-4 人）</h4><p>做一个普通场景。带领者随时喊"犯一个错！"，此时说话的人必须立刻犯一个明显的"错误"（说错台词/做错动作），下一个人必须立刻将这个错误合理化。</p></div>
+<div class="practice-box"><h4>练习 2：庆祝失败（全体）</h4><p>每次有人觉得自己"搞砸了"的时候，高举双手大喊"太棒了！"然后全组鼓掌。这个仪式会重塑你对失败的神经反应。</p></div>`
+  },
+
+  'm1-6': {
+    module: 'module1', moduleName: '即兴戏剧要学什么', subtopic: '角色塑造',
+    title: '30 秒建立角色 —— 用身体和声音快速进入人物',
+    level: '基础', readTime: '约 8 分钟',
+    content: `<p>在即兴中，你没有 30 分钟去"进入角色"。你只有走上舞台的那几秒钟。但好消息是：<strong>身体先于大脑</strong>——改变你的身体，角色就来了。</p>
+<h2>角色的三个快速入口</h2>
+<ol><li><strong>身体中心</strong>：改变你的重心位置。重心在胸口（自信/领导型），重心在腹部（放松/享乐型），重心在头部（紧张/思考型），重心在膝盖（卑微/畏缩型）。</li><li><strong>声音特质</strong>：改变音高、语速、音量。快速轻声 = 紧张秘书，缓慢低沉 = 权威长者。</li><li><strong>一个重复动作</strong>：给角色一个习惯性小动作——推眼镜、搓手、摸胡子、抖腿。一个动作就足以让观众相信"这是一个完整的人"。</li></ol>
+<h2>训练方法</h2>
+<div class="practice-box"><h4>练习 1：身体漫步（单人/团体）</h4><p>在空间中行走。带领者喊出一个身体部位（"鼻子！"），所有人马上让这个部位"带领"身体走路。体会不同的身体中心如何改变你的心理状态。</p></div>
+<div class="practice-box"><h4>练习 2：角色旋转门（3 人以上）</h4><p>两人开始一个中性场景。第三人在旁观看，随时拍手喊"换角色！"。正在表演的两人立刻换一个全新的角色（改变身体+声音+动作），但场景情境不变。</p></div>`
+  },
+
+  'm1-7': {
+    module: 'module1', moduleName: '即兴戏剧要学什么', subtopic: '角色塑造',
+    title: '身体语言、声音与展示而非讲述 —— 让你的行动替角色说话',
+    level: '进阶', readTime: '约 10 分钟',
+    content: `<p>即兴舞台上，观众判断一个角色，只有 30% 靠台词，<strong>70% 靠身体语言和声音</strong>。而其中最容易被新手忽略的原则是——<strong>"展示而非讲述"（Show, Don't Tell）</strong>。</p>
+<h2>身体语言的五个维度</h2>
+<ol><li><strong>张力</strong>：身体是绷紧的（焦虑/愤怒/控制）还是松弛的（慵懒/自信/疲惫）</li><li><strong>开放度</strong>：身体是展开的（坦诚/欢迎）还是内收的（防御/隐藏）</li><li><strong>节奏</strong>：动作是快而碎的（紧张/年轻）还是慢而稳的（从容/年长）</li><li><strong>空间使用</strong>：角色占据多少空间？大（高地位）还是小（低地位）</li><li><strong>与物件的关系</strong>：如何对待手中的无实物道具，暴露角色的内心</li></ol>
+<h2>声音的四个维度</h2>
+<p>音高 · 音量 · 语速 · 音质（沙哑/清亮/鼻音/气声）。改变其中一个维度，就改变了一种人格。</p>
+<h2>展示而非讲述（Show, Don't Tell）</h2>
+<p>这是即兴舞台上最有力的叙事原则，但很多新手甚至老手都会忘记：<strong>不要用台词告诉观众你的角色是什么样的人，用行为展示给他们看。</strong></p>
+<p>不要说"我很生气"——沉默地把桌上所有的东西扫到地上。不要说"我们是老朋友了"——自然地拍掉对方肩膀上的灰尘，一个只有老友之间才会有的动作。不要说"这个房间很冷"——搓手、哈气、缩起脖子。</p>
+<p>为什么展示比讲述更有力？因为<strong>展示让观众成为发现者而非被告知者</strong>。当观众通过你的行为自己推断出"这个人在生气"，他们会更投入、更相信。而台词说出来的信息，观众只是被动接收。</p>
+<h2>在即兴中实践"展示而非讲述"</h2>
+<ul><li>每次想说"我很[情绪]"的时候，做一个动作来表达这个情绪</li><li>用你和伙伴之间的<strong>身体距离</strong>来展示关系亲疏，而不是说"我们不太熟"</li><li>用你如何使用空间中的物件来展示角色性格——一个仔细叠好外套的人 vs 一个把外套随手扔在地上的人</li><li>用对待伙伴角色的方式展示你们的关系——一个下意识帮对方整理衣领的动作，胜过"我很在乎你"</li></ul>
+<h2>训练方法</h2>
+<div class="practice-box"><h4>练习 1：无声场景（2 人）</h4><p>两人表演一个完整的 1 分钟场景，全程不许说话，只用身体和表情。观众看完后描述发生了什么、两个角色的关系和情绪。这个练习强迫你完全依赖"展示"。</p></div>
+<div class="practice-box"><h4>练习 2：声音面具（单人）</h4><p>选一句中性台词（如"请把那个给我"）。用 5 种完全不同的声音说出来，每一种都暗示不同的角色。录制下来自己听。</p></div>
+<div class="practice-box"><h4>练习 3：台词替换（2 人）</h4><p>做一个普通场景。带领者每次听到演员用台词"告知"信息时（如"我很紧张"），就拍手喊"展示！"演员必须立刻把那句台词替换为一个身体行为、一个动作或一个表情来表达同样的信息。</p></div>`
+  },
+
+  'm1-8': {
+    module: 'module1', moduleName: '即兴戏剧要学什么', subtopic: '地位',
+    title: '地位的高低：即兴中的权力游戏 —— 理解并运用地位变化推动场景',
+    level: '进阶', readTime: '约 9 分钟',
+    content: `<p><strong>地位（Status）</strong>是即兴戏剧中最强大的叙事引擎之一。它由英国戏剧大师 Keith Johnstone 系统提出。理解地位，你就拥有了一把解读和创造戏剧张力的钥匙。</p>
+<h2>什么是地位？</h2>
+<p>地位不是社会阶层或职位高低。地位是<strong>角色在当下互动中表现出的相对权力</strong>。一个 CEO 可以在和下属说话时表现低地位（紧张、讨好、回避眼神）；一个清洁工可以表现高地位（从容、直接注视、占据空间）。</p>
+<h2>高地位 vs 低地位的行为特征</h2>
+<p><strong>高地位</strong>：少动、动作慢而稳、说话少但分量重、保持眼神接触、占据大量空间、不急于取悦对方。</p>
+<p><strong>低地位</strong>：多动、动作碎而快、话多且解释多、回避眼神、缩小身体、频繁看对方反应。</p>
+<h2>地位交易（Status Transaction）</h2>
+<p>最有趣的场景往往发生在<strong>地位发生变化</strong>的时刻。A 一开始高地位，B 通过某个行动翻转了局面——这就是戏剧。好的即兴演员能感知地位的微妙变化，并顺应或主动发起地位交易。</p>
+<h2>训练方法</h2>
+<div class="practice-box"><h4>练习 1：地位数字（2 人）</h4><p>两人从 1 到 10 选一个地位数字（10=极高地位，1=极低地位），不让对方知道。开始一个即兴场景，用自己的地位数字扮演。观察互动中产生的张力。</p></div>
+<div class="practice-box"><h4>练习 2：地位翻转（2 人）</h4><p>从一个明显的地位不对等场景开始（如老板-员工）。带领者在任意时刻喊"翻转！"，两人交换地位角色，观察场景如何变化。</p></div>`
+  },
+
+  'm1-9': {
+    module: 'module1', moduleName: '即兴戏剧要学什么', subtopic: '空间与物件',
+    title: '无实物表演与空间构建 —— 让观众"看到"不存在的世界',
+    level: '基础', readTime: '约 7 分钟',
+    content: `<p>即兴舞台上通常什么都没有——没有道具、没有布景。但好的即兴演员能让观众"看到"一杯咖啡、一扇门、一间拥挤的厨房。<strong>你越相信你创造的空间，观众就越相信。</strong></p>
+<h2>无实物表演的核心：一致性</h2>
+<p>如果你在第 3 秒端起一杯咖啡喝了半杯，那在第 30 秒再次端起它时，杯子必须还在原来的位置、杯中仍然是半杯。空间物件一旦建立，就变成了"真实存在"——你自己首先要尊重它。这也是"展示而非讲述"的延伸——你不需要说"这里有一杯咖啡"，你只需要持续地使用它，观众自然就看到了。</p>
+<h2>空间构建的三个层次</h2>
+<ol><li><strong>物件重量与质感</strong>：一个铁锤和一个气球，你的身体反应完全不同</li><li><strong>物件与角色的关系</strong>：角色怎么使用这个物件，暴露了什么性格</li><li><strong>完整的环境</strong>：不只一个物件，而是一个"世界"——温度、光线、气味</li></ol>
+<h2>训练方法</h2>
+<div class="practice-box"><h4>练习 1：日常动作还原（单人）</h4><p>选一个你每天做的动作（刷牙、系鞋带、倒水）。先真实做一遍，感受每个细节。然后不借助任何实物，完全复现这个动作。注意重量、大小、触感。</p></div>
+<div class="practice-box"><h4>练习 2：接力环境搭建（3 人以上）</h4><p>一人走上台，用无实物动作"放置"一件物品在空间中，并说出它是什么。第二人加入，使用第一件物品，并放置第二件。循环直到空间中有 10+ 件物品。所有人必须记住并尊重已建立的物品位置。</p></div>`
+  },
+
+  'm1-10': {
+    module: 'module1', moduleName: '即兴戏剧要学什么', subtopic: '情绪与能量',
+    title: '情绪表达与快速转换 —— 用情绪而不是台词驱动场景',
+    level: '进阶', readTime: '约 8 分钟',
+    content: `<p>很多即兴新手认为推动场景靠"想出好台词"。实际上，<strong>情绪才是场景的真正引擎</strong>。一个强烈的情绪选择，比十句聪明台词都能让场景走得更远。</p>
+<h2>情绪即动作</h2>
+<p>当你不确定接下来该做什么时，<strong>放大你此刻角色的情绪</strong>。如果你的角色在生气，就让生气变得更强烈——看看会发生什么。情绪本身就会导向行为。</p>
+<h2>情绪的物理化</h2>
+<p>不要让情绪只停留在脸上。让情绪<strong>进入你的整个身体</strong>：愤怒如何改变你的呼吸？喜悦如何改变你的重心？悲伤如何改变你的节奏？这也是"展示而非讲述"——用身体展示情绪，而非口头宣布。</p>
+<h2>情绪转换的速度</h2>
+<p>即兴中有一种技巧叫<strong>情绪切换</strong>——在一瞬间从一个情绪跳到完全相反的另一个情绪。这种快速的对比本身就能产生强烈的戏剧效果和喜剧效果。</p>
+<h2>训练方法</h2>
+<div class="practice-box"><h4>练习 1：情绪传送带（4 人以上）</h4><p>站成一圈。一个人做一个情绪动作+声音，传给下一个人。下一个人接收并放大该情绪，然后突然切换到一个新情绪，再传给下一个人。目标是切换之间不超过 1 秒。</p></div>
+<div class="practice-box"><h4>练习 2：情绪场景（2 人）</h4><p>两人开始一个普通场景。带领者每隔 15 秒喊一个新的情绪词（狂喜/恐惧/嫉妒/释然……），两人必须立刻切换到该情绪中，但场景情境和角色关系不变。</p></div>`
+  },
+
+  'm1-11': {
+    module: 'module1', moduleName: '即兴戏剧要学什么', subtopic: '情绪与能量',
+    title: '能量的高低与节奏 —— 控制场景张力的秘密',
+    level: '进阶', readTime: '约 8 分钟',
+    content: `<p>一个即兴场景的成败，很多时候不是"内容"决定的，而是<strong>节奏</strong>决定的。懂得控制能量的高低起伏，你就能让观众始终保持在注意力峰值。</p>
+<h2>能量的定义</h2>
+<p>在即兴的语境里，能量不是"音量大小"或"动作快慢"，而是<strong>场景此刻的戏剧张力等级</strong>。两个人在低声密谋，能量可以很高；两个人在大声吵架，能量也可能很低（如果只是空洞的噪音）。</p>
+<h2>能量的曲线</h2>
+<p>一个好的场景通常遵循：<strong>建立 → 上升 → 高潮 → 释放（或转折）</strong>。如果场景一直维持在同一能量水平，观众会疲劳。有意识地制造能量的波峰和波谷。</p>
+<h2>如何控制能量？</h2>
+<ol><li><strong>升</strong>：提高赌注、加速节奏、逼近冲突</li><li><strong>降</strong>：暂停、沉默、一个安静的真相时刻</li><li><strong>转换</strong>：用外部事件打破当前能量状态</li></ol>
+<h2>训练方法</h2>
+<div class="practice-box"><h4>练习 1：能量 1-10（2 人）</h4><p>两人表演一个场景。带领者随时喊出 1-10 之间的数字，1 = 极低能量，10 = 极高能量。演员必须在 3 秒内调整到对应能量级别，但不改变角色和情境。</p></div>
+<div class="practice-box"><h4>练习 2：沉默的 30 秒（2 人）</h4><p>在场景进行到高潮时，带领者喊"静止！"。两人保持静止 30 秒（角色不动的状态），然后从沉默中重新开始。感受沉默如何积累能量。</p></div>`
+  },
+
+  'm1-12': {
+    module: 'module1', moduleName: '即兴戏剧要学什么', subtopic: '场景与叙事',
+    title: 'CROW：场景的骨架 —— 角色·关系·目标·地点四要素',
+    level: '基础', readTime: '约 7 分钟',
+    content: `<p><strong>CROW</strong> 是即兴场景搭建的最经典框架，四个字母代表了场景启动必需的四个要素。当你走上舞台大脑一片空白时，CROW 可以让你在 10 秒内找到方向。</p>
+<h2>CROW 拆解</h2>
+<p><strong>C - Character（角色）</strong>：你是谁？给角色一个清晰的定义。不需要复杂——"一个急着上厕所的人"就够了。</p>
+<p><strong>R - Relationship（关系）</strong>：你和对方是什么关系？关系 = 戏剧。即使其他什么都没有，一段清晰的关系就足够支撑一个场景。</p>
+<p><strong>O - Objective（目标）</strong>：你的角色想要什么？目标 = 动力。有目标，场景就有方向。</p>
+<p><strong>W - Where（地点）</strong>：你们在什么地方？用身体和环境互动来建立空间。</p>
+<h2>使用 CROW 的顺序</h2>
+<p>建议优先建立 <strong>C 和 R</strong>——角色和关系是最重要的。你可以通过 Endowment 在一瞬间完成这一步（"爸，你今天好像有心事"——同时建立了对方角色、关系和情绪）。目标和地点可以在场景推进中逐步明确。不要在开头花太多时间"设置"——直接开始，让 CROW 在行动中自然浮现。</p>
+<h2>训练方法</h2>
+<div class="practice-box"><h4>练习：CROW 速建（2 人）</h4><p>带领者给一个地点词（如"厨房"）和一对关系词（如"母女"）。两人在 10 秒内开始场景，90 秒内必须让四个要素全部在场景中呈现。观众看完后尝试指出哪一个 CROW 要素最清晰。</p></div>`
+  },
+
+  'm1-13': {
+    module: 'module1', moduleName: '即兴戏剧要学什么', subtopic: '场景与叙事',
+    title: '找到"游戏"并升番 —— 即兴喜剧中制造笑声的核心技巧',
+    level: '进阶', readTime: '约 9 分钟',
+    content: `<p>在即兴喜剧（尤其是短即兴）中，<strong>"游戏"（The Game）</strong>是一个核心概念。它指的是场景中最有趣的那个"反常逻辑"——当你找到它并反复玩它时，笑声就会自然产生。</p>
+<h2>什么是"游戏"？</h2>
+<p>游戏不是字面意义上的小游戏，而是<strong>场景中第一个让你觉得"有趣/奇怪"的东西</strong>。比如：A 说"我考了 100 分"，B 说"我早就知道你行的，儿子"——但 B 的表情和语气像是在说一件悲伤的事。这个"用葬礼语气祝贺"就是游戏。</p>
+<h2>如何找到游戏？</h2>
+<ol><li>在场景最初的 15 秒内，留意第一个"不寻常"的瞬间</li><li>那个不寻常就是游戏的种子</li><li>清晰地识别这个不寻常的模式是什么</li><li>在后续场景中，反复用不同方式呈现这个模式</li></ol>
+<h2>升番（Heightening）</h2>
+<p>找到了游戏之后，每一次重复都应该<strong>比上一次更高、更强、更极致</strong>。不只是在原地重复，而是每次增加赌注、增加荒谬度、增加情感强度。这就叫"升番"。</p>
+<h2>训练方法</h2>
+<div class="practice-box"><h4>练习 1：找第一个有趣（2 人）</h4><p>两人做场景。带领者和观众的任务是：在场景开始 15 秒内找出"第一个有趣的东西"。找到后喊"游戏！"。演员接下来有意识地玩这个游戏并升番。</p></div>
+<div class="practice-box"><h4>练习 2：三拍升番（2 人）</h4><p>找到一个游戏后，演员必须在场景中做三次"升番"——每一次都比前一次更强。第三次是该游戏的最高潮，之后场景自然结束。</p></div>`
+  },
+
+  'm1-14': {
+    module: 'module1', moduleName: '即兴戏剧要学什么', subtopic: '高阶概念',
+    title: '长即兴格式简介 —— 从短游戏到完整即兴演出的跨越',
+    level: '高阶', readTime: '约 9 分钟',
+    content: `<p>短即兴游戏（3-5 分钟的场景或游戏）是入门的好方法。但即兴戏剧的真正艺术形式是<strong>长即兴（Long-form Improv）</strong>——一个持续 25-90 分钟的完整演出，其中多个场景、角色和故事线相互交织。</p>
+<h2>主要长即兴格式</h2>
+<p><strong>Harold</strong>：由 Del Close 发展，是最经典的长即兴格式。结构：开场 → 三个独立场景 → 游戏/团体段落 → 三个场景的回归和发展 → 收束。大约 25-30 分钟。</p>
+<p><strong>Armando / 独白即兴</strong>：一个讲述者分享真实故事或独白，演员们基于独白中的灵感即兴创作场景。</p>
+<p><strong>La Ronde</strong>：场景链式结构。第一个场景的两个角色，其中一人离开，新人进入形成第二个场景，以此类推。最后形成一个角色关系网络。</p>
+<p><strong>Mono-Scene</strong>：整场演出只有一个地点、一个连续时间。所有角色共享同一个空间。类似情景喜剧的一集。</p>
+<h2>长即兴的关键能力</h2>
+<ol><li><strong>耐心</strong>：不需要每 30 秒制造一个笑点</li><li><strong>记忆</strong>：记住之前场景中出现的角色和设定</li><li><strong>连接</strong>：在不同场景之间建立主题或角色上的回响（callback）</li><li><strong>编辑感</strong>：感知一个场景何时应该结束</li></ol>
+<p style="margin-top:16px;color:var(--text-dim);">👉 实操方法见模块二「长即兴格式实操」。</p>`
+  },
+
+  'm1-15': {
+    module: 'module1', moduleName: '即兴戏剧要学什么', subtopic: '高阶概念',
+    title: '团体意识与群像戏 —— 不只做最好的自己，做最好的团队',
+    level: '高阶', readTime: '约 8 分钟',
+    content: `<p>即兴戏剧的终极艺术不是"个人有多厉害"，而是<strong>一群人在一起能创造出什么</strong>。团体意识（Group Mind）是指团队在即兴演出中达成的某种"集体心流"状态——每个人都直觉地感知到团队的需要，并自然地做出贡献。</p>
+<h2>团体意识的特征</h2>
+<ul><li>不需要语言交流就能同时做出相同选择</li><li>一个人发起，其他人立刻识别并支持</li><li>没有人抢戏，也没有人退缩</li><li>场景的节奏像呼吸一样自然起伏</li></ul>
+<h2>如何培养团体意识？</h2>
+<ol><li><strong>共同的训练量</strong>：团体意识无法通过一次工作坊获得，它需要团队长时间一起训练</li><li><strong>信任高于技术</strong>：一个互相信任的中等水平团队，胜过一个互相竞争的高手团队</li><li><strong>放下自我</strong>：最好的一句话不是"看我多厉害"，而是你什么都没说但让伙伴闪耀</li></ol>
+<h2>训练方法</h2>
+<div class="practice-box"><h4>练习 1：团体计数（5 人以上）</h4><p>所有人闭眼。目标是团体从 1 数到 20。每次只能一个人说一个数字。如果两人同时说，从 1 重新开始。不能有节奏、不能有信号、不能用身体语言（因为都闭眼）。纯粹靠集体直觉。</p></div>
+<div class="practice-box"><h4>练习 2：同步动作（全体）</h4><p>没有带领者。所有人自由在空间中行走。当任意一个人停下，所有人必须尽快感知到并也停下。当任意一个人开始走，所有人一起开始走。目标是趋近于零延迟。</p></div>`
+  },
+
+  // ========== 模块二：如何系统学习（12 篇，不变） ==========
+  'm2-1': {
+    module: 'module2', moduleName: '如何系统学习', subtopic: '入门阶段',
+    title: '破冰与信任建立 —— 即兴表演团体的第一步',
+    level: '入门', readTime: '约 8 分钟',
+    content: `<p>即兴表演需要一种特殊的心理安全感——你需要足够信任你的伙伴，才能在舞台上做出"傻事"而不害怕被评判。因此任何即兴学习的起点都是<strong>破冰和信任建立</strong>。</p>
+<h2>为什么破冰如此重要？</h2>
+<p>成年人的日常社交充满了"面具"——我们习惯性地隐藏真实的反应、控制自己的言行以维持形象。即兴训练的第一步就是<strong>安全地摘下面具</strong>。如果跳过这一步，后续所有技巧都建立在不稳固的基础上。</p>
+<h2>破冰的三个阶段</h2>
+<ol><li><strong>名字与基本了解</strong>：用游戏化的方式记住彼此的名字和一个有趣的特征</li><li><strong>降低身体防线</strong>：适度的身体接触和空间接近练习，打破陌生人之间的"安全距离"</li><li><strong>共同冒险</strong>：团队一起完成一件"有点傻"的事，在共同经历中建立纽带</li></ol>
+<h2>关键原则</h2>
+<ul><li>永远尊重个人的舒适区——任何人可以随时选择不参与某个练习</li><li>带领者先做示范——如果你想让大家放得开，你自己要先放得开</li><li>用笑声化解尴尬——尴尬时刻本身就是连接的机会</li></ul>
+<h2>推荐破冰游戏</h2>
+<div class="practice-box"><h4>名字+动作（全体）</h4><p>围成一圈。每个人说自己的名字，同时做一个简单动作。全体一起重复这个人的名字和动作。绕完一圈后加速再来一轮。</p></div>
+<div class="practice-box"><h4>共同计数（全体）</h4><p>详细规则见模块一「团体意识」最后。这个游戏同时锻炼信任和集体感知。</p></div>
+<div class="practice-box"><h4>Zip Zap Zop（全体）</h4><p>围成圈。一个人拍手说"Zip"指向另一人，那人说"Zap"指向第三人，那人说"Zop"再指向下一人，循环。由慢到快，出错的人不淘汰而是做一个夸张的"错误庆祝"。这是经典的即兴热身游戏。</p></div>`
+  },
+
+  'm2-2': {
+    module: 'module2', moduleName: '如何系统学习', subtopic: '入门阶段',
+    title: '初学者的第一个即兴游戏 —— 从哪里开始玩',
+    level: '入门', readTime: '约 7 分钟',
+    content: `<p>如果你从未做过即兴，以下是<strong>经过验证的、适合第一次玩的即兴游戏</strong>。它们不需要任何基础，规则简单，而且几乎总是能带来笑声。</p>
+<h2>推荐的第一个即兴游戏</h2>
+<h3>1. 一词一句故事（One Word Story）</h3>
+<p><strong>人数</strong>：3-6 人｜<strong>难度</strong>：★☆☆</p>
+<p>所有人站成一排。轮流，每人每次只能说<strong>一个字</strong>，共同讲述一个完整的故事。需要有一个"主持人"在合适的时候用一个完整的句子收束故事。</p>
+<p><strong>为什么适合初学者</strong>：不需要创造角色或场景，只需要贡献一个词。压力极低。同时训练了聆听和集体协作。</p>
+<h3>2. 礼物传递（Gift Giving）</h3>
+<p><strong>人数</strong>：2 人｜<strong>难度</strong>：★☆☆</p>
+<p>A 用无实物动作"拿出"一个礼物送给 B，但不说什么。B 接过"礼物"，根据礼物的重量/大小/形状"猜出"它是什么，并说"谢谢你的[礼物名]，我正需要它因为……"。然后 B 再送一个新礼物给 A。</p>
+<p><strong>为什么适合初学者</strong>：有明确的结构（送-收-猜），不会"大脑空白"。同时训练了无实物动作和 Yes, And。</p>
+<h3>3. 我在做什么？（What Are You Doing?）</h3>
+<p><strong>人数</strong>：3 人以上｜<strong>难度</strong>：★★☆</p>
+<p>A 开始做一个重复性动作（如"搅拌咖啡"）。B 问"你在做什么？" A 的回答必须和当前动作<strong>完全无关</strong>（如"我在爬珠穆朗玛峰"）。然后 B 开始做 A 说的那个动作，C 问 B"你在做什么？" 以此类推。</p>
+<p><strong>为什么适合初学者</strong>：制造反差笑点的机制非常明确，不需要"幽默天赋"。</p>`
+  },
+
+  'm2-3': {
+    module: 'module2', moduleName: '如何系统学习', subtopic: '入门阶段',
+    title: '常见误区与心态 —— 初学者最容易踩的五个坑',
+    level: '入门', readTime: '约 7 分钟',
+    content: `<p>避免以下五个最常见的新手误区，可以让你少走很多弯路。</p>
+<h2>误区一：我要"搞笑"</h2>
+<p><strong>真相</strong>：即兴的目标不是搞笑，而是<strong>真实</strong>。当你专注于真实地反应、真实地和伙伴连接时，幽默自然会发生。刻意搞笑 = 紧张 = 不好笑。</p>
+<h2>误区二：我要"想出一个好主意"</h2>
+<p><strong>真相</strong>：即兴中最不需要的就是"原创的好主意"。最好的即兴选择往往是<strong>最明显、最直觉的那个</strong>。相信第一个直觉。</p>
+<h2>误区三：提问 = 推动场景</h2>
+<p><strong>真相</strong>：提问把负担丢给了伙伴。提供信息比提出问题更有力。把疑问句改写成陈述句。</p>
+<h2>误区四：场景必须"长"才好</h2>
+<p><strong>真相</strong>：一个 45 秒的精彩场景，远好过一个 5 分钟的拖沓场景。</p>
+<h2>误区五：我必须准备好才开始</h2>
+<p><strong>真相</strong>：在即兴中，<strong>开始行动本身就是准备</strong>。你不需要知道第二步是什么——你只需要迈出第一步。</p>`
+  },
+
+  'm2-4': {
+    module: 'module2', moduleName: '如何系统学习', subtopic: '进阶阶段',
+    title: '让场景变深的技巧 —— 从表面冲突到真正的戏剧张力',
+    level: '进阶', readTime: '约 9 分钟',
+    content: `<p>很多即兴场景停留在表面——两个人互相开玩笑，或者不断的冲突对抗。真正让场景"变深"的，是<strong>揭示角色内心的真相</strong>。</p>
+<h2>表面的深 vs 真正的深</h2>
+<p><strong>表面的深</strong>：突然引入一个严肃话题（"其实我得了绝症"），但没有情感基础。这只会让场景尴尬。</p>
+<p><strong>真正的深</strong>：在已经建立的角色关系中，发现一个<strong>诚实的、脆弱的情感瞬间</strong>。不需要是大事——一句"我只是不想让你失望"可能比任何宏大叙事都更有力量。</p>
+<h2>让场景变深的三个技巧</h2>
+<ol><li><strong>使用过往（History）</strong>：在场景中提及角色之间"曾经发生过"的事。哪怕是你刚刚编的。"还记得我们第一次来这里的时候吗？"——这句话瞬间给关系增加了厚度。</li><li><strong>情感诚实（Emotional Honesty）</strong>：当场景走到一个节点，不要用玩笑滑过去。让角色说出内心真正的感受。笑点之后，留下 3 秒沉默。</li><li><strong>影响（Stakes）</strong>：让场景中的事情真正"重要"起来。不一定是拯救世界——"如果今天面试失败，我就要搬回父母家了"就足够了。</li></ol>
+<h2>训练方法</h2>
+<div class="practice-box"><h4>练习：沉默之后的那句话（2 人）</h4><p>表演一个普通日常场景。在某个时刻，带领者喊"沉默！"——两人保持角色状态，沉默 10 秒。然后带领者喊"说真话！"——两个人同时说出角色此刻内心想的最真实的一句话。</p></div>`
+  },
+
+  'm2-5': {
+    module: 'module2', moduleName: '如何系统学习', subtopic: '进阶阶段',
+    title: '拓展角色宽度 —— 跳出舒适区，尝试更多角色类型',
+    level: '进阶', readTime: '约 7 分钟',
+    content: `<p>很多即兴演员在演了一段时间后，会发现自己"老是演同一类角色"。这很正常——我们都有舒适区。但拓展角色宽度能让你在场景中有更多选择，也能更好地支持伙伴。</p>
+<h2>识别你的"默认角色"</h2>
+<p>问自己：我最常演的角色是不是总有这些特征中的几个？<strong>高地位/理智/讽刺/控制局面/年轻/和自己真实性格接近……</strong> 如果是，你可能已经形成了角色惯性。</p>
+<h2>系统拓展角色宽度</h2>
+<ol><li><strong>反向选择</strong>：如果你总是演高地位，有意识地选择低地位角色</li><li><strong>情感先行</strong>：进入场景之前，先在心中选一个你不常表达的情感，让那个情感驱动你的身体和声音</li><li><strong>动物练习</strong>：选一种动物，观察它的身体质感（乌龟的慢、蜂鸟的快、猫的慵懒），把这种质感移植到人身上</li><li><strong>年龄跨度</strong>：有意识地尝试比你大 30 岁或小 20 岁的角色</li></ol>
+<h2>训练方法</h2>
+<div class="practice-box"><h4>练习：角色六宫格（单人/团体）</h4><p>准备 6 张卡片，分别写：极高地位、极低地位、极快语速、极慢语速、极强身体张力、极弱身体张力。每次随机抽一张，用该特质进入即兴场景。</p></div>`
+  },
+
+  'm2-6': {
+    module: 'module2', moduleName: '如何系统学习', subtopic: '进阶阶段',
+    title: '进阶即兴游戏精选 —— 推荐给有基础玩家的游戏清单',
+    level: '进阶', readTime: '约 10 分钟',
+    content: `<p>以下游戏适合已经掌握了基本即兴原则（自发性和 Yes And、聆听、CROW）的练习者。它们分别训练不同的进阶技能。</p>
+<h2>1. 三线场景（Three-Line Scene）</h2>
+<p><strong>训练目标</strong>：快速建立 CROW｜<strong>人数</strong>：2 人</p>
+<p>两人只用三句台词完成一个完整场景。A 第一句建立角色+地点，B 第一句建立关系+目标，A 第二句推向高潮，B 第二句转向结局，A 第三句收束。极简而高效。</p>
+<h2>2. 字幕机（Subtitles）</h2>
+<p><strong>训练目标</strong>：外化角色内心｜<strong>人数</strong>：4 人</p>
+<p>两人表演场景。另外两人站在两侧扮演"字幕机"——一人说出角色 A 没说出口的内心想法，另一人说出角色 B 的内心想法。演员必须将这些"字幕"融入表演。</p>
+<h2>3. 导演椅（Director's Chair）</h2>
+<p><strong>训练目标</strong>：接受外部输入｜<strong>人数</strong>：3 人以上</p>
+<p>两人表演场景。一个"导演"可以随时喊"停"，给出调整指令（"换一种情绪""用更慢的速度""交换角色"）。演员立刻执行。</p>
+<h2>4. 倒退剧（Rewind）</h2>
+<p><strong>训练目标</strong>：灵活性与叙事结构｜<strong>人数</strong>：2 人以上</p>
+<p>表演一个场景。带领者随时喊"倒退！"，演员必须把刚才的动作/台词倒着演一遍（像视频倒放）。然后喊"播放！"继续前进。</p>
+<h2>5. 四种情绪方格（Emotional Quadrant）</h2>
+<p><strong>训练目标</strong>：情绪范围与快速切换｜<strong>人数</strong>：2 人</p>
+<p>在地上画一个虚拟 2×2 方格。横轴：正面情绪 / 负面情绪。纵轴：高能量 / 低能量。演员在场景中根据带领者指向的方格切换到对应象限的情绪。</p>`
+  },
+
+  'm2-7': {
+    module: 'module2', moduleName: '如何系统学习', subtopic: '进阶阶段',
+    title: '场景编辑技巧：何时切入与切出 —— 即兴演出的"导演思维"',
+    level: '进阶', readTime: '约 8 分钟',
+    content: `<p>在长即兴中，<strong>编辑（Editing）</strong>是非常关键的一项技能。编辑意味着在一个场景恰到好处时结束它，并切入下一个场景。好的编辑让整场演出有呼吸感。</p>
+<h2>编辑的四种基本方式</h2>
+<ol><li><strong>扫切（Sweep Edit）</strong>：一个演员从舞台一侧快速跑到另一侧，像一个"擦除"动作，旧场景结束，新场景立刻开始</li><li><strong>标签切（Tag Edit）</strong>：一个演员拍正在表演的演员之一，喊"退场！"，然后和被拍的人开始新场景。另一个人退到一旁</li><li><strong>硬切（Hard Edit）</strong>：所有灯光暗下，所有人退场。然后新场景从空舞台开始</li><li><strong>交叉淡入（Cross-fade）</strong>：新场景的演员在旧场景还在进行时慢慢进入、开始建立新场景，旧场景演员感知到后退出</li></ol>
+<h2>什么时候应该编辑？</h2>
+<ul><li>场景已经到达一个自然的情绪高点/笑点</li><li>场景在重复（已经玩了三次同样的游戏，没有新的升番）</li><li>场景的能量在下滑，演员开始"找"东西而不是"发现"东西</li><li>你需要给演出引入对比（前面都是快节奏喜剧，需要一个安静场景）</li></ul>
+<h2>什么时候不应该编辑？</h2>
+<ul><li>场景正在进行一个有趣的发现</li><li>场景刚刚开始，还没有建立基础</li><li>你只是"觉得应该换了"但并没有具体的灵感——等你有灵感再切</li></ul>
+<h2>训练方法</h2>
+<div class="practice-box"><h4>练习：编辑接力（4 人以上）</h4><p>两人开始场景。另外的演员站在两侧。任何人都可以在任意时刻用任意编辑方式切掉场景并开始新场景。目标是每个场景都在"就该在这时结束"的时刻被切掉。观者在每个编辑后简短反馈。</p></div>`
+  },
+
+  'm2-8': {
+    module: 'module2', moduleName: '如何系统学习', subtopic: '进阶阶段',
+    title: '地位与关系在场景中的运用 —— 用地位变化让场景活起来',
+    level: '进阶', readTime: '约 8 分钟',
+    content: `<p>本文是模块一「地位的高低」的延伸，聚焦于<strong>如何在场景实操中运用地位来驱动故事</strong>。</p>
+<h2>地位不是标签，是动态的</h2>
+<p>不要把"高地位角色"当作一个固定标签。地位是<strong>在每一次互动中产生和变化的</strong>。一个场景的精彩之处，往往在于地位发生了翻转。</p>
+<h2>常见的地位场景模式</h2>
+<ol><li><strong>地位竞争</strong>：两个角色都在争夺高地位。适合喜剧——每一次微小胜利和失败都被放大</li><li><strong>地位互补</strong>：一个高地位 + 一个低地位，双方都在维持这种平衡。破坏平衡就是戏剧的开始</li><li><strong>地位翻转</strong>：低地位角色在某个瞬间获得了权力。观众最爱看这个。</li></ol>
+<h2>用身体表达地位的微妙变化</h2>
+<p>不需要台词。一个人稍微把椅子向后靠了一点，另一个人身体微微前倾——地位就已经发生了变化。优秀的即兴演员会在无意识层面感知到这些信号并做出回应。</p>
+<h2>训练方法</h2>
+<div class="practice-box"><h4>练习：地位扑克牌（3 人以上）</h4><p>准备一副扑克牌。每人抽一张贴在额头上（自己看不见，别人能看见）。数字越大地位越高。开始一个即兴场景，每个人根据别人额头的数字来对待对方。场景进行中，带领者随时给某人换牌——所有人根据新牌调整互动方式。场景结束后讨论感受。</p></div>`
+  },
+
+  'm2-9': {
+    module: 'module2', moduleName: '如何系统学习', subtopic: '高阶阶段',
+    title: '长即兴格式实操 —— 如何驾驭 30 分钟以上的即兴演出',
+    level: '高阶', readTime: '约 10 分钟',
+    content: `<p>本文假设你已经了解了长即兴的基本概念（见模块一「长即兴格式简介」），聚焦于<strong>实操注意事项</strong>。</p>
+<h2>演出前的团队准备</h2>
+<ol><li><strong>统一热身</strong>：演出前至少 30 分钟集体热身。推荐：Zip Zap Zop → 团体计数 → 一个放松的场景练习。让所有人的神经系统进入"接收模式"。</li><li><strong>约定信号</strong>：团队提前约定一些非语言信号：眼神可以代表"我需要被编辑"，点头可以代表"I got you"。</li><li><strong>清空大脑</strong>：不要在演出前"计划"任何东西。你的准备就是让你的身体和直觉就位。</li></ol>
+<h2>演出中的关键节点</h2>
+<p><strong>开场（前 3 分钟）</strong>：走出强有力的第一个选择。可以是团体开场造型、一个独白、或一个灵感词。开场的能量决定了整场演出的基调。</p>
+<p><strong>第一个场景（3-8 分钟）</strong>：建立世界。不需要急。让角色和关系充分展开。</p>
+<p><strong>中场（10-20 分钟）</strong>：开始建立连接。回顾之前出现过的角色、主题或物品，让它们再次出现（callback）。</p>
+<p><strong>收束（最后 5 分钟）</strong>：找到方式把多条故事线汇聚。不需要所有问题都解决——但需要一个情感上的完整感。</p>
+<h2>常见问题与对策</h2>
+<ul><li><strong>场景太长</strong>：设定团队默契——如果一个场景超过 5 分钟，任何人都有权编辑</li><li><strong>没有人编辑</strong>：在训练中指定一个人负责当晚的"主编辑"，其他人也可以编辑，但至少有一个人负责</li><li><strong>连续性断裂</strong>：指定一个人做"记忆守护者"——专门记住已出现的角色和设定，适时拉回</li></ul>`
+  },
+
+  'm2-10': {
+    module: 'module2', moduleName: '如何系统学习', subtopic: '高阶阶段',
+    title: '建立个人表演风格 —— 找到属于你自己的即兴声音',
+    level: '高阶', readTime: '约 8 分钟',
+    content: `<p>当你已经掌握了基础技巧、能够稳定地进行即兴表演之后，下一个阶段是<strong>找到你独一无二的表演风格</strong>。</p>
+<h2>风格来自于你的强项</h2>
+<p>观察自己在即兴中最自然的倾向是什么：你擅长荒诞的喜剧？你擅长细腻的情感表达？你擅长快速的文字游戏？你擅长用身体创造意象？<strong>你的强项就是你风格的起点。</strong></p>
+<h2>风格也来自于你的局限</h2>
+<p>令人惊讶的是，最独特的风格往往来自于一个人的"不足"。如果你不擅长快语速，你的慢可能成为一种标志性的节奏。拥抱你的局限，把它变成特征。</p>
+<h2>建立风格的路径</h2>
+<ol><li><strong>大量观看</strong>：看不同风格即兴演员的演出，记录打动你的具体瞬间</li><li><strong>刻意尝试</strong>：在训练中给自己设定风格约束（"今晚我只演安静的角色""今晚我不说超过 10 个字每句话"）</li><li><strong>寻求反馈</strong>：问你的队友和教练："我什么时候在舞台上最亮？"他们的答案可能让你意外</li><li><strong>跨领域汲取</strong>：舞蹈、音乐、绘画、诗歌——不同艺术形式的节奏和质感可以融入你的即兴风格</li></ol>
+<h2>注意：风格不是借口</h2>
+<p>风格是为了让你更好地服务场景和团队，而不是让你"只演一种角色"。好的风格是灵活的、有意识的，不是僵化的习惯。</p>`
+  },
+
+  'm2-11': {
+    module: 'module2', moduleName: '如何系统学习', subtopic: '高阶阶段',
+    title: '带领即兴团队的方法 —— 从演员到带领者的角色转变',
+    level: '高阶', readTime: '约 9 分钟',
+    content: `<p>当你积累了一定的即兴经验后，你可能会被问到："你能带我们的即兴训练吗？" 从演员到带领者/教练，是一次重要的角色转变。</p>
+<h2>带领 vs 表演</h2>
+<p>作为演员，你的焦点是"我如何让这个场景更好"。作为带领者，你的焦点是<strong>"我如何让这个团队中的每个人都变得更好"</strong>。这需要完全不同的技能组合。</p>
+<h2>好的即兴带领者的特质</h2>
+<ol><li><strong>观察 > 说话</strong>：多观察团队的动态，少给指令。一个精准的观察胜过十条通用建议</li><li><strong>建立安全空间</strong>：团队需要一个可以失败的环境。你如何回应一个人的"失误"会决定整个团队的心理安全感</li><li><strong>个性化反馈</strong>：不同的人需要不同的反馈方式。有人需要直接的技术指导，有人需要鼓励，有人需要你什么也别说</li><li><strong>保持学习</strong>：好的带领者永远也是学生。去上别人的课，看别人的演出</li></ol>
+<h2>一次即兴训练的结构</h2>
+<ol><li><strong>热身（15 分钟）</strong>：破冰 + 身体/声音暖身</li><li><strong>技能练习（25 分钟）</strong>：聚焦一个具体技能（如"今天练地位"）</li><li><strong>场景练习（30 分钟）</strong>：将技能应用于实际场景</li><li><strong>复盘（15 分钟）</strong>：观察和反馈，不是"评价好坏"而是"你看到了什么"</li></ol>
+<h2>训练方法（针对带领者）</h2>
+<div class="practice-box"><h4>练习：侧坐教练（Side-coaching）</h4><p>场景进行中，带领者在旁边用简短指令引导——"注意你的身体""听她说的最后一个词""你现在的情绪是什么"。这不是打断，而是帮助演员意识到当下的选择。音量要小，像耳语。</p></div>`
+  },
+
+  'm2-12': {
+    module: 'module2', moduleName: '如何系统学习', subtopic: '高阶阶段',
+    title: '即兴与剧本创作的交叉 —— 用即兴方法开发剧本与角色',
+    level: '高阶', readTime: '约 8 分钟',
+    content: `<p>即兴不仅仅是表演形式——它也是一种强大的<strong>创作工具</strong>。许多成功的影视剧和舞台剧，在剧本开发阶段大量使用了即兴方法。</p>
+<h2>即兴如何帮助剧本创作？</h2>
+<ol><li><strong>角色发现</strong>：与其在纸上构思角色背景故事，不如让演员直接即兴扮演这个角色，看看会自然出现什么</li><li><strong>对话的自然感</strong>：即兴产生的对话往往比精心编写的台词更自然、更有意外感</li><li><strong>发现场景的可能性</strong>：同一个情境，让不同的演员组合即兴表演三次，你会得到三种完全不同的场景走向</li><li><strong>打破创作阻塞</strong>：写不出来的时候，站起来即兴表演那个场景。身体动起来，大脑就通了</li></ol>
+<h2>具体方法</h2>
+<p><strong>角色即兴</strong>：在写剧本之前，先花一周时间——每天让演员用即兴的方式生活在角色的世界里。角色去买菜会怎么表现？角色接到诈骗电话会怎么反应？这些"非剧本时刻"的发现会成为剧本中最珍贵的细节。</p>
+<p><strong>场景即兴 + 记录</strong>：即兴表演目标场景，全程录音或录像。回去后挑选最精彩的台词和瞬间，转录为剧本草稿的第一版。</p>
+<h2>知名案例</h2>
+<p>许多喜剧剧集（如《办公室》美版、《公园与游憩》）在拍摄中允许大量即兴发挥，很多经典片段是演员在现场即兴创造的。动画电影《玩具总动员》的部分对话也是由演员在录音棚中即兴产生。</p>`
+  },
+
+  // ========== 模块三：资源与行动清单（8 篇，更新交叉引用） ==========
+  'm3-1': {
+    module: 'module3', moduleName: '资源与行动清单', subtopic: '专项练习（A类）',
+    title: '专项练习全集 —— Yes And / 聆听 / 角色 / 空间 / 情绪 / 地位 专项练习',
+    level: '练习', readTime: '约 18 分钟',
+    content: `<p>以下练习按技能分类，每次训练可以选择 1-2 个专项聚焦。</p>
+<h2>A1 · Yes, And 专项</h2>
+<div class="practice-box"><h4>A1-1 Yes, And 接龙（2 人）</h4><p>面对面。A 提议（"我们去海边吧"）。B 必须以"好，而且……"开头回应并添加信息。连续 5 轮不停。进阶：加入情绪，不只是文字上的 Yes And。</p></div>
+<div class="practice-box"><h4>A1-2 否定即兴（3 人以上）</h4><p>两人做场景，但规则是<strong>每一句话必须以"不"或"但是"开头</strong>。做 1 分钟后停止。讨论感受。然后用"Yes, And"做同样场景。对比体验是很好的学习。</p></div>
+<div class="practice-box"><h4>A1-3 超-YES（全体）</h4><p>一个人站到中间，做一个动作或者说一句话。周围所有人用最大的热情和能量回应"YES！"，并以夸张的方式加入那个动作。让每个人体验被完全接纳的感觉。</p></div>
+<h2>A2 · 聆听专项</h2>
+<div class="practice-box"><h4>A2-1 最后三个词（2 人）</h4><p>A 自由说话。B 在每一句话后，必须用 A 说的最后三个词作为自己的开头。进阶：A 可以故意说得越来越快，挑战 B 的聆听极限。</p></div>
+<div class="practice-box"><h4>A2-2 情感接力（4 人以上）</h4><p>围成圈。A 转身对 B 说一句带有情绪的话。B 接收后，转身对 C 说——<strong>必须用不同的词语但传递相同的情绪</strong>。比对第一句话和最后一句话，看情绪是否一致。</p></div>
+<div class="practice-box"><h4>A2-3 静默聆听（2 人）</h4><p>A 讲一个 1 分钟的真实故事。B 全程不能说任何话，不能点头，不能发出"嗯嗯"——只能保持眼神接触和开放性身体姿态。1 分钟后 B 复述。体验"仅仅被聆听"的感觉。</p></div>
+<h2>A3 · 角色专项</h2>
+<div class="practice-box"><h4>A3-1 身体中心漫步（全体）</h4><p>在空间中行走。带领者喊身体部位（头/胸/腹/膝/鼻），所有人让该部位"带路"。每个部位 30 秒。体会不同身体中心带来的角色感。</p></div>
+<div class="practice-box"><h4>A3-2 角色速写（2 人）</h4><p>A 在 10 秒内用一个身体姿势+一个声音建立一个角色。B 观察 10 秒后，以一个新角色加入场景。两个角色互动 60 秒，然后结束。讨论：A 的角色有什么特质？</p></div>
+<div class="practice-box"><h4>A3-3 动物人性化（全体）</h4><p>每人选一种动物。先用 1 分钟纯粹模仿该动物（四脚着地）。然后用 1 分钟把该动物的身体质感"翻译"成一个站立的人。比如蚂蚁→忙碌但总被忽视的人；猫→慵懒优雅的人。</p></div>
+<h2>A4 · 空间/无实物专项</h2>
+<div class="practice-box"><h4>A4-1 镜像环境（2 人）</h4><p>面对面。A 用手在空中"画出"一个物体轮廓。B 必须同时镜像 A 的动作（像照镜子）。然后 A 开始"使用"这个物体——B 持续镜像。最后 B 接过该物体，独立使用。</p></div>
+<div class="practice-box"><h4>A4-2 团队空间搭建（3 人以上）</h4><p>一人上前，用无实物动作放置一件物品并说出名称。第二人加入，使用该物品并放置新物品。循环。目标是 5 分钟内有 15+ 件物品共存，每个人都尊重已建立的物品位置和大小。</p></div>
+<div class="practice-box"><h4>A4-3 物体猜谜（2 人）</h4><p>A 用无实物动作使用一个物体（不说出），B 观察并通过加入使用来"确认"自己猜到的物体。A 根据 B 的使用方式判断 B 是否猜对了。如果对了，两人继续一起使用。</p></div>
+<h2>A5 · 情绪专项</h2>
+<div class="practice-box"><h4>A5-1 情绪传送带（4 人以上）</h4><p>围成一圈。一个人用面部+身体+声音表达一种情绪，传给下一个人。下一个人接收、放大，然后突然切换到新情绪，再传给下一个人。</p></div>
+<div class="practice-box"><h4>A5-2 情绪场景切换（2 人）</h4><p>表演一个场景。带领者每 15 秒喊一个新情绪词（暴怒/狂喜/恐惧/释然/嫉妒……），两人立刻切换情绪但保持情境和角色关系不变。</p></div>
+<div class="practice-box"><h4>A5-3 情绪雕塑（3 人以上）</h4><p>一人站中间，由其他两人用手"雕塑"——调整他的面部表情、身体姿态、手的位置，直到呈现出一个清晰的情绪。然后雕塑完成的人用一句话表达这个情绪。</p></div>
+<h2>A6 · 地位专项</h2>
+<div class="practice-box"><h4>A6-1 地位数字（2 人）</h4><p>两人从 1-10 各选一个秘密地位数字。开始场景。互动 2 分钟后，观察者猜两人的地位数字。</p></div>
+<div class="practice-box"><h4>A6-2 地位翻转（2 人）</h4><p>从一个明显的地位不对等场景开始（如面试官-求职者）。带领者随时喊"翻转！"，两人交换地位角色。</p></div>
+<div class="practice-box"><h4>A6-3 地位卡片（3 人以上）</h4><p>扑克牌贴额头（规则见模块二「地位与关系在场景中的运用」）。场景中途带领者可以给某人换牌，所有人必须根据新牌调整互动。</p></div>`
+  },
+
+  'm3-2': {
+    module: 'module3', moduleName: '资源与行动清单', subtopic: '融合练习（B类）',
+    title: '融合练习全集 —— 短场景与长即兴的综合练习方法',
+    level: '练习', readTime: '约 14 分钟',
+    content: `<p>以下练习需要综合运用多项即兴技能（自发性 + 聆听 + 角色 + 空间 + 情绪 + 叙事），适合已经完成专项训练的阶段使用。</p>
+<h2>B1 · 短场景融合练习</h2>
+<div class="practice-box"><h4>B1-1 一字场景（2 人）</h4><p>两人表演一个完整场景，但每人每次只能说<strong>一个字</strong>。训练目标：极致聆听 + 用身体和情绪补偿台词的匮乏 + 发现简约的力量。时间：2-3 分钟。</p></div>
+<div class="practice-box"><h4>B1-2 超市场景（2 人）</h4><p>地点限定在超市。两人扮演两个陌生人，推着购物车相遇。训练目标：在一个极平常的环境中找到戏剧 + 用细微的身体语言和空间互动建立角色关系。时间：3 分钟。</p></div>
+<div class="practice-box"><h4>B1-3 三幕人生（2 人）</h4><p>同一对角色关系（如"母女"），表演三个不同时间的场景：10 年前、现在、10 年后。训练目标：角色一致性 + 时间跨度 + 关系的发展与变化。时间：6-8 分钟。</p></div>
+<div class="practice-box"><h4>B1-4 门外汉（3 人）</h4><p>两人是某个行业的专家（如脑外科医生），第三人是完全的外行。专家在用术语讨论，外行试图参与。训练目标：地位游戏 + 信息不对等制造的喜剧 + 外行也能成为场景英雄。时间：3-4 分钟。</p></div>
+<div class="practice-box"><h4>B1-5 语言障碍（2 人）</h4><p>两人说不同的"语言"（自创的胡言乱语，如 gibberish）。只能用语调、身体、情绪来沟通。训练目标：非语言交流 + 情绪表达 + 空间和动作的叙事能力。时间：2-3 分钟。</p></div>
+<div class="practice-box"><h4>B1-6 情感过山车（2 人）</h4><p>带领者准备一张情绪清单，每 20 秒换一个情绪。演员在场景中跟随切换。训练目标：情绪灵活性 + 合理化快速变化 + 保持角色和情境的连续性。时间：3-4 分钟。</p></div>
+<div class="practice-box"><h4>B1-7 物品即兴（2 人）</h4><p>观众随机给一个物品名称（如"破雨伞""结婚戒指""未寄出的信"）。场景中该物品必须是关键元素。训练目标：CROW 快速构建 + 给无生命物体赋予戏剧意义。时间：3-4 分钟。</p></div>
+<div class="practice-box"><h4>B1-8 画外音（3 人）</h4><p>两人表演场景，第三人站在一旁担任"旁白"。旁白可以随时补充角色的内心独白、场景背景、或推进时间。演员将旁白内容融入表演。训练目标：接受外部输入 + 内外世界的切换。时间：4-5 分钟。</p></div>
+<h2>B2 · 长即兴融合练习</h2>
+<div class="practice-box"><h4>B2-1 迷你 Harold（4-6 人）</h4><p>压缩版 Harold 格式：观众给一个词 → 30 秒团体联想 → 3 个独立场景（每个 90 秒）→ 1 个团体游戏段落（90 秒）→ 3 个场景的回归（每个 60 秒）→ 收束。总时长约 12 分钟。训练目标：完整长即兴结构体验。</p></div>
+<div class="practice-box"><h4>B2-2 独白即兴（3-5 人）</h4><p>一位讲述者分享一个 1 分钟的真实故事。演员们基于故事中的<strong>具体意象或情感</strong>（而非整个故事）即兴创作场景。训练目标：灵感提取 + 主题深化 + 不与原故事竞争。</p></div>
+<div class="practice-box"><h4>B2-3 La Ronde 链式场景（4-6 人）</h4><p>场景 1：A+B → A 离开，C 进入 → 场景 2：B+C → B 离开，D 进入 → 场景 3：C+D → 持续直到所有人回来。训练目标：角色转换 + 关系网络构建 + 在多场景中保持一致角色。</p></div>
+<div class="practice-box"><h4>B2-4 单一空间剧（3-5 人）</h4><p>整场演出在一个固定空间（如"凌晨 3 点的便利店里"）。演员陆续进入和离开空间，每个进入带来新的能量。训练目标：共享空间的尊重 + 群像塑造 + 在一个限制中找到无限可能。</p></div>
+<div class="practice-box"><h4>B2-5 无台词长即兴（4-6 人）</h4><p>10 分钟的即兴演出，全程不许说话。只能使用身体、空间、声音（非语言）、眼神。训练目标：用非语言手段构建叙事 + 团体意识 + 对视觉叙事的敏感度。</p></div>`
+  },
+
+  'm3-3': {
+    module: 'module3', moduleName: '资源与行动清单', subtopic: '单人日常练习',
+    title: '单人每日练习 —— 不需要伙伴也能提升即兴能力的 6 个方法',
+    level: '练习', readTime: '约 7 分钟',
+    content: `<p>即兴训练不一定要有团队。以下是 6 个可以随时随地独自完成的练习方法。</p>
+<h2>1. 即兴独白（每日 5 分钟）</h2>
+<p>随便选一个眼前看到的物品（水杯、窗户、鼠标），就这个物品开始一段即兴独白——关于它、关于和它相关的记忆、关于它代表的意义。不停顿、不修改、不评判自己。训练目标：思维流畅度 + 直觉表达。</p>
+<h2>2. 路人观察（出门时）</h2>
+<p>在咖啡店、地铁、或街上观察一个陌生人 30 秒。然后闭眼，在心中用 3 个词描述这个人。再睁眼——给这个人编一个完整的人生故事：他叫什么、今天为什么在这里、最害怕什么、最渴望什么。训练目标：角色快速构建。</p>
+<h2>3. 反向动作（每日 3 分钟）</h2>
+<p>用非惯用手做一件日常小事（刷牙、用筷子、写字）。或倒着走 30 步。打破身体的惯性模式，让你的神经系统重新学习——这正是即兴训练的本质。</p>
+<h2>4. 声音日记（每日 3 分钟）</h2>
+<p>用和平时完全不同的声音（音高、语速、音色）朗读一段文字。可以是新闻、小说、或菜单。感受不同声音带来的不同"人格"。录制下来自己听。</p>
+<h2>5. 自由联想写作（每日 5 分钟）</h2>
+<p>设定一个计时器 5 分钟。从一个词开始（如"雨"），不停笔地写。不能停下思考、不能修改、不能删除。写什么都可以。这个练习训练你"不评判自己的产出"——是即兴心态的核心。</p>
+<h2>6. 音乐情绪反应（每日 5 分钟）</h2>
+<p>随机播放一首没听过的歌。闭眼。让音乐驱动你的身体——不要"编舞"，让你的身体自然地对音乐做出反应。注意音乐如何影响你的情绪和身体质感。</p>`
+  },
+
+  'm3-4': {
+    module: 'module3', moduleName: '资源与行动清单', subtopic: '共学功能',
+    title: '学习进度清单 —— 用浏览器本地存储跟踪你的学习进度',
+    level: '工具', readTime: '约 3 分钟',
+    content: `<p>本网站内置了<strong>学习进度追踪功能</strong>，使用方式非常简单：</p>
+<h2>如何使用</h2>
+<ol><li>在每个模块的文章列表中，每篇文章右侧有一个<strong>圆形复选框</strong></li><li>读完一篇文章后，点击复选框，它会变成金色 ✓</li><li>勾选状态会自动保存在你的浏览器中</li><li>下次打开页面时，之前的进度还在</li></ol>
+<h2>隐私说明</h2>
+<ul><li>进度数据存在<strong>你自己的浏览器本地</strong>，不上传到任何服务器</li><li>你把 HTML 文件发给朋友，每个人看到的是自己的进度</li><li>清除浏览器缓存会丢失进度，请注意备份</li></ul>
+<h2>建议的学习顺序</h2>
+<ol><li><strong>第一步</strong>：读完模块一的「核心原则」5 篇（m1-1 到 m1-5），建立即兴的底层思维——自发性 → Yes And → Offer/Endowment → 聆听 → 拥抱失败</li><li><strong>第二步</strong>：读模块二的「入门阶段」3 篇（m2-1 到 m2-3），了解如何开始实践</li><li><strong>第三步</strong>：边读模块一的剩余文章边做模块三的专项练习</li><li><strong>第四步</strong>：进入模块二的进阶阶段，配合融合练习</li><li><strong>第五步</strong>：高阶内容 + 长即兴实操</li></ol>
+<p style="margin-top:16px;color:var(--accent);">现在就去各个模块开始勾选你的进度吧！</p>`
+  },
+
+  'm3-5': {
+    module: 'module3', moduleName: '资源与行动清单', subtopic: '共学功能',
+    title: '小组练习组织指南 —— 如何发起、筹备、带领一次即兴练习局',
+    level: '工具', readTime: '约 8 分钟',
+    content: `<p>即兴是团队运动。以下是一份完整的<strong>小组练习组织指南</strong>，即使你从未组织过活动，也能照着做。</p>
+<h2>第一步：召集（提前 1-2 周）</h2>
+<ol><li><strong>人数</strong>：理想的即兴练习局是 4-8 人。少于 4 人很多练习做不了；多于 12 人需要分组</li><li><strong>场地</strong>：一个可以自由移动的空房间，最好是木地板。约 30-50 平方米就够。可以是舞蹈教室、会议室、或某人的大客厅</li><li><strong>时长</strong>：建议第一次 90 分钟。比 60 分钟充裕，比 120 分钟不容易疲劳</li></ol>
+<div class="practice-box"><h4>邀请文案模板</h4><p>【即兴戏剧练习局】<br>时间：[日期] [时间]，约 90 分钟<br>地点：[地址]<br>适合：[零基础 / 有基础 / 不限]<br>人数上限：[X] 人<br>内容：热身游戏 + 即兴基础练习 + 场景实践。不需要任何经验，不需要准备任何东西——穿舒服的衣服和鞋子来就好。<br>报名回复：[你的联系方式]</p></div>
+<h2>第二步：筹备（提前 1 天）</h2>
+<ul><li>确认场地有足够的照明和通风</li><li>准备一个蓝牙音箱（热身和某些练习需要音乐）</li><li>穿舒适的衣服和鞋子</li><li>提前 15 分钟到场，检查空间安全（移除尖锐物品、确保地面干净）</li></ul>
+<h2>第三步：执行（当天）</h2>
+<p>推荐的首场练习局结构：</p>
+<ol><li><strong>0-10 分钟</strong>：简短介绍 + 名字游戏（Zip Zap Zop 或名字+动作）</li><li><strong>10-25 分钟</strong>：破冰热身（选 2-3 个轻松的游戏）</li><li><strong>25-45 分钟</strong>：核心练习（选 1 个专项，如 Yes And 练习）</li><li><strong>45-75 分钟</strong>：场景实践（两人一组轮流上台，每人都有机会）</li><li><strong>75-90 分钟</strong>：简短复盘。问大家"哪个瞬间让你感觉最有连接？"而不是"哪里做得不好？"</li></ol>
+<h2>重要原则</h2>
+<ul><li><strong>自愿参与</strong>：任何人可以随时选择不参与某个练习</li><li><strong>零评判</strong>：没有"对错"，只有"试试看"</li><li><strong>给自己也留练习时间</strong>：带领者也应该参与练习，而不是站在外面</li></ul>`
+  },
+
+  'm3-6': {
+    module: 'module3', moduleName: '资源与行动清单', subtopic: '共学功能',
+    title: '每周练习计划模板 —— 可直接套用的 4 周训练计划',
+    level: '工具', readTime: '约 10 分钟',
+    content: `<p>以下是一份<strong>可直接套用的 4 周即兴训练计划</strong>。每周聚焦一个核心主题，从基础到综合逐步推进。适合自学小组或即兴团队使用。</p>
+<h2>第 1 周：自发性与连接</h2>
+<table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:0.9rem;">
+<tr style="color:var(--accent);text-align:left;"><th style="padding:8px 12px;">环节</th><th style="padding:8px 12px;">内容</th><th style="padding:8px 12px;">时长</th></tr>
+<tr style="border-top:1px solid var(--card-border);"><td style="padding:8px 12px;">热身</td><td style="padding:8px 12px;">Zip Zap Zop → 名字+动作 → 快速联想圈</td><td style="padding:8px 12px;">10 分钟</td></tr>
+<tr><td style="padding:8px 12px;">技能</td><td style="padding:8px 12px;">阅读 m1-1「自发性」、m1-2「Yes, And」→ 练习 A1-1 Yes And 接龙 + A1-3 超-YES</td><td style="padding:8px 12px;">25 分钟</td></tr>
+<tr><td style="padding:8px 12px;">场景</td><td style="padding:8px 12px;">一词一句故事 → Offer 接球 → 礼物传递</td><td style="padding:8px 12px;">30 分钟</td></tr>
+<tr><td style="padding:8px 12px;">复盘</td><td style="padding:8px 12px;">"今天哪个瞬间让你最惊喜？"</td><td style="padding:8px 12px;">10 分钟</td></tr>
+</table>
+<h2>第 2 周：角色与聆听</h2>
+<table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:0.9rem;">
+<tr style="color:var(--accent);text-align:left;"><th style="padding:8px 12px;">环节</th><th style="padding:8px 12px;">内容</th><th style="padding:8px 12px;">时长</th></tr>
+<tr style="border-top:1px solid var(--card-border);"><td style="padding:8px 12px;">热身</td><td style="padding:8px 12px;">团体计数 → 身体中心漫步</td><td style="padding:8px 12px;">10 分钟</td></tr>
+<tr><td style="padding:8px 12px;">技能</td><td style="padding:8px 12px;">阅读 m1-4「积极聆听」、m1-6「30 秒建立角色」→ 练习 A3-1 身体中心漫步 + A2-1 最后三个词</td><td style="padding:8px 12px;">25 分钟</td></tr>
+<tr><td style="padding:8px 12px;">场景</td><td style="padding:8px 12px;">B1-1 一字场景 → B1-2 超市场景 → Endowment 炸弹</td><td style="padding:8px 12px;">30 分钟</td></tr>
+<tr><td style="padding:8px 12px;">复盘</td><td style="padding:8px 12px;">"你今天演的角色和平时有什么不同？"</td><td style="padding:8px 12px;">10 分钟</td></tr>
+</table>
+<h2>第 3 周：情绪与空间</h2>
+<table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:0.9rem;">
+<tr style="color:var(--accent);text-align:left;"><th style="padding:8px 12px;">环节</th><th style="padding:8px 12px;">内容</th><th style="padding:8px 12px;">时长</th></tr>
+<tr style="border-top:1px solid var(--card-border);"><td style="padding:8px 12px;">热身</td><td style="padding:8px 12px;">音乐情绪反应 → 情绪传送带</td><td style="padding:8px 12px;">10 分钟</td></tr>
+<tr><td style="padding:8px 12px;">技能</td><td style="padding:8px 12px;">阅读 m1-9「无实物表演」、m1-10「情绪表达」→ 练习 A4-2 团队空间搭建 + A5-2 情绪场景切换</td><td style="padding:8px 12px;">25 分钟</td></tr>
+<tr><td style="padding:8px 12px;">场景</td><td style="padding:8px 12px;">B1-5 语言障碍 → B1-7 物品即兴 → 无声场景</td><td style="padding:8px 12px;">30 分钟</td></tr>
+<tr><td style="padding:8px 12px;">复盘</td><td style="padding:8px 12px;">"当不说话时，你是怎么'说'的？"</td><td style="padding:8px 12px;">10 分钟</td></tr>
+</table>
+<h2>第 4 周：地位与叙事整合</h2>
+<table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:0.9rem;">
+<tr style="color:var(--accent);text-align:left;"><th style="padding:8px 12px;">环节</th><th style="padding:8px 12px;">内容</th><th style="padding:8px 12px;">时长</th></tr>
+<tr style="border-top:1px solid var(--card-border);"><td style="padding:8px 12px;">热身</td><td style="padding:8px 12px;">同步动作 → 地位数字（不告知数字，让队友感受）</td><td style="padding:8px 12px;">10 分钟</td></tr>
+<tr><td style="padding:8px 12px;">技能</td><td style="padding:8px 12px;">阅读 m1-8「地位的高低」、m1-12「CROW」→ 练习 A6-3 地位卡片</td><td style="padding:8px 12px;">25 分钟</td></tr>
+<tr><td style="padding:8px 12px;">场景</td><td style="padding:8px 12px;">B1-3 三幕人生 → B2-1 迷你 Harold</td><td style="padding:8px 12px;">30 分钟</td></tr>
+<tr><td style="padding:8px 12px;">复盘</td><td style="padding:8px 12px;">"这四周你最大的变化是什么？" + 庆祝</td><td style="padding:8px 12px;">10 分钟</td></tr>
+</table>
+<p style="margin-top:16px;color:var(--text-dim);">完成 4 周后，可以根据团队的兴趣和薄弱点重新循环，或选择新的专项聚焦。</p>`
+  },
+
+  'm3-7': {
+    module: 'module3', moduleName: '资源与行动清单', subtopic: '推荐资源',
+    title: '书单、视频频道与播客 —— 即兴戏剧优质学习资源推荐',
+    level: '资源', readTime: '约 8 分钟',
+    content: `<h2>必读书单</h2>
+<ol>
+<li><strong>《Impro》（即兴）</strong>—— Keith Johnstone｜即兴戏剧的奠基之作。自发性（Spontaneity）、地位（Status）等核心概念都源自此书。必读。</li>
+<li><strong>《Truth in Comedy》（喜剧中的真实）</strong>—— Charna Halpern, Del Close & Kim Johnson｜长即兴 Harold 格式的圣经。解释了"游戏"（The Game）和"群体意识"（Group Mind）。</li>
+<li><strong>《Improvise》（即兴表演）</strong>—— Mick Napier｜强调"不必遵守规则"的反叛视角。当你被规则束缚时，读这本书。</li>
+<li><strong>《The Upright Citizens Brigade Comedy Improvisation Manual》</strong>—— UCB ｜非常系统的即兴喜剧教材，从基础到长即兴分段讲解。</li>
+<li><strong>《Play: How It Shapes the Brain, Opens the Imagination, and Invigorates the Soul》</strong>—— Stuart Brown｜不是即兴专书，但深刻解释了"玩"对人类创造力和社会连接的重要性。</li>
+</ol>
+<h2>视频资源</h2>
+<ul>
+<li><strong>YouTube: "Middleditch & Schwartz"</strong> —— Netflix 上三集长即兴特辑，教科书级别的长即兴表演。</li>
+<li><strong>YouTube: "Whose Line Is It Anyway?"</strong> —— 经典短即兴游戏节目。适合入门，观看短即兴的结构和节奏。</li>
+<li><strong>YouTube: 搜索 "TJ and Dave"</strong> —— TJ Jagodowski 和 David Pasquesi 的双人长即兴，极简而深刻。</li>
+</ul>
+<h2>播客</h2>
+<ul><li><strong>Improv Nerd</strong> —— Jimmy Carrane 主持，深度访谈即兴演员和教练</li><li><strong>The Backline Podcast</strong> —— 每周讨论即兴表演、喜剧和创意过程</li></ul>
+<h2>中文资源</h2>
+<ul><li>搜索各城市的即兴剧团，大部分有公众号和线下工作坊，可搜索"[城市名] + 即兴戏剧"找到最近的社群</li><li>Bilibili 搜索"即兴戏剧""即兴喜剧"可找到中文教学视频和演出录像</li><li>练习与交流欢迎联系北京「红宝石计划」—— 一个专注于即兴戏剧学习与实践的社群</li></ul>`
+  },
+
+  'm3-8': {
+    module: 'module3', moduleName: '资源与行动清单', subtopic: '行动清单',
+    title: '每日 15 分钟计划 + 加入社群指南 —— 从今天开始行动',
+    level: '行动', readTime: '约 7 分钟',
+    content: `<h2>每日 15 分钟即兴训练计划</h2>
+<p>即使没有团队、没有场地，你每天只需 15 分钟就可以保持即兴的"肌肉"不萎缩：</p>
+<table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:0.9rem;">
+<tr style="color:var(--accent);text-align:left;"><th style="padding:8px 12px;">时间</th><th style="padding:8px 12px;">内容</th></tr>
+<tr style="border-top:1px solid var(--card-border);"><td style="padding:8px 12px;">0-3 分钟</td><td style="padding:8px 12px;"><strong>身体唤醒</strong>：音乐情绪反应练习（见 m3-3 练习 6）。放一首歌，让身体自由动。</td></tr>
+<tr><td style="padding:8px 12px;">3-8 分钟</td><td style="padding:8px 12px;"><strong>即兴独白</strong>（见 m3-3 练习 1）。眼前任一物品，对着它讲 5 分钟。训练自发性。</td></tr>
+<tr><td style="padding:8px 12px;">8-13 分钟</td><td style="padding:8px 12px;"><strong>角色练习</strong>：选一个陌生人（回忆或在照片中），给他编完整的背景故事。</td></tr>
+<tr><td style="padding:8px 12px;">13-15 分钟</td><td style="padding:8px 12px;"><strong>自由联想写作</strong>（见 m3-3 练习 5）。2 分钟不修改地写。</td></tr>
+</table>
+<h2>加入即兴社群</h2>
+<ol><li><strong>搜索你所在城市的即兴剧团</strong>——大部分城市都有至少一个即兴团体。搜索关键词："[城市名] + 即兴戏剧""[城市名] + improv"</li><li><strong>参加工作坊</strong>——大多数即兴剧团定期举办面向公众的体验工作坊，通常 2-3 小时，价格亲民</li><li><strong>参加 Jam</strong>——即兴 Jam 是开放给所有人的即兴演出/练习活动，无论水平都可以上台</li><li><strong>自己组织</strong>——如果所在城市没有即兴团体，用本网站的「小组练习组织指南」（m3-5）自己建一个</li></ol>
+<h2>今天就做这三件事</h2>
+<ol><li>读完模块一的「自发性」（m1-1）和「Yes, And」（m1-2）—— 如果你还没读的话</li><li>做一次 5 分钟的即兴独白练习（流意识说话）</li><li>搜索你所在城市的即兴戏剧社群</li></ol>
+<p style="margin-top:16px;color:var(--accent);font-weight:600;">即兴不是学会的，是做会的。开始行动吧。</p>`
+  }
+};
+
+// ===== 模块文章顺序 =====
+const moduleOrder = {
+  module1: ['m1-1','m1-2','m1-3','m1-4','m1-5','m1-6','m1-7','m1-8','m1-9','m1-10','m1-11','m1-12','m1-13','m1-14','m1-15'],
+  module2: ['m2-1','m2-2','m2-3','m2-4','m2-5','m2-6','m2-7','m2-8','m2-9','m2-10','m2-11','m2-12'],
+  module3: ['m3-1','m3-2','m3-3','m3-4','m3-5','m3-6','m3-7','m3-8']
+};
+
+// ===== 当前状态 =====
+let currentArticle = null;
+
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  const target = document.getElementById('view-' + id);
+  if (target) target.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function navTo(target) {
+  if (target === 'home') {
+    showView('home');
+    window.location.hash = '';
+    currentArticle = null;
+    return;
+  }
+  showView(target);
+  window.location.hash = target;
+  currentArticle = null;
+}
+
+function openArticle(id) {
+  const art = articles[id];
+  if (!art) return;
+  currentArticle = { id, module: art.module };
+  document.getElementById('art-module-tag').textContent = art.moduleName + ' / ' + art.subtopic;
+  document.getElementById('art-title').textContent = art.title;
+  document.getElementById('art-meta').textContent = art.level + ' · ' + art.readTime;
+  document.getElementById('art-body').innerHTML = art.content;
+  const order = moduleOrder[art.module];
+  const idx = order.indexOf(id);
+  document.getElementById('nav-prev').disabled = idx <= 0;
+  document.getElementById('nav-next').disabled = idx >= order.length - 1;
+  showView('article');
+  window.location.hash = id;
+}
+
+function navArticle(dir) {
+  if (!currentArticle) return;
+  const order = moduleOrder[currentArticle.module];
+  const idx = order.indexOf(currentArticle.id);
+  const newIdx = idx + dir;
+  if (newIdx >= 0 && newIdx < order.length) {
+    openArticle(order[newIdx]);
+  }
+}
+
+function getCheckKey(id) { return 'improv-check-' + id; }
+
+function toggleCheck(id) {
+  const el = document.getElementById('check-' + id);
+  if (!el) return;
+  const key = getCheckKey(id);
+  const isDone = el.classList.contains('done');
+  if (isDone) { el.classList.remove('done'); localStorage.removeItem(key); }
+  else { el.classList.add('done'); localStorage.setItem(key, '1'); }
+}
+
+function loadChecks() {
+  document.querySelectorAll('.art-check').forEach(el => {
+    const id = el.id.replace('check-', '');
+    if (localStorage.getItem(getCheckKey(id)) === '1') { el.classList.add('done'); }
+  });
+}
+
+const practicePool = [
+  '🎭 Yes, And 接龙 —— 找一个伙伴，用"好，而且……"对话 5 轮',
+  '👂 最后三个词 —— 用对方说的最后三个词作为你的回应开头',
+  '🎪 一词一句故事 —— 每人一个字，共同讲一个故事',
+  '🪞 镜像聆听 —— 听伙伴讲 30 秒真实经历，复述事实和情绪',
+  '🚶 身体中心漫步 —— 用鼻子/胸部/膝盖"带领"你走路',
+  '🗣️ 即兴独白 —— 对眼前一个物品讲 5 分钟，不停顿不修改',
+  '🎭 地位数字 —— 从 1-10 选一个秘密地位，开始即兴场景',
+  '📦 无实物动作 —— 还原一个日常动作（刷牙/倒水），注意重量和质感',
+  '😤 情绪传送带 —— 传递一种情绪给下一个人，接收→放大→切换',
+  '🎲 礼物传递 —— 用无实物动作送一个礼物，对方猜出它是什么',
+  '✍️ 自由联想写作 —— 5 分钟，不停笔、不修改、不评判',
+  '🎵 音乐情绪反应 —— 随机一首歌，让身体自然地动',
+  '🤫 无声场景 —— 1 分钟场景，全程不说话，只用身体和表情',
+  '🔄 地位翻转 —— 场景中途突然交换高/低地位角色',
+  '👥 路人观察 —— 观察陌生人 30 秒，闭眼给他编完整人生故事',
+  '🎬 三线场景 —— 只用三句台词完成一个完整场景',
+  '🔙 反向动作 —— 用非惯用手做一件日常小事 3 分钟',
+  '🗺️ 团队空间搭建 —— 每人无实物放置一件物品，后来者尊重已建空间',
+  '🎤 声音面具 —— 用 5 种完全不同的声音说同一句台词',
+  '🧩 动物人性化 —— 模仿一种动物 1 分钟，再把它"翻译"成一个人',
+  '⚡ 快速联想 —— 看到任何东西，1 秒内说联想到的词',
+  '🎁 Endowment 炸弹 —— 60 秒内给伙伴 3 个角色赋予'
+];
+
+function randomPractice() {
+  const idx = Math.floor(Math.random() * practicePool.length);
+  document.getElementById('gen-result').textContent = practicePool[idx];
+}
+
+function init() {
+  loadChecks();
+  const hash = window.location.hash.replace('#', '');
+  if (hash) {
+    if (hash === 'module1' || hash === 'module2' || hash === 'module3') { navTo(hash); }
+    else if (articles[hash]) { openArticle(hash); }
+  }
+  window.addEventListener('hashchange', () => {
+    const h = window.location.hash.replace('#', '');
+    if (!h) { navTo('home'); return; }
+    if (h === 'module1' || h === 'module2' || h === 'module3') { navTo(h); return; }
+    if (articles[h]) { openArticle(h); }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
