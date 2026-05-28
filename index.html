@@ -84,6 +84,17 @@ body::before {
 .module-card .module-arrow { position: absolute; right: 28px; top: 50%; transform: translateY(-50%); font-size: 1.4rem; color: var(--accent-dim); transition: transform 0.25s ease, color 0.25s ease; }
 .module-card:hover .module-arrow { transform: translateY(-50%) translateX(4px); color: var(--accent); }
 
+.quickstart { margin-bottom: 28px; }
+.quickstart summary { cursor: pointer; font-size: 0.9rem; color: var(--accent); font-weight: 600; padding: 4px 0; }
+.quickstart summary:hover { opacity: 0.75; }
+.quickstart .qs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 14px; }
+.quickstart .qs-step { text-align: center; padding: 16px 12px; background: var(--card); border-radius: var(--radius-sm); border: 1px solid var(--card-border); }
+.quickstart .qs-step .qs-num { font-size: 1.2rem; font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+.quickstart .qs-step .qs-label { font-size: 0.85rem; color: var(--text); line-height: 1.5; }
+@media (max-width: 540px) {
+  .quickstart .qs-grid { grid-template-columns: 1fr; gap: 8px; }
+}
+
 .back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); text-decoration: none; font-size: 0.9rem; cursor: pointer; margin-bottom: 20px; transition: opacity 0.2s; font-weight: 500; }
 .back-link:hover { opacity: 0.75; }
 
@@ -185,6 +196,15 @@ body::before {
       <h1>即兴戏剧<span class="accent-dot"> · </span>从入门到高阶</h1>
       <p class="subtitle">覆盖即兴戏剧的核心原则、系统学习路径与实用练习清单。适合零基础新手，也适合有经验的即兴演员精进。</p>
     </div>
+
+    <details class="quickstart card" open>
+      <summary>新手上路 · 3 步开始</summary>
+      <div class="qs-grid">
+        <div class="qs-step"><div class="qs-num">1</div><div class="qs-label">点模块卡片<br>进入文章列表</div></div>
+        <div class="qs-step"><div class="qs-num">2</div><div class="qs-label">点文章标题<br>阅读 + 做练习</div></div>
+        <div class="qs-step"><div class="qs-num">3</div><div class="qs-label">读完点右侧 ○<br>标记学习进度</div></div>
+      </div>
+    </details>
 
     <div class="module-grid">
       <div class="card module-card" onclick="navTo('module1')">
