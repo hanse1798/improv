@@ -90,6 +90,7 @@ body::before {
 .list-header { margin-bottom: 32px; }
 .list-header h2 { font-size: 1.7rem; color: var(--text-bright); margin-bottom: 6px; }
 .list-header .list-subtitle { color: var(--text-dim); font-size: 0.92rem; }
+.list-header .list-hint { color: var(--accent-dim); font-size: 0.78rem; margin-top: 6px; }
 
 .subtopic-group { margin-bottom: 28px; }
 .subtopic-title { font-size: 0.8rem; font-weight: 600; color: var(--accent-dim); letter-spacing: 0.06em; margin-bottom: 10px; padding-left: 4px; }
@@ -126,6 +127,14 @@ body::before {
 .article-body table th { color: var(--accent); text-align: left; padding: 8px 12px; font-weight: 600; }
 .article-body table td { padding: 8px 12px; border-top: 1px solid var(--card-border); color: var(--text); }
 .article-body table tr:hover td { background: rgba(232,184,96,0.04); }
+
+.plan-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.9rem; }
+.plan-table th { color: var(--accent); text-align: left; padding: 8px 12px; font-weight: 600; }
+.plan-table th:first-child { width: 15%; }
+.plan-table th:last-child { width: 18%; }
+.plan-table td { padding: 8px 12px; border-top: 1px solid var(--card-border); color: var(--text); }
+.plan-table tr:first-child td { border-top-color: var(--accent-dim); }
+.plan-table tr:hover td { background: rgba(232,184,96,0.04); }
 .article-body .practice-box { background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius-sm); padding: 20px 22px; margin: 16px 0; }
 .article-body .practice-box h4 { color: var(--accent); margin-bottom: 8px; font-size: 0.9rem; }
 
@@ -212,6 +221,7 @@ body::before {
     <div class="list-header">
       <h2>即兴戏剧要学什么</h2>
       <p class="list-subtitle">从核心原则到高阶技巧，构建完整的即兴戏剧知识体系</p>
+      <p class="list-hint">点击右侧 ○ 标记已读</p>
     </div>
 
     <div class="subtopic-group">
@@ -264,6 +274,7 @@ body::before {
     <div class="list-header">
       <h2>如何系统学习</h2>
       <p class="list-subtitle">入门 → 进阶 → 高阶，一条循序渐进的即兴学习路径</p>
+      <p class="list-hint">点击右侧 ○ 标记已读</p>
     </div>
 
     <div class="subtopic-group">
@@ -297,6 +308,7 @@ body::before {
     <div class="list-header">
       <h2>资源与行动清单</h2>
       <p class="list-subtitle">可直接上手的练习库、共学工具与推荐资源</p>
+      <p class="list-hint">点击右侧 ○ 标记已读</p>
     </div>
 
     <div class="subtopic-group">
@@ -920,37 +932,32 @@ const articles = {
     level: '工具', readTime: '约 10 分钟',
     content: `<p>以下是一份<strong>可直接套用的 4 周即兴训练计划</strong>。每周聚焦一个核心主题，从基础到综合逐步推进。适合自学小组或即兴团队使用。</p>
 <h2>第 1 周：自发性与连接</h2>
-<table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:0.9rem;">
-<tr style="color:var(--accent);text-align:left;"><th style="padding:8px 12px;">环节</th><th style="padding:8px 12px;">内容</th><th style="padding:8px 12px;">时长</th></tr>
-<tr style="border-top:1px solid var(--card-border);"><td style="padding:8px 12px;">热身</td><td style="padding:8px 12px;">Zip Zap Zop → 名字+动作 → 快速联想圈</td><td style="padding:8px 12px;">10 分钟</td></tr>
-<tr><td style="padding:8px 12px;">技能</td><td style="padding:8px 12px;">阅读 m1-1「自发性」、m1-2「Yes, And」→ 练习 A1-1 Yes And 接龙 + A1-3 超-YES</td><td style="padding:8px 12px;">25 分钟</td></tr>
-<tr><td style="padding:8px 12px;">场景</td><td style="padding:8px 12px;">一词一句故事 → Offer 接球 → 礼物传递</td><td style="padding:8px 12px;">30 分钟</td></tr>
-<tr><td style="padding:8px 12px;">复盘</td><td style="padding:8px 12px;">"今天哪个瞬间让你最惊喜？"</td><td style="padding:8px 12px;">10 分钟</td></tr>
-</table>
+<table class="plan-table"><tr><th>环节</th><th>内容</th><th class="col-time">时长</th></tr>
+<tr><td>热身</td><td>Zip Zap Zop → 名字+动作 → 快速联想圈</td><td>10 分钟</td></tr>
+<tr><td>技能</td><td>阅读 m1-1「自发性」、m1-2「Yes, And」→ 练习 A1-1 Yes And 接龙 + A1-3 超-YES</td><td>25 分钟</td></tr>
+<tr><td>场景</td><td>一词一句故事 → Offer 接球 → 礼物传递</td><td>30 分钟</td></tr>
+<tr><td>复盘</td><td>"今天哪个瞬间让你最惊喜？"</td><td>10 分钟</td></tr></table>
+
 <h2>第 2 周：角色与聆听</h2>
-<table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:0.9rem;">
-<tr style="color:var(--accent);text-align:left;"><th style="padding:8px 12px;">环节</th><th style="padding:8px 12px;">内容</th><th style="padding:8px 12px;">时长</th></tr>
-<tr style="border-top:1px solid var(--card-border);"><td style="padding:8px 12px;">热身</td><td style="padding:8px 12px;">团体计数 → 身体中心漫步</td><td style="padding:8px 12px;">10 分钟</td></tr>
-<tr><td style="padding:8px 12px;">技能</td><td style="padding:8px 12px;">阅读 m1-4「积极聆听」、m1-6「30 秒建立角色」→ 练习 A3-1 身体中心漫步 + A2-1 最后三个词</td><td style="padding:8px 12px;">25 分钟</td></tr>
-<tr><td style="padding:8px 12px;">场景</td><td style="padding:8px 12px;">B1-1 一字场景 → B1-2 超市场景 → Endowment 炸弹</td><td style="padding:8px 12px;">30 分钟</td></tr>
-<tr><td style="padding:8px 12px;">复盘</td><td style="padding:8px 12px;">"你今天演的角色和平时有什么不同？"</td><td style="padding:8px 12px;">10 分钟</td></tr>
-</table>
+<table class="plan-table"><tr><th>环节</th><th>内容</th><th class="col-time">时长</th></tr>
+<tr><td>热身</td><td>团体计数 → 身体中心漫步</td><td>10 分钟</td></tr>
+<tr><td>技能</td><td>阅读 m1-4「积极聆听」、m1-6「30 秒建立角色」→ 练习 A3-1 身体中心漫步 + A2-1 最后三个词</td><td>25 分钟</td></tr>
+<tr><td>场景</td><td>B1-1 一字场景 → B1-2 超市场景 → Endowment 炸弹</td><td>30 分钟</td></tr>
+<tr><td>复盘</td><td>"你今天演的角色和平时有什么不同？"</td><td>10 分钟</td></tr></table>
+
 <h2>第 3 周：情绪与空间</h2>
-<table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:0.9rem;">
-<tr style="color:var(--accent);text-align:left;"><th style="padding:8px 12px;">环节</th><th style="padding:8px 12px;">内容</th><th style="padding:8px 12px;">时长</th></tr>
-<tr style="border-top:1px solid var(--card-border);"><td style="padding:8px 12px;">热身</td><td style="padding:8px 12px;">音乐情绪反应 → 情绪传送带</td><td style="padding:8px 12px;">10 分钟</td></tr>
-<tr><td style="padding:8px 12px;">技能</td><td style="padding:8px 12px;">阅读 m1-9「无实物表演」、m1-10「情绪表达」→ 练习 A4-2 团队空间搭建 + A5-2 情绪场景切换</td><td style="padding:8px 12px;">25 分钟</td></tr>
-<tr><td style="padding:8px 12px;">场景</td><td style="padding:8px 12px;">B1-5 语言障碍 → B1-7 物品即兴 → 无声场景</td><td style="padding:8px 12px;">30 分钟</td></tr>
-<tr><td style="padding:8px 12px;">复盘</td><td style="padding:8px 12px;">"当不说话时，你是怎么'说'的？"</td><td style="padding:8px 12px;">10 分钟</td></tr>
-</table>
+<table class="plan-table"><tr><th>环节</th><th>内容</th><th class="col-time">时长</th></tr>
+<tr><td>热身</td><td>音乐情绪反应 → 情绪传送带</td><td>10 分钟</td></tr>
+<tr><td>技能</td><td>阅读 m1-9「无实物表演」、m1-10「情绪表达」→ 练习 A4-2 团队空间搭建 + A5-2 情绪场景切换</td><td>25 分钟</td></tr>
+<tr><td>场景</td><td>B1-5 语言障碍 → B1-7 物品即兴 → 无声场景</td><td>30 分钟</td></tr>
+<tr><td>复盘</td><td>"当不说话时，你是怎么'说'的？"</td><td>10 分钟</td></tr></table>
+
 <h2>第 4 周：地位与叙事整合</h2>
-<table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:0.9rem;">
-<tr style="color:var(--accent);text-align:left;"><th style="padding:8px 12px;">环节</th><th style="padding:8px 12px;">内容</th><th style="padding:8px 12px;">时长</th></tr>
-<tr style="border-top:1px solid var(--card-border);"><td style="padding:8px 12px;">热身</td><td style="padding:8px 12px;">同步动作 → 地位数字（不告知数字，让队友感受）</td><td style="padding:8px 12px;">10 分钟</td></tr>
-<tr><td style="padding:8px 12px;">技能</td><td style="padding:8px 12px;">阅读 m1-8「地位的高低」、m1-12「CROW」→ 练习 A6-3 地位卡片</td><td style="padding:8px 12px;">25 分钟</td></tr>
-<tr><td style="padding:8px 12px;">场景</td><td style="padding:8px 12px;">B1-3 三幕人生 → B2-1 迷你 Harold</td><td style="padding:8px 12px;">30 分钟</td></tr>
-<tr><td style="padding:8px 12px;">复盘</td><td style="padding:8px 12px;">"这四周你最大的变化是什么？" + 庆祝</td><td style="padding:8px 12px;">10 分钟</td></tr>
-</table>
+<table class="plan-table"><tr><th>环节</th><th>内容</th><th class="col-time">时长</th></tr>
+<tr><td>热身</td><td>同步动作 → 地位数字（不告知数字，让队友感受）</td><td>10 分钟</td></tr>
+<tr><td>技能</td><td>阅读 m1-8「地位的高低」、m1-12「CROW」→ 练习 A6-3 地位卡片</td><td>25 分钟</td></tr>
+<tr><td>场景</td><td>B1-3 三幕人生 → B2-1 迷你 Harold</td><td>30 分钟</td></tr>
+<tr><td>复盘</td><td>"这四周你最大的变化是什么？" + 庆祝</td><td>10 分钟</td></tr></table>
 <p style="margin-top:16px;color:var(--text-dim);">完成 4 周后，可以根据团队的兴趣和薄弱点重新循环，或选择新的专项聚焦。</p>`
   },
 
