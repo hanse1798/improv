@@ -156,8 +156,6 @@ body::before {
 .generator .gen-result { margin-top: 20px; font-size: 1.1rem; color: var(--text-bright); min-height: 48px; display: flex; align-items: center; justify-content: center; padding: 16px; background: var(--card); border-radius: var(--radius-sm); }
 
 .footer { text-align: center; padding: 40px 0 20px; color: var(--text-dim); font-size: 0.8rem; }
-.footer-counter { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; padding: 6px 16px; background: var(--card); border-radius: 20px; border: 1px solid var(--card-border); font-size: 0.78rem; }
-.footer-counter .count-num { color: var(--accent); font-weight: 700; }
 
 @media (min-width: 540px) {
   .module-grid { grid-template-columns: repeat(2, 1fr); }
@@ -234,7 +232,7 @@ body::before {
       </div>
     </div>
 
-    <div class="footer">共 3 个模块 · 16 个主题 · 39 篇文章 · 学习进度本地存储<div class="footer-counter">👀 本站访问 <span class="count-num" id="visit-count">...</span> 次</div></div>
+    <div class="footer">共 3 个模块 · 16 个主题 · 39 篇文章 · 学习进度本地存储</div>
   </section>
 
   <!-- ==================== 模块一列表 ==================== -->
@@ -1249,15 +1247,6 @@ function randomPractice() {
   const idx = Math.floor(Math.random() * practicePool.length);
   document.getElementById('gen-result').textContent = practicePool[idx];
 }
-
-// ===== 访问计数器 =====
-(function loadCounter() {
-  const el = document.getElementById('visit-count');
-  if (!el) return;
-  fetch('/.netlify/functions/counter')
-    .then(r => r.json()).then(d => { el.textContent = d.value; })
-    .catch(() => { el.textContent = '--'; });
-})();
 
 function init() {
   loadChecks();
