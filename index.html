@@ -1254,13 +1254,9 @@ function randomPractice() {
 (function loadCounter() {
   const el = document.getElementById('visit-count');
   if (!el) return;
-  const NS = 'improvgo', KEY = 'page-visits';
-  fetch('https://api.countapi.xyz/hit/' + NS + '/' + KEY)
+  fetch('/.netlify/functions/counter')
     .then(r => r.json()).then(d => { el.textContent = d.value; })
-    .catch(() => { fetch('https://api.countapi.xyz/get/' + NS + '/' + KEY)
-      .then(r => r.json()).then(d => { el.textContent = d.value; })
-      .catch(() => { el.textContent = '--'; });
-    });
+    .catch(() => { el.textContent = '--'; });
 })();
 
 function init() {
