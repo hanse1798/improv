@@ -1,7 +1,0 @@
-{
-  "name": "improvgo",
-  "private": true,
-  "dependencies": {
-    "@netlify/blobs": "^7.4.0"
-  }
-}
