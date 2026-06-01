@@ -496,7 +496,8 @@ body::before {
     </div>
 
     <div class="toolbar-row">
-      <button class="gen-btn-sm" onclick="randomGame()">🎲 随机推荐游戏</button>
+      <input type="text" id="game-search" placeholder="🔍 搜索游戏名..." style="flex:1;min-width:140px;max-width:260px;padding:8px 14px;border-radius:20px;border:1px solid var(--card-border);background:var(--card);color:var(--text);font-size:0.82rem;font-family:var(--font);outline:none;transition:border-color 0.2s;" oninput="renderGameList()">
+      <button class="gen-btn-sm" onclick="randomGame()">🎲 随机</button>
       <span class="gen-result-inline" id="gen-result"></span>
     </div>
 
@@ -2305,6 +2306,17 @@ function navTo(target) {
   if (target === 'module3') { renderGameList(); }
 }
 
+function linkifyGameRefs(html) {
+  // Convert 「游戏名」（m3-XX） patterns to clickable links
+  return html.replace(/「([^」]+)」（(m\d+-\d+)）/g, function(match, name, refId) {
+    var art = articles[refId];
+    if (art) {
+      return '<a href="javascript:void(0)" onclick="event.stopPropagation();openArticle(\'' + refId + '\')" style="color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent-dim);cursor:pointer;" title="查看：' + art.title + '">「' + name + '」</a>';
+    }
+    return match;
+  });
+}
+
 function openArticle(id) {
   const art = articles[id];
   if (!art) return;
@@ -2312,7 +2324,7 @@ function openArticle(id) {
   document.getElementById('art-module-tag').textContent = art.moduleName + ' / ' + art.subtopic;
   document.getElementById('art-title').textContent = art.title;
   document.getElementById('art-meta').textContent = art.level + ' · ' + art.readTime;
-  document.getElementById('art-body').innerHTML = art.content;
+  document.getElementById('art-body').innerHTML = linkifyGameRefs(art.content);
   const order = moduleOrder[art.module];
   const idx = order ? order.indexOf(id) : -1;
   document.getElementById('nav-prev').disabled = idx <= 0;
@@ -2379,10 +2391,23 @@ function renderGameList(filter) {
   currentGameFilter = filter;
   const container = document.getElementById('game-list');
   if (!container) return;
-  const games = moduleOrder.module3.map(id => ({id, art: articles[id]})).filter(x => x.art);
-  const filtered = filter === 'all' ? games : games.filter(g => g.art.subtopic === gameSkills[filter]);
+  const searchInput = document.getElementById('game-search');
+  const searchTerm = searchInput ? searchInput.value.trim().toLowerCase() : '';
+  let games = moduleOrder.module3.map(id => ({id, art: articles[id]})).filter(x => x.art);
+  // Apply category filter
+  if (filter !== 'all') {
+    games = games.filter(g => g.art.subtopic === gameSkills[filter]);
+  }
+  // Apply text search
+  if (searchTerm) {
+    games = games.filter(g => {
+      const name = g.art.title.toLowerCase();
+      const skills = (g.art.skills || []).join(' ').toLowerCase();
+      return name.includes(searchTerm) || skills.includes(searchTerm);
+    });
+  }
   let html = '';
-  filtered.forEach(g => {
+  games.forEach(g => {
     const tags = (g.art.skills || []).map(s => '<span class="skill-tag">' + s + '</span>').join('');
     const gameName = g.art.title.split(' ——')[0];
     html += '<div class="game-card" onclick="openArticle(\'' + g.id + '\')">' +
@@ -2391,7 +2416,7 @@ function renderGameList(filter) {
       '<div class="game-desc" style="font-size:0.84rem;color:var(--text-dim);">' + g.art.subtopic + '</div>' +
       '</div>';
   });
-  container.innerHTML = html || '<p style="color:var(--text-dim);text-align:center;padding:32px;">没有匹配的游戏，试试其他筛选条件</p>';
+  container.innerHTML = html || '<p style="color:var(--text-dim);text-align:center;padding:32px;">没有匹配的游戏，试试其他关键词</p>';
 
   // 更新筛选按钮状态
   document.querySelectorAll('#game-filters .filter-btn').forEach(btn => {
