@@ -307,6 +307,7 @@ body::before {
         <div class="qs-step"><div class="qs-num">②</div><div class="qs-label">进入<strong>学什么</strong>与<strong>怎么学</strong><br>系统掌握核心技能</div></div>
         <div class="qs-step"><div class="qs-num">③</div><div class="qs-label">浏览<strong>游戏库</strong>找练习<br>动手实践，标记进度</div></div>
       </div>
+      <p style="margin-top:12px;font-size:0.78rem;color:var(--text-dim);line-height:1.6;"><strong>推荐学习顺序：</strong>核心原则 5 篇（自发性 → Yes And → Offer → 聆听 → 拥抱失败）→ 入门阶段 3 篇 → 边学边练 → 进阶阶段 → 高阶内容。读完点右侧 ○ 标记进度，数据存于本地浏览器。</p>
     </details>
 
     <div class="module-grid home-grid">
@@ -315,7 +316,7 @@ body::before {
         <div class="module-num">模块一</div>
         <div class="module-title">认识即兴</div>
         <div class="module-desc">什么是即兴？从意大利到芝加哥再到中国，了解即兴的起源、流派与发展脉络。</div>
-        <div class="module-meta">6 篇文章 · 入门必读</div>
+        <div class="module-meta">7 篇文章 · 入门必读</div>
       </div>
 
       <div class="card module-card" onclick="navTo('module1')">
@@ -347,7 +348,7 @@ body::before {
         <div class="module-num">模块五</div>
         <div class="module-title">资源与演出</div>
         <div class="module-desc">练习清单、演出准备指南、共学工具与推荐资源，可直接上手。</div>
-        <div class="module-meta">5 个板块 · 12 篇文章</div>
+        <div class="module-meta">5 个板块 · 11 篇文章</div>
       </div>
     </div>
 
@@ -367,6 +368,7 @@ body::before {
       <div class="subtopic-title">即兴基础认知</div>
       <div class="article-row" onclick="openArticle('m0-1')"><div class="art-dot"></div><div class="art-title">什么是即兴戏剧 —— 无剧本、即时创作、团队协作的表演艺术</div><span class="art-badge">入门</span><div class="art-check" id="check-m0-1" onclick="event.stopPropagation();toggleCheck('m0-1')"></div></div>
       <div class="article-row" onclick="openArticle('m0-6')"><div class="art-dot"></div><div class="art-title">即兴的种类：短即兴、长即兴与应用即兴 —— 一张图看懂即兴的全貌</div><span class="art-badge">入门</span><div class="art-check" id="check-m0-6" onclick="event.stopPropagation();toggleCheck('m0-6')"></div></div>
+      <div class="article-row" onclick="openArticle('m0-7')"><div class="art-dot"></div><div class="art-title">应用即兴：即兴不止在舞台上 —— 当 Yes And 走进企业和课堂</div><span class="art-badge">入门</span><div class="art-check" id="check-m0-7" onclick="event.stopPropagation();toggleCheck('m0-7')"></div></div>
     </div>
 
     <div class="subtopic-group">
@@ -527,7 +529,6 @@ body::before {
 
     <div class="subtopic-group">
       <div class="subtopic-title">共学功能</div>
-      <div class="article-row" onclick="openArticle('m4-4')"><div class="art-dot"></div><div class="art-title">学习进度清单 —— 用浏览器本地存储跟踪你的学习进度</div><span class="art-badge">工具</span><div class="art-check" id="check-m4-4" onclick="event.stopPropagation();toggleCheck('m4-4')"></div></div>
       <div class="article-row" onclick="openArticle('m4-5')"><div class="art-dot"></div><div class="art-title">小组练习组织指南 —— 如何发起、筹备、带领一次即兴练习局</div><span class="art-badge">工具</span><div class="art-check" id="check-m4-5" onclick="event.stopPropagation();toggleCheck('m4-5')"></div></div>
       <div class="article-row" onclick="openArticle('m4-6')"><div class="art-dot"></div><div class="art-title">每周练习计划模板 —— 可直接套用的 4 周训练计划</div><span class="art-badge">工具</span><div class="art-check" id="check-m4-6" onclick="event.stopPropagation();toggleCheck('m4-6')"></div></div>
     </div>
@@ -741,10 +742,44 @@ const articles = {
 <ul><li><strong>企业培训</strong>：团队建设、创新思维、沟通技能、领导力发展</li><li><strong>教育</strong>：课堂互动、创造思维培养、社交情感学习</li><li><strong>心理咨询</strong>：心理剧、社交焦虑治疗、表达性艺术治疗</li><li><strong>设计创新</strong>：IDEO 等设计公司广泛使用即兴方法进行头脑风暴和原型设计</li></ul>
 <h2>你最适合从哪里开始？</h2>
 <ul><li>如果你<strong>零基础</strong>：从认识即兴 → 学几个热身游戏 → 参加一次体验工作坊</li><li>如果你<strong>想学表演</strong>：从短即兴游戏开始 → 掌握核心原则 → 进阶到长即兴</li><li>如果你<strong>只想提升软技能</strong>：重点学习 Yes And 和聆听原则 → 在日常沟通中有意识地练习</li></ul>
-<p style="margin-top:16px;color:var(--accent-dim);">你已经完成了"认识即兴"模块！接下来可以进入模块二「即兴戏剧要学什么」，开始系统学习核心技能。</p>`
+<p style="margin-top:16px;color:var(--accent-dim);">你已经了解了即兴的三大类别。下一篇将深入介绍「应用即兴」——当即兴方法走出剧场，如何改变企业和课堂。</p>`
   },
 
-  // ========== 模块一：即兴戏剧要学什么（15 篇） ==========
+  'm0-7': {
+    module: 'module0', moduleName: '认识即兴', subtopic: '即兴基础认知',
+    title: '应用即兴：即兴不止在舞台上 —— 当 Yes And 走进企业和课堂',
+    level: '入门', readTime: '约 9 分钟',
+    content: `<p>很多人以为即兴只是演员的事。但实际上，即兴的核心原则——<strong>Yes And、积极聆听、拥抱失败、活在当下</strong>——在剧场之外同样强大。这就是应用即兴（Applied Improv）。</p>
+<h2>什么是应用即兴？</h2>
+<p>应用即兴<strong>不是表演</strong>。它不要求参与者上台面对观众，也不以制造笑声为目标。应用即兴是将即兴戏剧的训练方法和核心原则，应用于非表演领域的实践——企业团队建设、课堂教学、心理咨询、设计创新、领导力发展等。</p>
+<p>与应用即兴相对的是<strong>表演即兴</strong>——以舞台演出为目的的即兴。二者的区别在于：表演即兴的终点是"给观众看"，应用即兴的终点是"让参与者变"。</p>
+<h2>应用即兴的四大领域</h2>
+<h3>1. 企业培训</h3>
+<p>这是应用即兴最大的市场。全球许多企业（包括 Google、IDEO、Pixar）都在使用即兴方法进行：</p>
+<ul><li><strong>团队协作</strong>：Yes And 练习直接训练团队成员的"接纳与添加"习惯，减少会议室里的"是的，但是……"</li><li><strong>创新思维</strong>：即兴中的"不评判"原则帮助团队在头脑风暴阶段放下自我审查，产生更多创意</li><li><strong>沟通与呈现</strong>：即兴训练提升聆听能力和在压力下清晰表达的能力</li><li><strong>变革管理</strong>：即兴的核心是"在不确定中前行"——这正是组织变革最需要的心态</li></ul>
+<h3>2. 教育领域</h3>
+<p>从小学到大学，即兴方法正在改变课堂：</p>
+<ul><li><strong>课堂互动</strong>：即兴游戏让学生从被动听讲变为主动参与</li><li><strong>社交情感学习（SEL）</strong>：即兴训练的同理心、合作、情绪管理直接对应 SEL 的核心目标</li><li><strong>语言学习</strong>：即兴降低了"说错"的恐惧，对第二语言学习者尤其有效</li><li><strong>创造思维</strong>：即兴培养"一个问题的多种答案"的发散思维，对抗标准化考试的单一答案模式</li></ul>
+<h3>3. 心理健康</h3>
+<p>即兴在心理治疗和心理健康领域有广泛应用：</p>
+<ul><li><strong>社交焦虑</strong>：即兴提供了一个低风险的"试错"空间，帮助社交焦虑者在安全环境中练习社交互动</li><li><strong>心理剧（Psychodrama）</strong>：即兴是心理剧的基础技术之一，用于探索个人议题和人际关系</li><li><strong>正念与当下</strong>：即兴训练的核心状态——完全沉浸在当下、不评判——与正念冥想的理念高度一致</li></ul>
+<h3>4. 设计与创新</h3>
+<p>知名设计公司 IDEO 将即兴方法系统融入设计思维流程：</p>
+<ul><li><strong>头脑风暴</strong>：即兴的"Yes And"原则直接转化为设计团队的"build on the ideas of others"（在他人的想法上构建）</li><li><strong>快速原型</strong>：即兴中"先做再想"的哲学与设计中的快速原型迭代高度契合</li><li><strong>用户共情</strong>：即兴的角色扮演技术帮助设计师深入理解用户的情境和需求</li></ul>
+<h2>应用即兴 vs 表演即兴：关键区别</h2>
+<table class="plan-table"><tr><th></th><th>表演即兴</th><th>应用即兴</th></tr>
+<tr><td>目标</td><td>创造一场好看的演出</td><td>改变参与者的行为或思维</td></tr>
+<tr><td>受众</td><td>观众（被动观看）</td><td>参与者（主动体验）</td></tr>
+<tr><td>评估标准</td><td>是否好笑/感人/精彩</td><td>是否促成了学习或改变</td></tr>
+<tr><td>带领者角色</td><td>导演/教练/主持人</td><td>引导师（Facilitator）</td></tr>
+<tr><td>是否需要表演经验</td><td>需要</td><td>不需要</td></tr></table>
+<h2>如何进入应用即兴领域？</h2>
+<p>如果你对应用即兴感兴趣：</p>
+<ol><li><strong>先掌握表演即兴的基础</strong>：自己体验过即兴训练，才能理解它的力量。本网站的模块二和模块三是很好的起点。</li><li><strong>了解引导技术（Facilitation）</strong>：应用即兴的核心技能不是"表演"，而是"引导"——如何设计体验、如何提问、如何帮助参与者反思</li><li><strong>选择一个垂直领域</strong>：企业、教育、心理——每个领域有自己的语言和需求，需要针对性地设计即兴方案</li></ol>
+<p style="margin-top:16px;color:var(--accent-dim);">你已经完成了"认识即兴"模块的全部 7 篇文章！接下来可以进入模块二「即兴戏剧要学什么」，开始系统学习核心技能。</p>`
+  },
+
+  // ========== 模块一：即兴戏剧要学什么（19 篇） ==========
 
   'm1-1': {
     module: 'module1', moduleName: '即兴戏剧要学什么', subtopic: '核心原则',
@@ -1126,20 +1161,16 @@ const articles = {
     module: 'module2', moduleName: '如何系统学习', subtopic: '入门阶段',
     title: '初学者的第一个即兴游戏 —— 从哪里开始玩',
     level: '入门', readTime: '约 7 分钟',
-    content: `<p>如果你从未做过即兴，以下是<strong>经过验证的、适合第一次玩的即兴游戏</strong>。它们不需要任何基础，规则简单，而且几乎总是能带来笑声。</p>
-<h2>推荐的第一个即兴游戏</h2>
-<h3>1. 一词一句故事（One Word Story）</h3>
-<p><strong>人数</strong>：3-6 人｜<strong>难度</strong>：★☆☆</p>
-<p>所有人站成一排。轮流，每人每次只能说<strong>一个字</strong>，共同讲述一个完整的故事。需要有一个"主持人"在合适的时候用一个完整的句子收束故事。</p>
-<p><strong>为什么适合初学者</strong>：不需要创造角色或场景，只需要贡献一个词。压力极低。同时训练了聆听和集体协作。</p>
-<h3>2. 礼物传递（Gift Giving）</h3>
-<p><strong>人数</strong>：2 人｜<strong>难度</strong>：★☆☆</p>
-<p>A 用无实物动作"拿出"一个礼物送给 B，但不说什么。B 接过"礼物"，根据礼物的重量/大小/形状"猜出"它是什么，并说"谢谢你的[礼物名]，我正需要它因为……"。然后 B 再送一个新礼物给 A。</p>
-<p><strong>为什么适合初学者</strong>：有明确的结构（送-收-猜），不会"大脑空白"。同时训练了无实物动作和 Yes, And。</p>
-<h3>3. 我在做什么？（What Are You Doing?）</h3>
-<p><strong>人数</strong>：3 人以上｜<strong>难度</strong>：★★☆</p>
-<p>A 开始做一个重复性动作（如"搅拌咖啡"）。B 问"你在做什么？" A 的回答必须和当前动作<strong>完全无关</strong>（如"我在爬珠穆朗玛峰"）。然后 B 开始做 A 说的那个动作，C 问 B"你在做什么？" 以此类推。</p>
-<p><strong>为什么适合初学者</strong>：制造反差笑点的机制非常明确，不需要"幽默天赋"。</p>`
+    content: `<p>如果你从未做过即兴，选对第一个游戏很重要。<strong>好的入门游戏应该满足三个条件</strong>：规则在 30 秒内能讲清楚、不需要"创造角色"的经验、即使"失败"也能带来笑声而非尴尬。</p>
+<h2>入门游戏的三个特征</h2>
+<ol><li><strong>结构清晰</strong>：每个人在每个时刻都知道自己该做什么——轮流说、轮流做、有明确的"你的回合"</li><li><strong>压力够低</strong>：不需要想出"聪明的台词"，不需要建立复杂的角色，甚至不需要说话（有些最好的入门游戏是无声的）</li><li><strong>笑点自动产生</strong>：游戏本身的结构就会制造反差和意外——演员不需要"搞笑"，游戏帮你搞笑</li></ol>
+<h2>推荐的入门游戏类型</h2>
+<p><strong>集体协作型</strong>（如「一词一句故事」m3-15、「团体计数」m3-3）：全组一起完成一个任务，每个人只贡献极小的一部分。压力分散在所有人身上，非常适合第一次见面的团体。</p>
+<p><strong>结构互动型</strong>（如「礼物传递」m3-13、「我在做什么」m3-7）：两人之间有明确的结构（送→收→猜，问→答→做），演员不需要担心"下一步该干嘛"——结构已经告诉你了。</p>
+<p><strong>身体先行型</strong>（如「镜像」m3-8、「名字+动作」m3-2）：不用说话或少说话，让身体先动起来。这对很多"觉得自己不搞笑"的新手来说是一种解放——不需要说台词，你的身体就是台词。</p>
+<h2>新手第一次练习的建议流程</h2>
+<ol><li><strong>热身</strong>：名字+动作（m3-2）→ Zip Zap Zop（m3-1），10 分钟</li><li><strong>体验接纳</strong>：礼物传递（m3-13），5 分钟</li><li><strong>体验协作</strong>：一词一句故事（m3-15），5 分钟</li><li><strong>第一次场景</strong>：我是树（m3-17），5 分钟</li></ol>
+<p>以上 4 个游戏的总时长约 25 分钟，涵盖了破冰、接纳、协作和场景创造——即兴入门最核心的四个维度。每个游戏的完整规则和教学提示，请到「即兴游戏库」查看对应文章。</p>`
   },
 
   'm2-3': {
@@ -1190,22 +1221,18 @@ const articles = {
     module: 'module2', moduleName: '如何系统学习', subtopic: '进阶阶段',
     title: '进阶即兴游戏精选 —— 推荐给有基础玩家的游戏清单',
     level: '进阶', readTime: '约 10 分钟',
-    content: `<p>以下游戏适合已经掌握了基本即兴原则（自发性和 Yes And、聆听、CROW）的练习者。它们分别训练不同的进阶技能。</p>
-<h2>1. 三线场景（Three-Line Scene）</h2>
-<p><strong>训练目标</strong>：快速建立 CROW｜<strong>人数</strong>：2 人</p>
-<p>两人只用三句台词完成一个完整场景。A 第一句建立角色+地点，B 第一句建立关系+目标，A 第二句推向高潮，B 第二句转向结局，A 第三句收束。极简而高效。</p>
-<h2>2. 字幕机（Subtitles）</h2>
-<p><strong>训练目标</strong>：外化角色内心｜<strong>人数</strong>：4 人</p>
-<p>两人表演场景。另外两人站在两侧扮演"字幕机"——一人说出角色 A 没说出口的内心想法，另一人说出角色 B 的内心想法。演员必须将这些"字幕"融入表演。</p>
-<h2>3. 导演椅（Director's Chair）</h2>
-<p><strong>训练目标</strong>：接受外部输入｜<strong>人数</strong>：3 人以上</p>
-<p>两人表演场景。一个"导演"可以随时喊"停"，给出调整指令（"换一种情绪""用更慢的速度""交换角色"）。演员立刻执行。</p>
-<h2>4. 倒退剧（Rewind）</h2>
-<p><strong>训练目标</strong>：灵活性与叙事结构｜<strong>人数</strong>：2 人以上</p>
-<p>表演一个场景。带领者随时喊"倒退！"，演员必须把刚才的动作/台词倒着演一遍（像视频倒放）。然后喊"播放！"继续前进。</p>
-<h2>5. 四种情绪方格（Emotional Quadrant）</h2>
-<p><strong>训练目标</strong>：情绪范围与快速切换｜<strong>人数</strong>：2 人</p>
-<p>在地上画一个虚拟 2×2 方格。横轴：正面情绪 / 负面情绪。纵轴：高能量 / 低能量。演员在场景中根据带领者指向的方格切换到对应象限的情绪。</p>`
+    content: `<p>当你已经掌握了 Yes And、聆听和 CROW 的基础之后，进阶游戏可以帮助你在特定维度上突破瓶颈。以下按<strong>训练目标</strong>分类，推荐游戏库中的进阶游戏。</p>
+<h2>训练场景效率</h2>
+<p><strong>推荐</strong>：「三句话场景」（m3-27）训练在最少台词中建立完整的 CROW；「限词场景」（m3-49）用字数限制迫使你精炼表达。这两个游戏解决的是进阶者常见问题——场景拖沓、信息密度低。</p>
+<h2>训练角色深度</h2>
+<p><strong>推荐</strong>：「字幕机」（m3-28）让你看到角色"嘴上说的"和"心里想的"之间的差距——这是角色立体化的关键；「角色热椅」（m3-23）通过采访式互动，迫使你在没有场景支撑的情况下维持一个角色的完整人格。</p>
+<h2>训练接受外部输入</h2>
+<p><strong>推荐</strong>：「导演椅」（m3-29）和「新选择」（m3-18）训练同一个核心能力——放下自己的预设，接受来自外部的方向调整。进阶者最常见的瓶颈不是"不会演"，而是"不能放下自己已经想好的东西"。</p>
+<h2>训练情绪与风格的灵活性</h2>
+<p><strong>推荐</strong>：「四种情绪方格」（m3-43）帮助你在情绪的两个维度（正负 × 高低能量）之间自如切换；「类型重演」（m3-37）则训练你在不同的叙事风格之间转换——同一个场景在恐怖片和浪漫喜剧中完全不同。</p>
+<h2>训练身体控制与精准度</h2>
+<p><strong>推荐</strong>：「倒退剧」（m3-30）和「慢动作解说」（m3-33）都要求极高的身体意识——记住自己的每一个动作、在极慢或倒放中保持角色的连续性。</p>
+<p style="margin-top:16px;color:var(--text-dim);">以上每个游戏的完整规则和教学提示，请到「即兴游戏库」查看对应文章。进阶练习的核心不是"玩更多的游戏"，而是<strong>有目标地玩</strong>——知道自己当前最需要突破的能力，然后选择针对性的游戏反复练习。</p>`
   },
 
   'm2-7': {
@@ -1996,20 +2023,6 @@ const articles = {
 <p>随机播放一首没听过的歌。闭眼。让音乐驱动你的身体——不要"编舞"，让你的身体自然地对音乐做出反应。注意音乐如何影响你的情绪和身体质感。</p>`
   },
 
-  'm4-4': {
-    module: 'module4', moduleName: '资源与演出', subtopic: '共学功能',
-    title: '学习进度清单 —— 用浏览器本地存储跟踪你的学习进度',
-    level: '工具', readTime: '约 3 分钟',
-    content: `<p>本网站内置了<strong>学习进度追踪功能</strong>，使用方式非常简单：</p>
-<h2>如何使用</h2>
-<ol><li>在每个模块的文章列表中，每篇文章右侧有一个<strong>圆形复选框</strong></li><li>读完一篇文章后，点击复选框，它会变成金色 ✓</li><li>勾选状态会自动保存在你的浏览器中</li><li>下次打开页面时，之前的进度还在</li></ol>
-<h2>隐私说明</h2>
-<ul><li>进度数据存在<strong>你自己的浏览器本地</strong>，不上传到任何服务器</li><li>你把 HTML 文件发给朋友，每个人看到的是自己的进度</li><li>清除浏览器缓存会丢失进度，请注意备份</li></ul>
-<h2>建议的学习顺序</h2>
-<ol><li><strong>第一步</strong>：读完模块一的「核心原则」5 篇（m1-1 到 m1-5），建立即兴的底层思维——自发性 → Yes And → Offer/Endowment → 聆听 → 拥抱失败</li><li><strong>第二步</strong>：读模块二的「入门阶段」3 篇（m2-1 到 m2-3），了解如何开始实践</li><li><strong>第三步</strong>：边读模块一的剩余文章边做模块三的专项练习</li><li><strong>第四步</strong>：进入模块二的进阶阶段，配合融合练习</li><li><strong>第五步</strong>：高阶内容 + 长即兴实操</li></ol>
-<p style="margin-top:16px;color:var(--accent);">现在就去各个模块开始勾选你的进度吧！</p>`
-  },
-
   'm4-5': {
     module: 'module4', moduleName: '资源与演出', subtopic: '共学功能',
     title: '小组练习组织指南 —— 如何发起、筹备、带领一次即兴练习局',
@@ -2208,7 +2221,7 @@ const articles = {
 <h2>播客</h2>
 <ul><li><strong>Improv Nerd</strong> —— Jimmy Carrane 主持，深度访谈即兴演员和教练</li><li><strong>The Backline Podcast</strong> —— 每周讨论即兴表演、喜剧和创意过程</li></ul>
 <h2>中文资源</h2>
-<ul><li>搜索各城市的即兴剧团，大部分有公众号和线下工作坊，可搜索"[城市名] + 即兴戏剧"找到最近的社群</li><li>Bilibili 搜索"即兴戏剧""即兴喜剧"可找到中文教学视频和演出录像</li><li>关注即兴戏剧节和即兴 Jam 活动——这是认识同好、找到练习伙伴的最佳途径</li></ul>`
+<ul><li>搜索各城市的即兴剧团，大部分有公众号和线下工作坊，可搜索"[城市名] + 即兴戏剧"找到最近的社群</li><li>北京「红宝石计划」是一个专注即兴戏剧学习与实践的活跃社群，定期举办工作坊和练习局，适合新人入门和演员精进</li><li>Bilibili 搜索"即兴戏剧""即兴喜剧"可找到中文教学视频和演出录像</li><li>关注各城市的即兴戏剧节和即兴 Jam 活动——这是认识同好、找到练习伙伴的最佳途径</li></ul>`
   },
 
   'm4-12': {
@@ -2234,11 +2247,11 @@ const articles = {
 
 // ===== 模块文章顺序 =====
 const moduleOrder = {
-  module0: ['m0-1','m0-6','m0-2','m0-3','m0-4','m0-5'],
+  module0: ['m0-1','m0-6','m0-7','m0-2','m0-3','m0-4','m0-5'],
   module1: ['m1-1','m1-2','m1-3','m1-4','m1-5','m1-6','m1-7','m1-8','m1-9','m1-10','m1-11','m1-12','m1-13','m1-14','m1-15','m1-16','m1-17','m1-18','m1-19'],
   module2: ['m2-1','m2-2','m2-3','m2-4','m2-5','m2-6','m2-7','m2-8','m2-9','m2-10','m2-11','m2-12'],
   module3: ['m3-1','m3-2','m3-3','m3-4','m3-5','m3-6','m3-7','m3-8','m3-9','m3-10','m3-11','m3-12','m3-13','m3-14','m3-15','m3-16','m3-17','m3-18','m3-19','m3-20','m3-21','m3-22','m3-23','m3-24','m3-25','m3-26','m3-27','m3-28','m3-29','m3-30','m3-31','m3-32','m3-33','m3-34','m3-35','m3-36','m3-37','m3-38','m3-39','m3-40','m3-41','m3-42','m3-43','m3-44','m3-45','m3-46','m3-47','m3-48','m3-49','m3-50','m3-51','m3-52','m3-53','m3-54','m3-55','m3-56','m3-57','m3-58','m3-59','m3-60'],
-  module4: ['m4-1','m4-2','m4-3','m4-4','m4-5','m4-6','m4-7','m4-8','m4-9','m4-10','m4-11','m4-12']
+  module4: ['m4-1','m4-2','m4-3','m4-5','m4-6','m4-7','m4-8','m4-9','m4-10','m4-11','m4-12']
 };
 
 // ===== 游戏能力分类 =====
