@@ -93,7 +93,16 @@ body::before {
 .hero .subtitle { font-size: 0.95rem; color: var(--text-dim); max-width: 520px; margin: 0 auto; line-height: 1.65; }
 .hero .accent-dot { color: var(--accent); }
 
+.home-section-label { font-size: 0.78rem; font-weight: 600; color: var(--accent-dim); letter-spacing: 0.08em; margin: 28px 0 12px; padding-left: 2px; }
 .module-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 8px; }
+.tool-grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 8px; margin-bottom: 8px; }
+.tool-card { cursor: pointer; padding: 20px 22px; border-radius: var(--radius-sm); background: var(--card); border: 1px solid var(--card-border); transition: all 0.25s; display: flex; flex-direction: column; gap: 6px; border-left: 3px solid var(--accent-dim); }
+.tool-card:hover { transform: translateY(-2px); background: var(--card-hover); border-left-color: var(--accent); box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
+.tool-card .tool-icon { font-size: 1.5rem; line-height: 1; }
+.tool-card .tool-title { font-size: 1rem; font-weight: 700; color: var(--text-bright); }
+.tool-card .tool-desc { font-size: 0.82rem; color: var(--text-dim); line-height: 1.45; flex: 1; }
+.tool-card .tool-action { font-size: 0.78rem; color: var(--accent); font-weight: 600; }
+.prompt-tool { border-left-color: var(--accent); }
 
 .module-card { cursor: pointer; position: relative; overflow: hidden; padding: 24px; display: flex; flex-direction: column; gap: 8px; border-radius: var(--radius); background: var(--card); border: 1px solid var(--card-border); transition: all 0.25s ease; }
 .module-card:hover { transform: translateY(-3px); background: var(--card-hover); border-color: var(--accent-dim); box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
@@ -181,12 +190,18 @@ body::before {
 
 .footer { text-align: center; padding: 40px 0 20px; color: var(--text-dim); font-size: 0.8rem; }
 
-.game-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; align-items: center; }
+.game-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; align-items: center; }
 .game-filters .filter-label { font-size: 0.78rem; color: var(--text-dim); margin-right: 4px; }
 .game-filters .filter-btn { font-size: 0.76rem; padding: 5px 14px; border-radius: 20px; border: 1px solid var(--card-border); background: transparent; color: var(--text-dim); cursor: pointer; font-family: var(--font); transition: all 0.2s; white-space: nowrap; }
 .game-filters .filter-btn:hover { border-color: var(--accent-dim); color: var(--text); }
 .game-filters .filter-btn.active { background: var(--accent); color: var(--bg); border-color: var(--accent); font-weight: 600; }
 .game-filters .filter-divider { width: 1px; height: 20px; background: var(--card-border); margin: 0 4px; }
+.filter-select { font-size: 0.76rem; padding: 5px 28px 5px 10px; border-radius: 20px; border: 1px solid var(--card-border); background: var(--card); color: var(--text); cursor: pointer; font-family: var(--font); appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238888a0'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 8px center; transition: border-color 0.2s; }
+.filter-select:hover, .filter-select:focus { border-color: var(--accent-dim); outline: none; }
+.active-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; min-height: 0; }
+.active-tag { font-size: 0.74rem; padding: 3px 10px; border-radius: 14px; background: rgba(232,184,96,0.15); color: var(--accent); display: inline-flex; align-items: center; gap: 4px; cursor: default; }
+.active-tag .tag-x { cursor: pointer; font-weight: bold; opacity: 0.7; }
+.active-tag .tag-x:hover { opacity: 1; }
 
 .toolbar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
 .toolbar-row .gen-btn-sm { display: inline-flex; align-items: center; gap: 4px; padding: 8px 18px; background: var(--accent); color: var(--bg); border: none; border-radius: 20px; font-size: 0.8rem; font-weight: 600; cursor: pointer; font-family: var(--font); transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 2px 8px var(--accent-glow); white-space: nowrap; }
@@ -231,27 +246,25 @@ body::before {
 
 @media (min-width: 540px) {
   .module-grid { grid-template-columns: repeat(2, 1fr); }
+  .tool-grid { grid-template-columns: repeat(2, 1fr); }
   .hero h1 { font-size: 2.3rem; }
 }
 
 @media (min-width: 740px) {
   .module-grid { grid-template-columns: repeat(3, 1fr); }
+  .tool-grid { grid-template-columns: 2fr 1fr; }
+  .prompt-tool { grid-row: 1 / 3; }
   .hero h1 { font-size: 2.4rem; }
 }
 
 @media (min-width: 1000px) {
   .module-grid { grid-template-columns: repeat(3, 1fr); max-width: 780px; margin-left: auto; margin-right: auto; }
+  .tool-grid { grid-template-columns: 2fr 1fr; max-width: 780px; margin-left: auto; margin-right: auto; }
+  .prompt-tool { grid-row: 1 / 3; }
   .module-card { padding: 28px; }
   .module-card .module-title { font-size: 1.2rem; }
   .module-card .module-desc { font-size: 0.86rem; }
   .module-card .module-icon { font-size: 1.8rem; }
-  /* Last row (2 cards) centered - only when 5 cards total */
-  .module-grid.home-grid .module-card:nth-child(4) { grid-column: 1 / 2; justify-self: end; width: 100%; }
-  .module-grid.home-grid .module-card:nth-child(5) { grid-column: 2 / 4; justify-self: start; width: 50%; }
-}
-@media (min-width: 1100px) {
-  .module-grid.home-grid .module-card:nth-child(4),
-  .module-grid.home-grid .module-card:nth-child(5) { width: 100%; }
 }
 
 @media (max-width: 540px) {
@@ -271,6 +284,50 @@ body::before {
   .article-row .art-check { margin-top: 0.05em; }
   html { font-size: 15px; }
 }
+.prompt-gen .gen-btn-sm:last-child:hover { border-color: var(--accent); background: rgba(232,184,96,0.1); }
+
+/* ===== 能力测评 ===== */
+.assess-intro { text-align: center; padding: 30px 0 10px; }
+.assess-intro h2 { font-size: 1.6rem; color: var(--text-bright); margin-bottom: 8px; }
+.assess-intro p { color: var(--text-dim); font-size: 0.9rem; }
+
+.quiz-block { margin-bottom: 28px; padding: 20px 24px; background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius-sm); }
+.quiz-block h3 { color: var(--accent); font-size: 1rem; margin-bottom: 4px; }
+.quiz-block .quiz-desc { color: var(--text-dim); font-size: 0.82rem; margin-bottom: 14px; }
+.quiz-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.04); gap: 12px; }
+.quiz-item .q-text { flex: 1; font-size: 0.9rem; color: var(--text); }
+.quiz-item .q-opts { display: flex; gap: 6px; flex-shrink: 0; }
+.quiz-item .q-opt { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--card-border); background: transparent; color: var(--text-dim); cursor: pointer; font-size: 0.78rem; font-family: var(--font); transition: all 0.2s; display: flex; align-items: center; justify-content: center; padding: 0; }
+.quiz-item .q-opt:hover { border-color: var(--accent-dim); color: var(--text); }
+.quiz-item .q-opt.sel { background: var(--accent); color: var(--bg); border-color: var(--accent); font-weight: 700; }
+.q-labels { display: flex; gap: 6px; justify-content: flex-end; font-size: 0.68rem; color: var(--text-dim); margin-bottom: 6px; }
+.q-labels span { width: 36px; text-align: center; }
+
+.quiz-submit-wrap { text-align: center; margin: 30px 0; }
+.quiz-submit-wrap button { padding: 12px 40px; background: var(--accent); color: var(--bg); border: none; border-radius: 24px; font-size: 1rem; font-weight: 700; cursor: pointer; font-family: var(--font); transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 2px 12px var(--accent-glow); }
+.quiz-submit-wrap button:hover { transform: scale(1.05); }
+.quiz-submit-wrap button:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+.result-panel { text-align: center; padding: 10px 0; }
+.result-panel h2 { font-size: 1.4rem; color: var(--text-bright); margin-bottom: 20px; }
+.radar-container { max-width: 460px; margin: 0 auto 24px; }
+.radar-container svg { width: 100%; height: auto; }
+.dim-scores { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin: 20px 0; }
+.dim-score-card { background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius-sm); padding: 14px 16px; }
+.dim-score-card .ds-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.dim-score-card .ds-name { font-weight: 700; color: var(--text-bright); font-size: 0.9rem; }
+.dim-score-card .ds-val { font-weight: 700; font-size: 1.1rem; }
+.dim-score-card .ds-bar { height: 6px; background: var(--bg-alt); border-radius: 3px; margin-bottom: 6px; overflow: hidden; }
+.dim-score-card .ds-fill { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
+.dim-score-card .ds-tip { font-size: 0.78rem; color: var(--text-dim); line-height: 1.4; }
+.result-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 24px; }
+.result-actions button { padding: 10px 22px; border-radius: 20px; border: 1px solid var(--card-border); background: var(--card); color: var(--text); cursor: pointer; font-family: var(--font); font-size: 0.86rem; transition: all 0.2s; }
+.result-actions button:hover { border-color: var(--accent-dim); color: var(--accent); }
+
+@media (max-width: 540px) {
+  .quiz-item { flex-direction: column; align-items: flex-start; }
+  .dim-scores { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
@@ -289,6 +346,8 @@ body::before {
         <a data-nav="module2" onclick="navTo('module2');document.getElementById('nav-menu-check').checked=false">怎么学</a>
         <a data-nav="module3" onclick="navTo('module3');document.getElementById('nav-menu-check').checked=false">游戏库</a>
         <a data-nav="module4" onclick="navTo('module4');document.getElementById('nav-menu-check').checked=false">演出资源</a>
+        <a data-nav="assess" onclick="navTo('assess');document.getElementById('nav-menu-check').checked=false">能力测评</a>
+        <a data-nav="faq" onclick="navTo('faq');document.getElementById('nav-menu-check').checked=false" title="AI智能问答">💬 问答</a>
       </div>
     </div>
   </nav>
@@ -310,6 +369,7 @@ body::before {
       <p style="margin-top:12px;font-size:0.78rem;color:var(--text-dim);line-height:1.6;"><strong>推荐学习顺序：</strong>核心原则 5 篇（自发性 → Yes And → Offer → 聆听 → 拥抱失败）→ 入门阶段 3 篇 → 边学边练 → 进阶阶段 → 高阶内容。读完点右侧 ○ 标记进度，数据存于本地浏览器。</p>
     </details>
 
+    <div class="home-section-label">📚 学习模块</div>
     <div class="module-grid home-grid">
       <div class="card module-card" onclick="navTo('module0')">
         <div class="module-icon">📖</div>
@@ -347,12 +407,48 @@ body::before {
         <div class="module-icon">📋</div>
         <div class="module-num">模块五</div>
         <div class="module-title">资源与演出</div>
-        <div class="module-desc">练习清单、演出准备指南、共学工具与推荐资源，可直接上手。</div>
-        <div class="module-meta">5 个板块 · 11 篇文章</div>
+        <div class="module-desc">练习导航、演出准备、提示词指南与推荐资源——从学习到上台一条龙。</div>
+        <div class="module-meta">5 个板块 · 12 篇文章</div>
       </div>
     </div>
 
-    <div class="footer">共 5 个模块 · 109 篇文章 · 60 个游戏 · 学习进度本地存储</div>
+    <div class="home-section-label">🛠️ 实用工具</div>
+    <div class="tool-grid">
+      <div class="card tool-card" onclick="navTo('assess')">
+        <div class="tool-icon">🧠</div>
+        <div class="tool-title">即兴能力评估</div>
+        <div class="tool-desc">8 维度 × 30 题，5 分钟测出你的长短板，获取个性化学习建议。</div>
+        <div class="tool-action">开始测评 →</div>
+      </div>
+
+      <div class="card tool-card" onclick="navTo('faq')">
+        <div class="tool-icon">💬</div>
+        <div class="tool-title">即兴教练 FAQ</div>
+        <div class="tool-desc">有关于即兴的问题？搜索全站 110 篇文章，秒出答案。</div>
+        <div class="tool-action">提问 →</div>
+      </div>
+
+      <div class="card tool-card prompt-tool" id="home-prompt-card">
+        <div class="tool-icon">🎯</div>
+        <div class="tool-title">快速开始</div>
+        <div class="tool-desc">场景灵感 & 今日练习，点一下就开始</div>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:4px;">
+          <div style="flex:1;min-width:180px;">
+            <div style="font-size:0.7rem;color:var(--text-dim);margin-bottom:4px;">🎲 场景灵感</div>
+            <div id="prompt-result-home" style="font-size:0.8rem;color:var(--accent);line-height:1.5;min-height:24px;margin-bottom:6px;"></div>
+            <span class="gen-btn-sm" onclick="event.stopPropagation();generateHomePrompt()" style="font-size:0.76rem;padding:6px 14px;cursor:pointer;">提示词生成</span>
+            <span class="gen-btn-sm" onclick="event.stopPropagation();copyHomePrompt()" style="font-size:0.76rem;padding:6px 14px;cursor:pointer;background:transparent;border:1px solid var(--accent);color:var(--accent);margin-left:4px;">📋 复制</span>
+          </div>
+          <div style="flex:1;min-width:180px;border-left:1px solid var(--card-border);padding-left:16px;">
+            <div style="font-size:0.7rem;color:var(--text-dim);margin-bottom:4px;">🔄 今天练什么</div>
+            <div id="practice-result-home" style="font-size:0.8rem;color:var(--text);line-height:1.4;min-height:24px;margin-bottom:6px;"></div>
+            <span class="gen-btn-sm" onclick="event.stopPropagation();randomPracticeHome()" style="font-size:0.76rem;padding:6px 14px;cursor:pointer;background:transparent;border:1px solid var(--card-border);color:var(--text-dim);">换个练习</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">共 5 个模块 + 3 个工具 · 110 篇文章 · 60 个游戏 · 能力测评 · 智能问答 · 快速开始 · 学习进度本地存储</div>
   </section>
 
   <!-- ==================== 模块零：认识即兴（新增） ==================== -->
@@ -484,9 +580,8 @@ body::before {
     </div>
 
     <div class="game-filters" id="game-filters">
-      <span class="filter-label">筛选：</span>
+      <span class="filter-label">类型：</span>
       <button class="filter-btn active" data-filter="all">全部</button>
-      <span class="filter-divider"></span>
       <button class="filter-btn" data-filter="热身">🔥 热身</button>
       <button class="filter-btn" data-filter="接纳">🤝 接纳</button>
       <button class="filter-btn" data-filter="角色">🎭 角色</button>
@@ -494,11 +589,37 @@ body::before {
       <button class="filter-btn" data-filter="地位情绪">⚡ 地位情绪</button>
       <button class="filter-btn" data-filter="竞技">🏆 竞技</button>
     </div>
+    <div class="game-filters" style="margin-bottom:6px;">
+      <span class="filter-label">人数：</span>
+      <select class="filter-select" id="filter-players" onchange="renderGameList()">
+        <option value="all">不限人数</option>
+        <option value="2">2 人</option>
+        <option value="3-5">3-5 人</option>
+        <option value="6-10">6-10 人</option>
+        <option value="10+">10 人以上</option>
+      </select>
+      <span class="filter-label">难度：</span>
+      <select class="filter-select" id="filter-difficulty" onchange="renderGameList()">
+        <option value="all">不限难度</option>
+        <option value="1">★☆☆ 入门</option>
+        <option value="2">★★☆ 进阶</option>
+        <option value="3">★★★ 挑战</option>
+      </select>
+      <span class="filter-label">用途：</span>
+      <select class="filter-select" id="filter-usage" onchange="renderGameList()">
+        <option value="all">全部用途</option>
+        <option value="performance">🎪 适合演出</option>
+        <option value="training">🎯 训练专用</option>
+        <option value="warmup">🔥 热身破冰</option>
+      </select>
+      <span class="filter-divider"></span>
+      <input type="text" id="game-search" placeholder="🔍 搜索游戏名..." style="width:170px;padding:6px 12px;border-radius:20px;border:1px solid var(--card-border);background:var(--card);color:var(--text);font-size:0.78rem;font-family:var(--font);outline:none;transition:border-color 0.2s;" oninput="renderGameList()">
+      <button class="gen-btn-sm" onclick="randomGame()" style="font-size:0.78rem;padding:6px 14px;">🎲 随机</button>
+    </div>
+    <div class="active-tags" id="active-tags"></div>
 
-    <div class="toolbar-row">
-      <input type="text" id="game-search" placeholder="🔍 搜索游戏名..." style="flex:1;min-width:140px;max-width:260px;padding:8px 14px;border-radius:20px;border:1px solid var(--card-border);background:var(--card);color:var(--text);font-size:0.82rem;font-family:var(--font);outline:none;transition:border-color 0.2s;" oninput="renderGameList()">
-      <button class="gen-btn-sm" onclick="randomGame()">🎲 随机</button>
-      <span class="gen-result-inline" id="gen-result"></span>
+    <div class="toolbar-row" style="margin-bottom:8px;">
+      <span class="gen-result-inline" id="gen-result" style="font-size:0.78rem;"></span>
     </div>
 
     <div id="game-list"></div>
@@ -535,6 +656,11 @@ body::before {
     </div>
 
     <div class="subtopic-group">
+      <div class="subtopic-title">演出提示词</div>
+      <div class="article-row" onclick="openArticle('m4-13')"><div class="art-dot"></div><div class="art-title">即兴演出提示词全指南 —— 好提示词 vs 坏提示词，让观众帮你创作</div><span class="art-badge">指南</span><div class="art-check" id="check-m4-13" onclick="event.stopPropagation();toggleCheck('m4-13')"></div></div>
+    </div>
+
+    <div class="subtopic-group">
       <div class="subtopic-title">演出准备</div>
       <div class="article-row" onclick="openArticle('m4-7')"><div class="art-dot"></div><div class="art-title">一场即兴演出的准备工作 —— 场地、团队、排练、宣传与心态</div><span class="art-badge">演出</span><div class="art-check" id="check-m4-7" onclick="event.stopPropagation();toggleCheck('m4-7')"></div></div>
       <div class="article-row" onclick="openArticle('m4-8')"><div class="art-dot"></div><div class="art-title">即兴演出的结构与节奏 —— 从开场到收束的能量曲线设计</div><span class="art-badge">演出</span><div class="art-check" id="check-m4-8" onclick="event.stopPropagation();toggleCheck('m4-8')"></div></div>
@@ -552,11 +678,87 @@ body::before {
       <div class="article-row" onclick="openArticle('m4-12')"><div class="art-dot"></div><div class="art-title">每日 15 分钟计划 + 加入社群指南 —— 从今天开始行动</div><span class="art-badge">行动</span><div class="art-check" id="check-m4-12" onclick="event.stopPropagation();toggleCheck('m4-12')"></div></div>
     </div>
 
-    <div class="card generator" style="margin-top: 32px;">
+    <div class="card generator" style="margin-top: 24px;">
       <h3 style="color:var(--text-bright);margin-bottom:6px;">🎲 今日练习随机生成器</h3>
       <p style="color:var(--text-dim);font-size:0.88rem;margin-bottom:16px;">不知道今天练什么？点一下随机推荐一个练习</p>
       <button class="gen-btn" onclick="randomPractice()">随机抽取</button>
       <div class="gen-result" id="gen-result2">点击按钮获取练习建议 →</div>
+    </div>
+  </section>
+
+  <!-- ==================== 能力测评 ==================== -->
+  <section class="view" id="view-assess">
+    <div class="back-link" onclick="navTo('home')">← 返回首页</div>
+    <div class="assess-intro">
+      <h2>🧠 即兴能力评估</h2>
+      <p>8 个维度 · 30 道题 · 约 5 分钟 · 数据仅存于你的浏览器</p>
+    </div>
+
+    <div style="background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius-sm);padding:14px 20px;margin-bottom:20px;text-align:center;">
+      <p style="font-size:0.82rem;color:var(--text-dim);margin-bottom:8px;">📏 评分指引：请根据每句话<strong>与你的符合程度</strong>打分</p>
+      <div style="display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;font-size:0.8rem;">
+        <span style="padding:6px 12px;color:#e06060;">① 完全不符合</span>
+        <span style="color:var(--text-dim);">→</span>
+        <span style="padding:6px 12px;color:#e08860;">② 不太符合</span>
+        <span style="color:var(--text-dim);">→</span>
+        <span style="padding:6px 12px;color:#e8b860;">③ 一般</span>
+        <span style="color:var(--text-dim);">→</span>
+        <span style="padding:6px 12px;color:#a0c860;">④ 比较符合</span>
+        <span style="color:var(--text-dim);">→</span>
+        <span style="padding:6px 12px;color:#60c080;">⑤ 完全符合</span>
+      </div>
+    </div>
+
+    <div id="quiz-container">
+      <div class="quiz-block" id="quiz-block-0"><h3>① 自发性</h3><div class="quiz-desc">不假思索地行动和回应，绕过"内心评判者"的能力</div><div class="quiz-items" id="quiz-items-0"></div></div>
+      <div class="quiz-block" id="quiz-block-1"><h3>② Yes And 接纳力</h3><div class="quiz-desc">接纳他人的提议并在此基础上创造性发展的能力</div><div class="quiz-items" id="quiz-items-1"></div></div>
+      <div class="quiz-block" id="quiz-block-2"><h3>③ 积极聆听</h3><div class="quiz-desc">真正听进对方每一个词、情绪和意图的能力</div><div class="quiz-items" id="quiz-items-2"></div></div>
+      <div class="quiz-block" id="quiz-block-3"><h3>④ 角色塑造</h3><div class="quiz-desc">快速建立和切换不同角色的身体质感、声音和人格的能力</div><div class="quiz-items" id="quiz-items-3"></div></div>
+      <div class="quiz-block" id="quiz-block-4"><h3>⑤ 情绪表达</h3><div class="quiz-desc">情绪范围的广度、表达的真实度和在情绪间切换的灵活性</div><div class="quiz-items" id="quiz-items-4"></div></div>
+      <div class="quiz-block" id="quiz-block-5"><h3>⑥ 空间与身体意识</h3><div class="quiz-desc">用身体创造观众可见的物体和环境、在空间中自如行动的能力</div><div class="quiz-items" id="quiz-items-5"></div></div>
+      <div class="quiz-block" id="quiz-block-6"><h3>⑦ 叙事构建</h3><div class="quiz-desc">在无预设的情况下推进故事、建立有因果关系的场景序列的能力</div><div class="quiz-items" id="quiz-items-6"></div></div>
+      <div class="quiz-block" id="quiz-block-7"><h3>⑧ 失败复原力</h3><div class="quiz-desc">在"错误"发生后快速恢复、将意外转化为创意燃料的能力</div><div class="quiz-items" id="quiz-items-7"></div></div>
+
+      <div class="quiz-submit-wrap">
+        <button id="quiz-submit" onclick="submitAssessment()" disabled>请完成所有题目</button>
+        <p style="color:var(--text-dim);font-size:0.78rem;margin-top:8px;" id="quiz-progress">已答 0 / 30 题</p>
+      </div>
+    </div>
+
+    <div id="result-container" style="display:none;">
+      <div class="result-panel">
+        <h2>你的即兴能力画像</h2>
+        <div class="radar-container" id="radar-chart"></div>
+        <div class="dim-scores" id="dim-scores"></div>
+        <div style="background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius-sm);padding:16px 20px;margin:20px 0;text-align:left;" id="overall-analysis"></div>
+        <div class="result-actions">
+          <button onclick="retakeAssessment()">🔄 重新测评</button>
+          <button onclick="navTo('module1')">📖 开始学习</button>
+          <button onclick="navTo('module3')">🎪 浏览游戏库</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 智能 FAQ 问答 ==================== -->
+  <section class="view" id="view-faq">
+    <div class="back-link" onclick="navTo('home')">← 返回首页</div>
+    <div class="assess-intro">
+      <h2>💬 即兴教练 FAQ</h2>
+      <p>输入你的问题，从全站 109 篇文章中智能匹配最相关的内容</p>
+    </div>
+
+    <div style="max-width:640px;margin:0 auto;">
+      <div style="display:flex;gap:10px;margin-bottom:24px;">
+        <input type="text" id="faq-input" placeholder="例如：什么是 Yes And？如何开始学即兴？怎样克服紧张？..." style="flex:1;padding:12px 18px;border-radius:24px;border:1px solid var(--card-border);background:var(--card);color:var(--text);font-size:0.92rem;font-family:var(--font);outline:none;transition:border-color 0.2s;" onkeydown="if(event.key==='Enter')searchFAQ()">
+        <button onclick="searchFAQ()" style="padding:12px 24px;background:var(--accent);color:var(--bg);border:none;border-radius:24px;font-weight:700;cursor:pointer;font-family:var(--font);font-size:0.92rem;transition:transform 0.2s;white-space:nowrap;">🔍 搜索</button>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;" id="faq-quick">
+        <span style="font-size:0.78rem;color:var(--text-dim);margin-right:4px;">快速提问：</span>
+      </div>
+
+      <div id="faq-results"></div>
     </div>
   </section>
 
@@ -1332,6 +1534,7 @@ const articles = {
 
   'm3-1': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '热身破冰', skills: ['热身','反应力','能量'],
+    usage: 'warmup', players: {min:4, max:20, label:'4-20 人'}, difficultyNum: 1,
     title: 'Zip Zap Zop —— 经典即兴热身游戏',
     level: '★☆☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">4-20 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">反应力 · 能量 · 专注</div><div class="gi-label">训练能力</div></div></div>
@@ -1342,6 +1545,7 @@ const articles = {
 
   'm3-2': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '热身破冰', skills: ['热身','破冰','记忆'],
+    usage: 'warmup', players: {min:4, max:20, label:'4-20 人'}, difficultyNum: 1,
     title: '名字+动作（Name + Motion）—— 用身体记住彼此',
     level: '★☆☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">4-20 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">破冰 · 记忆 · 自发性</div><div class="gi-label">训练能力</div></div></div>
@@ -1352,6 +1556,7 @@ const articles = {
 
   'm3-3': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '热身破冰', skills: ['团体意识','聆听','耐心'],
+    usage: 'warmup', players: {min:5, max:20, label:'5-20 人'}, difficultyNum: 2,
     title: '团体计数（Group Count）—— 闭上眼，用心听',
     level: '★★☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">5-20 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">团体意识 · 聆听 · 耐心</div><div class="gi-label">训练能力</div></div></div>
@@ -1362,6 +1567,7 @@ const articles = {
 
   'm3-4': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '热身破冰', skills: ['自发性','联想','反应力'],
+    usage: 'warmup', players: {min:4, max:20, label:'4-20 人'}, difficultyNum: 1,
     title: '快速联想圈（Word Association Circle）—— 说出口之前不要想',
     level: '★☆☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">4-20 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">自发性 · 联想能力 · 反应力</div><div class="gi-label">训练能力</div></div></div>
@@ -1372,6 +1578,7 @@ const articles = {
 
   'm3-5': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '热身破冰', skills: ['能量','团体','身体'],
+    usage: 'warmup', players: {min:4, max:20, label:'4-20 人'}, difficultyNum: 1,
     title: '能量传递（Pass the Energy）—— 用身体传递无形的能量球',
     level: '★☆☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">4-20 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">能量感知 · 身体表达 · 团体连接</div><div class="gi-label">训练能力</div></div></div>
@@ -1382,6 +1589,7 @@ const articles = {
 
   'm3-6': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '热身破冰', skills: ['反应力','专注','能量'],
+    usage: 'warmup', players: {min:6, max:20, label:'6-20 人'}, difficultyNum: 1,
     title: 'Bunny Bunny —— 疯狂兔子接力赛',
     level: '★☆☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">6-20 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">反应力 · 专注力 · 能量</div><div class="gi-label">训练能力</div></div></div>
@@ -1392,6 +1600,7 @@ const articles = {
 
   'm3-7': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '热身破冰', skills: ['反应力','反差','自发性'],
+    usage: 'warmup', players: {min:3, max:10, label:'3-10 人'}, difficultyNum: 2,
     title: '我在做什么？（What Are You Doing?）—— 说一套，做一套',
     level: '★★☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">3-10 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">反应力 · 反差思维 · 自发性</div><div class="gi-label">训练能力</div></div></div>
@@ -1402,6 +1611,7 @@ const articles = {
 
   'm3-8': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '热身破冰', skills: ['观察力','同步','非语言'],
+    usage: 'both', players: {min:2, max:2, label:'2 人一组'}, difficultyNum: 1,
     title: '镜像（Mirror）—— 像照镜子一样跟随伙伴',
     level: '★☆☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2 人一组</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">观察力 · 同步能力 · 非语言连接</div><div class="gi-label">训练能力</div></div></div>
@@ -1412,6 +1622,7 @@ const articles = {
 
   'm3-9': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '热身破冰', skills: ['聆听','连接','自发性'],
+    usage: 'both', players: {min:6, max:30, label:'6-30 人'}, difficultyNum: 1,
     title: '同心圆问答（Concentric Circles）—— 快速连接的破冰利器',
     level: '★☆☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">6-30 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">聆听 · 连接 · 自发性</div><div class="gi-label">训练能力</div></div></div>
@@ -1422,6 +1633,7 @@ const articles = {
 
   'm3-10': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '热身破冰', skills: ['破冰','角色','能量'],
+    usage: 'both', players: {min:4, max:20, label:'4-20 人'}, difficultyNum: 1,
     title: '疯狂握手（Crazy Handshake）—— 用握手建立角色',
     level: '★☆☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">4-20 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">破冰 · 角色建立 · 能量</div><div class="gi-label">训练能力</div></div></div>
@@ -1434,6 +1646,7 @@ const articles = {
 
   'm3-11': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: 'Yes And 与接纳', skills: ['Yes And','自发性','场景'],
+    usage: 'training', players: {min:2, max:2, label:'2 人一组'}, difficultyNum: 1,
     title: 'Yes, And 接龙 —— 练习即兴的第一行为准则',
     level: '★☆☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2 人一组</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">Yes And · 自发性 · 场景推进</div><div class="gi-label">训练能力</div></div></div>
@@ -1444,6 +1657,7 @@ const articles = {
 
   'm3-12': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: 'Yes And 与接纳', skills: ['Yes And','自发性','对比体验'],
+    usage: 'training', players: {min:2, max:3, label:'2-3 人'}, difficultyNum: 1,
     title: '否定即兴（No, But Scene）—— 感受被拒绝的滋味',
     level: '★☆☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-3 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">Yes And（反向学习）</div><div class="gi-label">训练能力</div></div></div>
@@ -1454,6 +1668,7 @@ const articles = {
 
   'm3-13': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: 'Yes And 与接纳', skills: ['接纳','无实物','联想'],
+    usage: 'both', players: {min:2, max:2, label:'2 人一组'}, difficultyNum: 1,
     title: '礼物传递（Gift Giving）—— 接纳你收到的每一个"礼物"',
     level: '★☆☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2 人一组</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">接纳 · 无实物 · 联想</div><div class="gi-label">训练能力</div></div></div>
@@ -1464,6 +1679,7 @@ const articles = {
 
   'm3-14': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: 'Yes And 与接纳', skills: ['完全接纳','团体','能量'],
+    usage: 'training', players: {min:5, max:20, label:'5-20 人'}, difficultyNum: 1,
     title: '超-YES（Mega-Yes）—— 体验被完全接纳的力量',
     level: '★☆☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">5-20 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">完全接纳 · 团体支持 · 能量</div><div class="gi-label">训练能力</div></div></div>
@@ -1474,6 +1690,7 @@ const articles = {
 
   'm3-15': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: 'Yes And 与接纳', skills: ['聆听','协作','叙事'],
+    usage: 'training', players: {min:3, max:8, label:'3-8 人'}, difficultyNum: 1,
     title: '一词一句故事（One Word Story）—— 每个人只说一个字',
     level: '★☆☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">3-8 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">聆听 · 协作叙事 · 耐心</div><div class="gi-label">训练能力</div></div></div>
@@ -1484,6 +1701,7 @@ const articles = {
 
   'm3-16': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: 'Yes And 与接纳', skills: ['接纳转折','叙事','自发性'],
+    usage: 'training', players: {min:3, max:8, label:'3-8 人'}, difficultyNum: 2,
     title: '幸运/不幸（Fortunately/Unfortunately）—— 每个转折都接纳',
     level: '★★☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">3-8 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">接纳转折 · 叙事 · 自发性</div><div class="gi-label">训练能力</div></div></div>
@@ -1494,6 +1712,7 @@ const articles = {
 
   'm3-17': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: 'Yes And 与接纳', skills: ['团体接纳','联想','空间'],
+    usage: 'both', players: {min:4, max:20, label:'4-20 人'}, difficultyNum: 1,
     title: '我是树（I Am a Tree）—— 一个人变成一棵树，两个人为它添上世界',
     level: '★☆☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">4-20 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">团体接纳 · 联想 · 空间构建</div><div class="gi-label">训练能力</div></div></div>
@@ -1504,6 +1723,7 @@ const articles = {
 
   'm3-18': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: 'Yes And 与接纳', skills: ['灵活性','场景','接纳'],
+    usage: 'both', players: {min:2, max:4, label:'2-4 人'}, difficultyNum: 2,
     title: '新选择（New Choice）—— 每个选择都可以重来',
     level: '★★☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-4 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">灵活性 · 场景 · 接纳外部输入</div><div class="gi-label">训练能力</div></div></div>
@@ -1516,6 +1736,7 @@ const articles = {
 
   'm3-19': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '角色塑造', skills: ['角色切换','身体','反应力'],
+    usage: 'training', players: {min:3, max:6, label:'3-6 人'}, difficultyNum: 2,
     title: '角色旋转门（Character Revolving Door）—— 瞬间转换角色',
     level: '★★☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">3-6 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">角色切换 · 身体 · 反应力</div><div class="gi-label">训练能力</div></div></div>
@@ -1526,6 +1747,7 @@ const articles = {
 
   'm3-20': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '角色塑造', skills: ['身体意识','角色','空间'],
+    usage: 'training', players: {min:4, max:20, label:'4-20 人'}, difficultyNum: 1,
     title: '身体带领（Body Lead）—— 让你的身体部位为你选角色',
     level: '★☆☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">4-20 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">身体意识 · 角色建立 · 空间行走</div><div class="gi-label">训练能力</div></div></div>
@@ -1536,6 +1758,7 @@ const articles = {
 
   'm3-21': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '角色塑造', skills: ['角色','观察','身体'],
+    usage: 'training', players: {min:4, max:20, label:'4-20 人'}, difficultyNum: 2,
     title: '动物人性化（Animal to Human）—— 把动物的质地带给人类角色',
     level: '★★☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">4-20 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">角色质感 · 观察力 · 身体转化</div><div class="gi-label">训练能力</div></div></div>
@@ -1546,6 +1769,7 @@ const articles = {
 
   'm3-22': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '角色塑造', skills: ['声音角色','角色范围','表达'],
+    usage: 'both', players: {min:2, max:4, label:'2-4 人'}, difficultyNum: 1,
     title: '声音面具（Voice Mask）—— 用声音创造完全不同的人',
     level: '★☆☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-4 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">声音角色 · 角色范围 · 表达</div><div class="gi-label">训练能力</div></div></div>
@@ -1556,6 +1780,7 @@ const articles = {
 
   'm3-23': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '角色塑造', skills: ['角色深度','聆听','即兴回答'],
+    usage: 'both', players: {min:3, max:10, label:'3-10 人'}, difficultyNum: 2,
     title: '角色热椅（Character Hot Seat）—— 采访一个角色直到你认识他',
     level: '★★☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">3-10 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">角色深度 · 即兴回答 · 角色一致性</div><div class="gi-label">训练能力</div></div></div>
@@ -1566,6 +1791,7 @@ const articles = {
 
   'm3-24': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '角色塑造', skills: ['角色范围','身体','年龄表达'],
+    usage: 'training', players: {min:4, max:20, label:'4-20 人'}, difficultyNum: 2,
     title: '年龄行走（Age Walk）—— 从 3 岁走到 90 岁',
     level: '★★☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">4-20 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">角色范围 · 身体控制 · 年龄表达</div><div class="gi-label">训练能力</div></div></div>
@@ -1576,6 +1802,7 @@ const articles = {
 
   'm3-25': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '角色塑造', skills: ['非语言','角色','观察'],
+    usage: 'training', players: {min:2, max:4, label:'2-4 人'}, difficultyNum: 1,
     title: '职业默剧（Job Mime）—— 让身体说话，别用台词',
     level: '★☆☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-4 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">非语言表达 · 角色建立 · 观察力</div><div class="gi-label">训练能力</div></div></div>
@@ -1586,6 +1813,7 @@ const articles = {
 
   'm3-26': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '角色塑造', skills: ['协作','聆听','角色'],
+    usage: 'both', players: {min:3, max:3, label:'3 人以上'}, difficultyNum: 3,
     title: '双头专家（Two-Headed Expert）—— 二人合体，一字一人',
     level: '★★★', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">3 人以上</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★★</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">协作 · 极致聆听 · 角色融合</div><div class="gi-label">训练能力</div></div></div>
@@ -1598,6 +1826,7 @@ const articles = {
 
   'm3-27': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '场景与叙事', skills: ['CROW','场景效率','叙事'],
+    usage: 'both', players: {min:2, max:2, label:'2 人'}, difficultyNum: 2,
     title: '三句话场景（Three-Line Scene）—— 三句话，一个完整世界',
     level: '★★☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">CROW 快速建立 · 场景效率</div><div class="gi-label">训练能力</div></div></div>
@@ -1608,6 +1837,7 @@ const articles = {
 
   'm3-28': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '场景与叙事', skills: ['内心独白','角色层次','场景深度'],
+    usage: 'both', players: {min:4, max:4, label:'4 人'}, difficultyNum: 2,
     title: '字幕机（Subtitles）—— 嘴上说的 vs 心里想的',
     level: '★★☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">4 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">内心独白 · 角色层次 · 场景深度</div><div class="gi-label">训练能力</div></div></div>
@@ -1618,6 +1848,7 @@ const articles = {
 
   'm3-29': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '场景与叙事', skills: ['接收指导','灵活性','场景'],
+    usage: 'both', players: {min:3, max:3, label:'3 人以上'}, difficultyNum: 2,
     title: '导演椅（Director\'s Chair）—— 导演随时喊停',
     level: '★★☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">3 人以上</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">接受指导 · 灵活性 · 场景调整</div><div class="gi-label">训练能力</div></div></div>
@@ -1628,6 +1859,7 @@ const articles = {
 
   'm3-30': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '场景与叙事', skills: ['身体控制','灵活性','叙事'],
+    usage: 'both', players: {min:2, max:4, label:'2-4 人'}, difficultyNum: 2,
     title: '倒退剧（Rewind）—— 倒带重来，换个方向',
     level: '★★☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-4 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">身体控制 · 灵活性 · 叙事意识</div><div class="gi-label">训练能力</div></div></div>
@@ -1638,6 +1870,7 @@ const articles = {
 
   'm3-31': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '场景与叙事', skills: ['限制创作','场景','反应力'],
+    usage: 'both', players: {min:2, max:2, label:'2 人'}, difficultyNum: 3,
     title: 'ABC 场景（Alphabet Scene）—— 每句话的首字母必须是 ABC',
     level: '★★★', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★★</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">3-5 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">限制下创作 · 语言灵活性</div><div class="gi-label">训练能力</div></div></div>
@@ -1648,6 +1881,7 @@ const articles = {
 
   'm3-32': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '场景与叙事', skills: ['叙事跨度','角色','情感'],
+    usage: 'both', players: {min:2, max:3, label:'2-3 人'}, difficultyNum: 2,
     title: '时间跳跃（Time Jump）—— 在时间中穿越角色的一生',
     level: '★★☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-3 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">叙事跨度 · 角色发展 · 情感</div><div class="gi-label">训练能力</div></div></div>
@@ -1658,6 +1892,7 @@ const articles = {
 
   'm3-33': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '场景与叙事', skills: ['身体控制','叙事','专注'],
+    usage: 'both', players: {min:3, max:4, label:'3-4 人'}, difficultyNum: 2,
     title: '慢动作解说（Slow Motion Commentary）—— 体育解说的即兴版',
     level: '★★☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">3-4 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">4-6 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">身体控制 · 叙事 · 专注力</div><div class="gi-label">训练能力</div></div></div>
@@ -1668,6 +1903,7 @@ const articles = {
 
   'm3-34': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '场景与叙事', skills: ['场景结构','聆听','连接'],
+    usage: 'both', players: {min:4, max:8, label:'4-8 人'}, difficultyNum: 3,
     title: '抽屉/柱子（Pillars / Drawers）—— 串联看似无关的场景',
     level: '★★★', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">4-8 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★★</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">10-15 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">场景结构 · 聆听 · 主题连接</div><div class="gi-label">训练能力</div></div></div>
@@ -1678,6 +1914,7 @@ const articles = {
 
   'm3-35': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '场景与叙事', skills: ['多角色','空间','叙事'],
+    usage: 'both', players: {min:1, max:2, label:'1-2 人'}, difficultyNum: 3,
     title: '空椅子（Empty Chair）—— 一个人撑起整个世界',
     level: '★★★', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">1-2 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★★</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">3-6 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">多角色 · 空间构建 · 独白叙事</div><div class="gi-label">训练能力</div></div></div>
@@ -1688,6 +1925,7 @@ const articles = {
 
   'm3-36': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '场景与叙事', skills: ['高赌注','叙事','团体'],
+    usage: 'performance', players: {min:2, max:4, label:'2-4 人'}, difficultyNum: 2,
     title: '世界末日（Armageddon）—— 地球上最后 N 分钟的对话',
     level: '★★☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-4 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">3-5 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">高赌注场景 · 情感真实</div><div class="gi-label">训练能力</div></div></div>
@@ -1698,6 +1936,7 @@ const articles = {
 
   'm3-37': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '场景与叙事', skills: ['风格切换','类型','灵活性'],
+    usage: 'performance', players: {min:2, max:4, label:'2-4 人'}, difficultyNum: 3,
     title: '类型重演（Genre Replay）—— 同一场景，换个风格再演',
     level: '★★★', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-4 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★★</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">风格切换 · 类型认知 · 灵活性</div><div class="gi-label">训练能力</div></div></div>
@@ -1708,6 +1947,7 @@ const articles = {
 
   'm3-38': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '场景与叙事', skills: ['角色深入','采访','叙事'],
+    usage: 'performance', players: {min:2, max:2, label:'2 人+'}, difficultyNum: 2,
     title: '采访者（The Interviewer）—— 一个角色揭示一段人生',
     level: '★★☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2 人+</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">角色深入 · 即兴采访</div><div class="gi-label">训练能力</div></div></div>
@@ -1720,6 +1960,7 @@ const articles = {
 
   'm3-39': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '地位与情绪', skills: ['地位感知','身体','互动'],
+    usage: 'training', players: {min:2, max:2, label:'2 人'}, difficultyNum: 1,
     title: '地位数字（Status Numbers）—— 1 到 10，你的地位是几？',
     level: '★☆☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">地位感知 · 身体表达</div><div class="gi-label">训练能力</div></div></div>
@@ -1730,6 +1971,7 @@ const articles = {
 
   'm3-40': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '地位与情绪', skills: ['地位互动','观察','适应'],
+    usage: 'training', players: {min:3, max:6, label:'3-6 人'}, difficultyNum: 2,
     title: '地位扑克牌（Status Cards）—— 贴在额头上的身份',
     level: '★★☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">3-6 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">地位互动 · 观察 · 适应</div><div class="gi-label">训练能力</div></div></div>
@@ -1740,6 +1982,7 @@ const articles = {
 
   'm3-41': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '地位与情绪', skills: ['地位变化','戏剧张力','反应力'],
+    usage: 'training', players: {min:2, max:2, label:'2 人'}, difficultyNum: 2,
     title: '地位翻转（Status Flip）—— 一瞬间的权力倒转',
     level: '★★☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">地位变化 · 戏剧张力</div><div class="gi-label">训练能力</div></div></div>
@@ -1750,6 +1993,7 @@ const articles = {
 
   'm3-42': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '地位与情绪', skills: ['情绪表达','反应力','能量'],
+    usage: 'training', players: {min:4, max:20, label:'4-20 人'}, difficultyNum: 1,
     title: '情绪传送带（Emotion Conveyor Belt）—— 传递、放大、切换',
     level: '★☆☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">4-20 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">情绪表达 · 反应力 · 能量</div><div class="gi-label">训练能力</div></div></div>
@@ -1760,6 +2004,7 @@ const articles = {
 
   'm3-43': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '地位与情绪', skills: ['情绪范围','场景','角色'],
+    usage: 'training', players: {min:2, max:2, label:'2 人'}, difficultyNum: 2,
     title: '四种情绪方格（Emotional Quadrant）—— 在能量和正负面之间跳转',
     level: '★★☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">3-5 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">情绪范围 · 快速切换</div><div class="gi-label">训练能力</div></div></div>
@@ -1770,6 +2015,7 @@ const articles = {
 
   'm3-44': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '地位与情绪', skills: ['非语言','场景','身体表达'],
+    usage: 'both', players: {min:2, max:3, label:'2-3 人'}, difficultyNum: 2,
     title: '无声场景（Silent Scene）—— 一句话不说，故事照样讲',
     level: '★★☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-3 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">2-4 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">非语言表达 · 身体叙事</div><div class="gi-label">训练能力</div></div></div>
@@ -1780,6 +2026,7 @@ const articles = {
 
   'm3-45': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '地位与情绪', skills: ['情绪控制','角色','场景'],
+    usage: 'both', players: {min:2, max:2, label:'2 人'}, difficultyNum: 2,
     title: '情绪过山车（Emotional Rollercoaster）—— 每 15 秒换一个情绪',
     level: '★★☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">3-5 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">情绪控制 · 角色灵活性</div><div class="gi-label">训练能力</div></div></div>
@@ -1790,6 +2037,7 @@ const articles = {
 
   'm3-46': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '地位与情绪', skills: ['地位细腻','观察','微妙表达'],
+    usage: 'training', players: {min:3, max:6, label:'3-6 人'}, difficultyNum: 3,
     title: '隐藏地位（Hidden Status）—— 小声说话的人才是真正的老大',
     level: '★★★', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">3-6 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★★</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">地位细腻度 · 微妙表达</div><div class="gi-label">训练能力</div></div></div>
@@ -1800,6 +2048,7 @@ const articles = {
 
   'm3-47': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '地位与情绪', skills: ['情绪控制','细腻度','耐心'],
+    usage: 'training', players: {min:2, max:2, label:'2 人'}, difficultyNum: 3,
     title: '情绪渐变（Emotional Shift）—— 不知不觉中改变情绪',
     level: '★★★', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★★</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">情绪控制 · 细腻度 · 耐心</div><div class="gi-label">训练能力</div></div></div>
@@ -1810,6 +2059,7 @@ const articles = {
 
   'm3-48': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '地位与情绪', skills: ['限制创作','场景','自发性'],
+    usage: 'both', players: {min:2, max:2, label:'2 人'}, difficultyNum: 2,
     title: '只有提问（Questions Only）—— 不能说陈述句',
     level: '★★☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">3-5 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">限制创作 · 语言灵活性</div><div class="gi-label">训练能力</div></div></div>
@@ -1822,6 +2072,7 @@ const articles = {
 
   'm3-49': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '竞技与表演', skills: ['限制创作','简约','场景'],
+    usage: 'both', players: {min:2, max:2, label:'2 人'}, difficultyNum: 2,
     title: '限词场景（Word Limit）—— 每句话只能说 N 个字',
     level: '★★☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">3-6 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">简约表达 · 限制创作</div><div class="gi-label">训练能力</div></div></div>
@@ -1832,6 +2083,7 @@ const articles = {
 
   'm3-50': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '竞技与表演', skills: ['声音叙事','团体','想象力'],
+    usage: 'performance', players: {min:3, max:6, label:'3-6 人'}, difficultyNum: 2,
     title: '广播剧（Radio Play）—— 只用声音讲故事',
     level: '★★☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">3-6 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">声音叙事 · 团体协作</div><div class="gi-label">训练能力</div></div></div>
@@ -1842,6 +2094,7 @@ const articles = {
 
   'm3-51': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '竞技与表演', skills: ['音乐即兴','情感表达','勇气'],
+    usage: 'performance', players: {min:2, max:4, label:'2-4 人'}, difficultyNum: 3,
     title: '即兴歌曲（Improvised Song）—— 把场景唱出来',
     level: '★★★', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-4 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★★</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">3-5 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">音乐即兴 · 情感表达</div><div class="gi-label">训练能力</div></div></div>
@@ -1852,6 +2105,7 @@ const articles = {
 
   'm3-52': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '竞技与表演', skills: ['节奏控制','场景','压力管理'],
+    usage: 'both', players: {min:2, max:2, label:'2 人'}, difficultyNum: 3,
     title: '倒计时场景（Countdown Scene）—— 与时间赛跑',
     level: '★★★', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★★</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">3-5 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">节奏控制 · 压力管理</div><div class="gi-label">训练能力</div></div></div>
@@ -1862,6 +2116,7 @@ const articles = {
 
   'm3-53': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '竞技与表演', skills: ['多角色','切换','记忆力'],
+    usage: 'both', players: {min:1, max:2, label:'1-2 人'}, difficultyNum: 3,
     title: '角色圈（Circle of Characters）—— 一个人演 N 个角色',
     level: '★★★', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">1-2 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★★</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">3-6 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">多角色 · 快速切换</div><div class="gi-label">训练能力</div></div></div>
@@ -1872,6 +2127,7 @@ const articles = {
 
   'm3-54': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '竞技与表演', skills: ['语言转换','抽象思维','协作'],
+    usage: 'both', players: {min:2, max:3, label:'2-3 人'}, difficultyNum: 2,
     title: '诗人和翻译（Poet and Translator）—— 一个说胡话，一个翻人话',
     level: '★★☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-3 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">3-5 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">语言转换 · 抽象思维</div><div class="gi-label">训练能力</div></div></div>
@@ -1882,6 +2138,7 @@ const articles = {
 
   'm3-55': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '竞技与表演', skills: ['物件即兴','联想','场景'],
+    usage: 'both', players: {min:2, max:4, label:'2-4 人'}, difficultyNum: 2,
     title: '道具袋（Prop Bag）—— 给任何东西赋予故事',
     level: '★★☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-4 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">物件即兴 · 联想能力</div><div class="gi-label">训练能力</div></div></div>
@@ -1892,6 +2149,7 @@ const articles = {
 
   'm3-56': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '竞技与表演', skills: ['外部输入','灵活性','场景'],
+    usage: 'both', players: {min:2, max:4, label:'2-4 人'}, difficultyNum: 2,
     title: '对白纸条（Lines from a Hat）—— 把观众写的话塞进场景',
     level: '★★☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-4 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">外部输入 · 灵活性</div><div class="gi-label">训练能力</div></div></div>
@@ -1902,6 +2160,7 @@ const articles = {
 
   'm3-57': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '竞技与表演', skills: ['速度','精准','记忆'],
+    usage: 'both', players: {min:2, max:4, label:'2-4 人'}, difficultyNum: 2,
     title: '半时重演（Half-Life）—— 同一场景，时间减半再减半',
     level: '★★☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-4 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">3-5 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">速度控制 · 精准记忆</div><div class="gi-label">训练能力</div></div></div>
@@ -1912,6 +2171,7 @@ const articles = {
 
   'm3-58': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '竞技与表演', skills: ['场景接龙','观察','反应力'],
+    usage: 'both', players: {min:4, max:12, label:'4-12 人'}, difficultyNum: 2,
     title: '自由定格（Freeze Tag）—— 随时定格，抢位接戏',
     level: '★★☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">4-12 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">场景接龙 · 快速反应</div><div class="gi-label">训练能力</div></div></div>
@@ -1922,6 +2182,7 @@ const articles = {
 
   'm3-59': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '竞技与表演', skills: ['互动','接纳','灵活性'],
+    usage: 'both', players: {min:2, max:4, label:'2-4 人'}, difficultyNum: 2,
     title: '观众导演（Audience Director）—— 观众说了算',
     level: '★★☆', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-4 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">观众互动 · 接纳</div><div class="gi-label">训练能力</div></div></div>
@@ -1932,6 +2193,7 @@ const articles = {
 
   'm3-60': {
     module: 'module3', moduleName: '即兴游戏库', subtopic: '竞技与表演', skills: ['团体叙事','悬疑','协作'],
+    usage: 'performance', players: {min:5, max:8, label:'5-8 人'}, difficultyNum: 3,
     title: '谋杀悬疑（Murder Mystery）—— 即兴的侦探故事',
     level: '★★★', readTime: '约 3 分钟',
     content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">5-8 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★★</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">10-15 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">团体叙事 · 悬疑构建</div><div class="gi-label">训练能力</div></div></div>
@@ -1943,40 +2205,55 @@ const articles = {
   // ========== 模块五：资源与行动清单（原模块三） ==========
   'm4-1': {
     module: 'module4', moduleName: '资源与演出', subtopic: '专项练习（A类）',
-    title: '专项练习全集 —— Yes And / 聆听 / 角色 / 空间 / 情绪 / 地位 专项练习',
-    level: '练习', readTime: '约 18 分钟',
-    content: `<p>以下练习按技能分类，每次训练可以选择 1-2 个专项聚焦。</p>
+    title: '专项练习导航 —— 按能力分类的游戏推荐与训练路线',
+    level: '指南', readTime: '约 10 分钟',
+    content: `<p>本页面是一个<strong>练习导航</strong>——不重复罗列游戏规则（所有游戏的完整规则和教学提示都在「即兴游戏库」中），而是按技能维度推荐<strong>训练顺序和游戏组合</strong>。点击游戏名即可跳转查看完整内容。</p>
 <h2>A1 · Yes, And 专项</h2>
-<div class="practice-box"><h4>A1-1 Yes, And 接龙（2 人）</h4><p>面对面。A 提议（"我们去海边吧"）。B 必须以"好，而且……"开头回应并添加信息。连续 5 轮不停。进阶：加入情绪，不只是文字上的 Yes And。</p></div>
-<div class="practice-box"><h4>A1-2 否定即兴（3 人以上）</h4><p>两人做场景，但规则是<strong>每一句话必须以"不"或"但是"开头</strong>。做 1 分钟后停止。讨论感受。然后用"Yes, And"做同样场景。对比体验是很好的学习。</p></div>
-<div class="practice-box"><h4>A1-3 超-YES（全体）</h4><p>一个人站到中间，做一个动作或者说一句话。周围所有人用最大的热情和能量回应"YES！"，并以夸张的方式加入那个动作。让每个人体验被完全接纳的感觉。</p></div>
+<p>核心能力：无条件接纳 + 创造性地添加。建议训练顺序：</p>
+<ol><li>「Yes, And 接龙」（m3-11）——入门必做。两人轮流 Yes, And 对话，体会接纳的力量。</li>
+<li>「礼物传递」（m3-13）——用无实物礼物练习"收到什么就用什么"。</li>
+<li>「否定即兴」（m3-12）——反向体验：先用"No, But"做一轮，再用 Yes, And 做同样场景，对比感受。</li>
+<li>「超-YES」（m3-14）——全组体验被完全接纳的情感冲击。</li>
+<li>「新选择」（m3-18）——训练"第一个想法不是最好的"的放下心态。</li></ol>
+<div class="practice-box"><h4>升级挑战：抵抗中接纳</h4><p>一方不断 Block 场景，另一方必须把 Block 本身当作 Offer 接纳——不是无视拒绝，而是把拒绝变成场景的一部分。</p></div>
 <h2>A2 · 聆听专项</h2>
-<div class="practice-box"><h4>A2-1 最后三个词（2 人）</h4><p>A 自由说话。B 在每一句话后，必须用 A 说的最后三个词作为自己的开头。进阶：A 可以故意说得越来越快，挑战 B 的聆听极限。</p></div>
-<div class="practice-box"><h4>A2-2 情感接力（4 人以上）</h4><p>围成圈。A 转身对 B 说一句带有情绪的话。B 接收后，转身对 C 说——<strong>必须用不同的词语但传递相同的情绪</strong>。比对第一句话和最后一句话，看情绪是否一致。</p></div>
-<div class="practice-box"><h4>A2-3 静默聆听（2 人）</h4><p>A 讲一个 1 分钟的真实故事。B 全程不能说任何话，不能点头，不能发出"嗯嗯"——只能保持眼神接触和开放性身体姿态。1 分钟后 B 复述。体验"仅仅被聆听"的感觉。</p></div>
+<p>核心能力：真正听见伙伴的每一个词，而非在脑子里排练自己的回应。建议训练顺序：</p>
+<ol><li>「Zip Zap Zop」（m3-1）——建立基础的"看-反应"连接。</li>
+<li>「团体计数」（m3-3）——闭眼从 1 数到 20，用直觉而非抢夺。</li>
+<li>「一词一句故事」（m3-15）——每人只能说一个字，迫使极致聆听。</li>
+<li>「同心圆问答」（m3-9）——60 秒轮流分享，听完才能回应。</li>
+<li>「镜像」（m3-8）——两人同时做镜像动作，训练非语言层面的深度聆听。</li></ol>
+<div class="practice-box"><h4>升级挑战：干扰中聆听</h4><p>做"一词一句故事"时，额外一人在旁制造声音干扰——训练在嘈杂环境中保持听觉连接。</p></div>
 <h2>A3 · 角色专项</h2>
-<div class="practice-box"><h4>A3-1 身体中心漫步（全体）</h4><p>在空间中行走。带领者喊身体部位（头/胸/腹/膝/鼻），所有人让该部位"带路"。每个部位 30 秒。体会不同身体中心带来的角色感。</p></div>
-<div class="practice-box"><h4>A3-2 角色速写（2 人）</h4><p>A 在 10 秒内用一个身体姿势+一个声音建立一个角色。B 观察 10 秒后，以一个新角色加入场景。两个角色互动 60 秒，然后结束。讨论：A 的角色有什么特质？</p></div>
-<div class="practice-box"><h4>A3-3 动物人性化（全体）</h4><p>每人选一种动物。先用 1 分钟纯粹模仿该动物（四脚着地）。然后用 1 分钟把该动物的身体质感"翻译"成一个站立的人。比如蚂蚁→忙碌但总被忽视的人；猫→慵懒优雅的人。</p></div>
-<h2>A4 · 空间/无实物专项</h2>
-<div class="practice-box"><h4>A4-1 镜像环境（2 人）</h4><p>面对面。A 用手在空中"画出"一个物体轮廓。B 必须同时镜像 A 的动作（像照镜子）。然后 A 开始"使用"这个物体——B 持续镜像。最后 B 接过该物体，独立使用。</p></div>
-<div class="practice-box"><h4>A4-2 团队空间搭建（3 人以上）</h4><p>一人上前，用无实物动作放置一件物品并说出名称。第二人加入，使用该物品并放置新物品。循环。目标是 5 分钟内有 15+ 件物品共存，每个人都尊重已建立的物品位置和大小。</p></div>
-<div class="practice-box"><h4>A4-3 物体猜谜（2 人）</h4><p>A 用无实物动作使用一个物体（不说出），B 观察并通过加入使用来"确认"自己猜到的物体。A 根据 B 的使用方式判断 B 是否猜对了。如果对了，两人继续一起使用。</p></div>
+<p>核心能力：用身体建立角色、在不同角色间自如切换。建议训练顺序：</p>
+<ol><li>「名字+动作」（m3-2）——用身体动作记住伙伴，也是角色建立的起点。</li>
+<li>「疯狂握手」（m3-10）——通过握手方式的改变体会"身体决定角色"。</li>
+<li>「角色旋转门」（m3-19）——瞬间切换全新角色，用身体而非大脑驱动。</li>
+<li>「身体带领」（m3-20）——让不同身体部位"带路"走路，感受角色质感变化。</li>
+<li>「角色热椅」（m3-23）——采访式互动，在没有场景支撑下维持角色人格。</li></ol>
+<div class="practice-box"><h4>升级挑战：角色融合</h4><p>两人各建一个鲜明角色，互动 2 分钟后"融合"——各取对方角色的一个特征融入自己，角色逐渐趋同但不完全相同。</p></div>
+<h2>A4 · 空间与无实物专项</h2>
+<p>核心能力：用身体创造观众"看得见"的物体和环境。建议训练顺序：</p>
+<ol><li>「镜像」（m3-8）——非语言连接的基础。</li>
+<li>「我是树」（m3-17）——用身体构建空间画面，三人共创一个"画面"。</li>
+<li>「礼物传递」（m3-13）——用无实物动作"拿出"并"递送"一个礼物。</li>
+<li>「道具袋」（m3-55）——给任何随机物品赋予故事，训练空间和物件意识。</li></ol>
+<div class="practice-box"><h4>升级挑战：隐形障碍赛</h4><p>在空间中布置 5 个"隐形物件"（钉子、水坑、矮门、电网、黏胶地板），每次通过时必须避开所有物件，且物件位置不能变。</p></div>
 <h2>A5 · 情绪专项</h2>
-<div class="practice-box"><h4>A5-1 情绪传送带（4 人以上）</h4><p>围成一圈。一个人用面部+身体+声音表达一种情绪，传给下一个人。下一个人接收、放大，然后突然切换到新情绪，再传给下一个人。</p></div>
-<div class="practice-box"><h4>A5-2 情绪场景切换（2 人）</h4><p>表演一个场景。带领者每 15 秒喊一个新情绪词（暴怒/狂喜/恐惧/释然/嫉妒……），两人立刻切换情绪但保持情境和角色关系不变。</p></div>
-<div class="practice-box"><h4>A5-3 情绪雕塑（3 人以上）</h4><p>一人站中间，由其他两人用手"雕塑"——调整他的面部表情、身体姿态、手的位置，直到呈现出一个清晰的情绪。然后雕塑完成的人用一句话表达这个情绪。</p></div>
+<p>核心能力：情绪的范围、表达、切换和控制。建议训练顺序：</p>
+<ol><li>「能量传递」（m3-5）——用身体和声音传递不同质感的"能量球"，体会情绪的物理基础。</li>
+<li>「情绪传送带」（m3-42）——接收情绪→放大→切换到新情绪，传给下一人。</li>
+<li>「四种情绪方格」（m3-43）——在两个维度（正负×高低能量）之间自如切换。</li>
+<li>「情绪过山车」（m3-45）——场景中带领者每 15 秒喊一个新情绪，演员必须保持情境连续。</li></ol>
+<div class="practice-box"><h4>升级挑战：情绪渐变</h4><p>不是快速切换情绪，而是让一个情绪在 90 秒内缓慢地、不可察觉地渐变到完全相反的情绪——观众不应感知到"切换点"。</p></div>
 <h2>A6 · 地位专项</h2>
-<div class="practice-box"><h4>A6-1 地位数字（2 人）</h4><p>两人从 1-10 各选一个秘密地位数字。开始场景。互动 2 分钟后，观察者猜两人的地位数字。</p></div>
-<div class="practice-box"><h4>A6-2 地位翻转（2 人）</h4><p>从一个明显的地位不对等场景开始（如面试官-求职者）。带领者随时喊"翻转！"，两人交换地位角色。</p></div>
-<div class="practice-box"><h4>A6-3 地位卡片（3 人以上）</h4><p>扑克牌贴额头（规则见模块二「地位与关系在场景中的运用」）。场景中途带领者可以给某人换牌，所有人必须根据新牌调整互动。</p></div>
-<h2>进阶挑战（每个专项选一个升级）</h2>
-<div class="practice-box"><h4>Yes And 升级：抵抗中接纳（2 人）</h4><p>一方不断用语言或身体 Block 场景，另一方的任务是无论如何都要 Yes And——不是粗暴地无视 Block，而是<strong>把 Block 本身当作 Offer 接纳</strong>。训练在压力下保持开放。</p></div>
-<div class="practice-box"><h4>聆听升级：干扰中聆听（2 人+1）</h4><p>A 和 B 做"最后三个词"练习，但 C 在旁边不断制造声音干扰（说话、拍手、走动）。A 和 B 必须保持对彼此的完全听觉连接。训练在嘈杂环境中的专注力。</p></div>
-<div class="practice-box"><h4>角色升级：角色融合（2 人）</h4><p>两人各建一个鲜明角色，进入场景。在互动 2 分钟后，带领者喊"融合！"——两人必须在 30 秒内<strong>各取对方角色的一个特征融入自己</strong>，角色逐渐趋同但不完全相同。训练角色的可塑性和细腻度。</p></div>
-<div class="practice-box"><h4>空间升级：隐形障碍赛（单人）</h4><p>在空间中布置 5 个"隐形物件"（钉子、水坑、矮门、电网、黏胶地板），每次通过空间时必须避开所有物件，且物件位置不能变。训练空间记忆和无实物精度。</p></div>
-<div class="practice-box"><h4>情绪升级：情绪渐变（2 人）</h4><p>不是"快速切换"情绪，而是让一个情绪<strong>在 90 秒内缓慢地、不可察觉地渐变到另一个完全相反的情绪</strong>。观众不应感知到"切换点"，只应感知到变化发生了。训练情绪的细腻控制。</p></div>
-<div class="practice-box"><h4>地位升级：隐藏地位（3 人以上）</h4><p>每人抽一个秘密地位数字（1-10），但规则是<strong>不允许用任何明显的高低地位身体语言</strong>——所有人必须用中性的身体和声音互动，仅通过微妙的眼神、停顿、措辞差异来体现地位。训练地位表达的细腻度。</p></div>`
+<p>核心能力：感知和灵活运用地位高低来丰富角色关系。建议训练顺序：</p>
+<ol><li>「地位数字」（m3-39）——两人各选秘密地位数字(1-10)，互动 2 分钟后让观察者猜。</li>
+<li>「地位扑克牌」（m3-40）——扑克牌贴额头，根据他人对待你的方式推断自己的"身份"。</li>
+<li>「地位翻转」（m3-41）——带领者随时喊"翻转！"，两人交换地位角色。</li>
+<li>「隐藏地位」（m3-46）——不用明显的身体语言，仅通过微妙的眼神和措辞体现地位差异。</li></ol>
+<div class="practice-box"><h4>升级挑战：隐藏地位长场景</h4><p>4 人场景，每人抽秘密地位等级，规则是<strong>全程不让观众猜出你的地位数字</strong>——但你的每个选择都受地位影响。5 分钟后观众投票猜各人地位。</p></div>
+<p style="margin-top:20px;padding:14px;background:var(--bg-alt);border-radius:10px;color:var(--text-dim);font-size:0.88rem;">💡 <strong>使用方式</strong>：每次训练聚焦 1-2 个专项。先选入门游戏热身（10 min），再选 2-3 个核心游戏深入练习（25 min），最后用场景类游戏综合运用（30 min）。具体安排参考「每周练习计划模板」（m4-6）。</p>`
   },
 
   'm4-2': {
@@ -2243,6 +2520,36 @@ const articles = {
 <h2>今天就做这三件事</h2>
 <ol><li>读完模块一的「自发性」（m1-1）和「Yes, And」（m1-2）—— 如果你还没读的话</li><li>做一次 5 分钟的即兴独白练习（流意识说话）</li><li>搜索你所在城市的即兴戏剧社群</li></ol>
 <p style="margin-top:16px;color:var(--accent);font-weight:600;">即兴不是学会的，是做会的。开始行动吧。</p>`
+  },
+
+  'm4-13': {
+    module: 'module4', moduleName: '资源与演出', subtopic: '演出提示词',
+    title: '即兴演出提示词全指南 —— 好提示词与坏提示词，让观众帮你创作',
+    level: '指南', readTime: '约 8 分钟',
+    content: `<p>即兴演出的生命线是<strong>观众给的提示词</strong>（Suggestion/Prompt）。一个好的提示词点燃灵感，一个差的提示词让演员在台上挣扎。本文帮助你理解什么样的提示词是好的，以及如何从观众那里获取它们。</p>
+<h2>什么是好的即兴提示词？</h2>
+<p>好的提示词 = <strong>具体但开放</strong>。它给了一个明确的起点，但留下了无限的发挥空间。</p>
+<table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:0.88rem;">
+<tr style="color:var(--accent);text-align:left;"><th style="padding:8px 12px;">好提示词 ✅</th><th style="padding:8px 12px;">坏提示词 ❌</th><th style="padding:8px 12px;">为什么</th></tr>
+<tr style="border-top:1px solid var(--card-border);"><td style="padding:8px 12px;">"深夜的洗衣店"</td><td style="padding:8px 12px;">"随便什么都行"</td><td style="padding:8px 12px;">前者给了一个具体的空间，后者什么都没给</td></tr>
+<tr><td style="padding:8px 12px;">"失散多年的兄妹"</td><td style="padding:8px 12px;">"两个人"</td><td style="padding:8px 12px;">前者给了关系中的戏剧张力</td></tr>
+<tr><td style="padding:8px 12px;">"被锁在动物园里"</td><td style="padding:8px 12px;">"搞笑"</td><td style="padding:8px 12px;">前者给了情境，后者只给了压力</td></tr>
+<tr><td style="padding:8px 12px;">"一封未寄出的信"</td><td style="padding:8px 12px;">"一个关于爱情的故事"</td><td style="padding:8px 12px;">前者是一个具体的意象/物件，后者太宏大</td></tr>
+</table>
+<h2>常见提示词类型</h2>
+<p>不同类型的即兴游戏需要不同类型的提示词：</p>
+<ul><li><strong>地点</strong>——"深夜便利店""机场候机厅""废弃的游乐园"（适合 CROW 建立）</li><li><strong>关系</strong>——"离婚后第一次见面的夫妻""面试官和过度准备的求职者"</li><li><strong>职业</strong>——"专门给宠物做心理咨询的兽医""太空垃圾回收员"</li><li><strong>情绪</strong>——"压抑的狂喜""假装不在乎的失落"（适合情绪驱动场景）</li><li><strong>物件</strong>——"一把打不开的锁""一张忘了是谁的照片"（适合 Harold 开场）</li><li><strong>一句台词</strong>——"我知道你会这么说""你确定那玩意儿关了吗？"（适合对白纸条类游戏）</li></ul>
+<h2>如何从观众那里获取好提示词</h2>
+<ol><li><strong>不要问太宽的问题</strong>："谁能给我一个词？"→ 好一点："请说一个你去过的最奇怪的地方。" 更好："如果你可以住在世界上任何一个建筑里——真实的或想象的——你会住在哪里？"</li><li><strong>一次只要一个</strong>：不要一次问三个问题。观众会混乱，你会得到三个回答混在一起。</li><li><strong>确认+重复+感谢</strong>：拿到提示词后大声重复一遍，确认无误，说谢谢。这不仅是礼貌——重复让全组演员都听到了。</li><li><strong>避免五个坑</strong>：政治（观众会站队）、性暗示（容易油腻）、明星/品牌（著作权和笑点的陷阱）、你们的演出（太后设）、"什么都可以"（什么都没给）</li><li><strong>如果得到了一个差提示词</strong>——不要抱怨，不要要求换一个。这就是你的 Yes And 训练！"你妈"→ 这个场景可以是任何东西——一个关于家庭、关于期待、关于成长的场景。差提示词往往激发最好的即兴。</li></ol>
+<h2>提示词的艺术：挖掘第二层</h2>
+<p>大多数提示词是"第一反应"——大脑最快想到的东西。好主持人的技巧是引导观众给出"第二层"的回答：不问"说一个地点"（所有人都会说"学校""家"），而是问"说一个你小时候最害怕去的地方"（更有记忆、更有情感、更有戏剧性）。</p>
+<h2>提示词生成器的三种使用模式</h2>
+<ol><li><strong>完整使用</strong>：取所有元素，构建包含全部信息的场景。适合 3-5 分钟练习。</li>
+<li><strong>部分采样</strong>：只取 1-2 个元素作为起点，其余在场景中自然生成。适合训练 CROW 建立能力。</li>
+<li><strong>连续生成</strong>：连续点击随机，只用情绪和开场台词，同一个地点演 3 个完全不同风格的场景。</li></ol>
+<h2>进阶用法</h2>
+<ul><li><strong>限制挑战</strong>：生成后给场景加限制——"只能说 5 个词""不能说话""必须唱歌"</li><li><strong>类型混搭</strong>：同样元素用恐怖片/韩剧/纪录片/默片风格各演一遍</li><li><strong>角色互换</strong>：用同样元素但演员交换角色——看同样起点可以去到哪些不同地方</li></ul>
+<p style="margin-top:16px;color:var(--text-dim);">🎲 提示词生成器已放在首页，随时可以使用。</p>`
   }
 };
 
@@ -2252,7 +2559,7 @@ const moduleOrder = {
   module1: ['m1-1','m1-2','m1-3','m1-4','m1-5','m1-6','m1-7','m1-8','m1-9','m1-10','m1-11','m1-12','m1-13','m1-14','m1-15','m1-16','m1-17','m1-18','m1-19'],
   module2: ['m2-1','m2-2','m2-3','m2-4','m2-5','m2-6','m2-7','m2-8','m2-9','m2-10','m2-11','m2-12'],
   module3: ['m3-1','m3-2','m3-3','m3-4','m3-5','m3-6','m3-7','m3-8','m3-9','m3-10','m3-11','m3-12','m3-13','m3-14','m3-15','m3-16','m3-17','m3-18','m3-19','m3-20','m3-21','m3-22','m3-23','m3-24','m3-25','m3-26','m3-27','m3-28','m3-29','m3-30','m3-31','m3-32','m3-33','m3-34','m3-35','m3-36','m3-37','m3-38','m3-39','m3-40','m3-41','m3-42','m3-43','m3-44','m3-45','m3-46','m3-47','m3-48','m3-49','m3-50','m3-51','m3-52','m3-53','m3-54','m3-55','m3-56','m3-57','m3-58','m3-59','m3-60'],
-  module4: ['m4-1','m4-2','m4-3','m4-5','m4-6','m4-7','m4-8','m4-9','m4-10','m4-11','m4-12']
+  module4: ['m4-1','m4-2','m4-3','m4-5','m4-6','m4-13','m4-7','m4-8','m4-9','m4-10','m4-11','m4-12']
 };
 
 // ===== 游戏能力分类 =====
@@ -2393,38 +2700,107 @@ function renderGameList(filter) {
   if (!container) return;
   const searchInput = document.getElementById('game-search');
   const searchTerm = searchInput ? searchInput.value.trim().toLowerCase() : '';
+  const playersFilter = document.getElementById('filter-players');
+  const difficultyFilter = document.getElementById('filter-difficulty');
+  const usageFilter = document.getElementById('filter-usage');
+
   let games = moduleOrder.module3.map(id => ({id, art: articles[id]})).filter(x => x.art);
+
   // Apply category filter
   if (filter !== 'all') {
     games = games.filter(g => g.art.subtopic === gameSkills[filter]);
   }
+
+  // Apply player count filter
+  if (playersFilter && playersFilter.value !== 'all') {
+    const pv = playersFilter.value;
+    games = games.filter(g => {
+      const p = g.art.players;
+      if (!p) return true;
+      if (pv === '2') return p.max <= 2;
+      if (pv === '3-5') return p.min >= 3 && p.max <= 5;
+      if (pv === '6-10') return p.min >= 6 && p.max <= 10;
+      if (pv === '10+') return p.min >= 10 || p.max >= 10;
+      return true;
+    });
+  }
+
+  // Apply difficulty filter
+  if (difficultyFilter && difficultyFilter.value !== 'all') {
+    const dv = parseInt(difficultyFilter.value);
+    games = games.filter(g => (g.art.difficultyNum || 1) === dv);
+  }
+
+  // Apply usage filter
+  if (usageFilter && usageFilter.value !== 'all') {
+    const uv = usageFilter.value;
+    games = games.filter(g => {
+      const u = g.art.usage || 'both';
+      if (uv === 'performance') return u === 'performance' || u === 'both';
+      if (uv === 'training') return u === 'training' || u === 'both';
+      if (uv === 'warmup') return u === 'warmup' || u === 'both';
+      return true;
+    });
+  }
+
   // Apply text search
   if (searchTerm) {
     games = games.filter(g => {
       const name = g.art.title.toLowerCase();
       const skills = (g.art.skills || []).join(' ').toLowerCase();
-      return name.includes(searchTerm) || skills.includes(searchTerm);
+      const subtopic = (g.art.subtopic || '').toLowerCase();
+      return name.includes(searchTerm) || skills.includes(searchTerm) || subtopic.includes(searchTerm);
     });
   }
+
+  // Show active filter tags
+  const tagsEl = document.getElementById('active-tags');
+  if (tagsEl) {
+    let tagHtml = '';
+    if (filter !== 'all') {
+      const label = Object.keys(gameSkills).find(k => gameSkills[k] === (gameSkills[filter] || filter)) || filter;
+      tagHtml += '<span class="active-tag">' + (gameSkills[filter] || filter) + ' <span class="tag-x" onclick="event.stopPropagation();document.querySelectorAll(\'#game-filters .filter-btn\').forEach(b=>b.classList.remove(\'active\'));document.querySelector(\'#game-filters .filter-btn[data-filter=all]\').classList.add(\'active\');renderGameList(\'all\')">×</span></span>';
+    }
+    if (playersFilter && playersFilter.value !== 'all') {
+      const labels = {'2':'2人','3-5':'3-5人','6-10':'6-10人','10+':'10人以上'};
+      tagHtml += '<span class="active-tag">' + (labels[playersFilter.value]||'') + ' <span class="tag-x" onclick="event.stopPropagation();document.getElementById(\'filter-players\').value=\'all\';renderGameList()">×</span></span>';
+    }
+    if (difficultyFilter && difficultyFilter.value !== 'all') {
+      const labels = {'1':'★入门','2':'★★进阶','3':'★★★挑战'};
+      tagHtml += '<span class="active-tag">' + (labels[difficultyFilter.value]||'') + ' <span class="tag-x" onclick="event.stopPropagation();document.getElementById(\'filter-difficulty\').value=\'all\';renderGameList()">×</span></span>';
+    }
+    if (usageFilter && usageFilter.value !== 'all') {
+      const labels = {'performance':'适合演出','training':'训练专用','warmup':'热身破冰'};
+      tagHtml += '<span class="active-tag">' + (labels[usageFilter.value]||'') + ' <span class="tag-x" onclick="event.stopPropagation();document.getElementById(\'filter-usage\').value=\'all\';renderGameList()">×</span></span>';
+    }
+    if (searchTerm) {
+      tagHtml += '<span class="active-tag">搜索:"' + searchTerm.substring(0,12) + (searchTerm.length>12?'...':'') + '" <span class="tag-x" onclick="event.stopPropagation();document.getElementById(\'game-search\').value=\'\';renderGameList()">×</span></span>';
+    }
+    tagsEl.innerHTML = tagHtml;
+  }
+
   let html = '';
   games.forEach(g => {
     const tags = (g.art.skills || []).map(s => '<span class="skill-tag">' + s + '</span>').join('');
     const gameName = g.art.title.split(' ——')[0];
+    const usageBadge = g.art.usage === 'performance' ? ' 🎪' : g.art.usage === 'warmup' ? ' 🔥' : g.art.usage === 'training' ? ' 🎯' : '';
+    const players = g.art.players || {};
+    const playerStr = players.label || '';
     html += '<div class="game-card" onclick="openArticle(\'' + g.id + '\')">' +
-      '<div class="game-header"><span class="game-name">' + gameName + '</span><span style="font-size:0.78rem;color:var(--text-dim)">' + g.art.level + '</span></div>' +
+      '<div class="game-header"><span class="game-name">' + gameName + usageBadge + '</span><span style="font-size:0.78rem;color:var(--text-dim)">' + g.art.level + '</span></div>' +
+      '<div class="game-meta"><span>' + playerStr + '</span><span>' + (g.art.usage === 'performance' ? '适合演出' : g.art.usage === 'warmup' ? '热身破冰' : g.art.usage === 'training' ? '训练专用' : '训练演出') + '</span></div>' +
       '<div class="game-skills">' + tags + '</div>' +
-      '<div class="game-desc" style="font-size:0.84rem;color:var(--text-dim);">' + g.art.subtopic + '</div>' +
       '</div>';
   });
-  container.innerHTML = html || '<p style="color:var(--text-dim);text-align:center;padding:32px;">没有匹配的游戏，试试其他关键词</p>';
+  container.innerHTML = html || '<p style="color:var(--text-dim);text-align:center;padding:32px;">没有匹配的游戏，试试调整筛选条件</p>';
 
-  // 更新筛选按钮状态
+  // Update filter button states
   document.querySelectorAll('#game-filters .filter-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.filter === filter);
   });
 }
 
-// 筛选按钮事件
+// Filter button events
 document.addEventListener('click', function(e) {
   if (e.target.classList.contains('filter-btn')) {
     renderGameList(e.target.dataset.filter);
@@ -2432,9 +2808,18 @@ document.addEventListener('click', function(e) {
 });
 
 function randomGame() {
+  // Pick random from currently filtered games
+  const container = document.getElementById('game-list');
+  if (container && container.children.length > 0 && container.children[0].classList.contains('game-card')) {
+    const cards = container.querySelectorAll('.game-card');
+    const idx = Math.floor(Math.random() * cards.length);
+    cards[idx].click();
+    return;
+  }
+  // Fallback: pick from all games
   const games = moduleOrder.module3;
   const idx = Math.floor(Math.random() * games.length);
-  document.getElementById('gen-result').textContent = '🎲 ' + articles[games[idx]].title;
+  openArticle(games[idx]);
 }
 
 const practicePool = [
@@ -2462,17 +2847,477 @@ const practicePool = [
   '🎁 Endowment 炸弹 —— 60 秒内给伙伴 3 个角色赋予'
 ];
 
+function randomPracticeHome() {
+  const idx = Math.floor(Math.random() * practicePool.length);
+  const el = document.getElementById('practice-result-home');
+  if (el) el.textContent = practicePool[idx];
+}
+
 function randomPractice() {
   const idx = Math.floor(Math.random() * practicePool.length);
   const el = document.getElementById('gen-result2') || document.getElementById('gen-result');
   if (el) el.textContent = practicePool[idx];
 }
 
+// ===== 提示词生成器 =====
+const promptData = {
+  places: ['深夜便利店', '废弃游乐场', '太空站厨房', '婚礼现场的后台', '凌晨三点的急诊室', '动物园的企鹅馆', '地下停车场', '楼顶天台', '第一次约会的高级餐厅', '偏远小镇的邮局', '海底观测站', '机场行李转盘旁', '空无一人的电影院', '雨中的公交站', '24小时洗衣房'],
+  relations: ['失散多年的兄妹', '互相暗恋的同事', '退休老教师和当年的学生', '面试官和过度准备的求职者', '离婚后第一次见面的夫妻', '外卖骑手和点了奇怪订单的顾客', '新搬来的邻居和社恐住户', '导演和第一次上场的替身演员', '有同一个前女友的两个人', '魔术师和他的托儿'],
+  emotions: ['压抑的狂喜', '假装不在乎的失落', '说不出口的感激', '愤怒之下的柔情', '尴尬到极致的礼貌', '绝望中的一抹乐观', '嫉妒但努力保持风度', '恐惧但强装镇定', '无聊到开始幻想', '害羞到说话结巴'],
+  objects: ['一把打不开的锁', '一盒过期的巧克力', '一张忘了是谁的照片', '一个永远响着但没人接的电话', '一封未寄出的信', '一支写不出字的笔', '一把透明的伞', '一个装着沙子的漂流瓶', '一只总是慢五分钟的手表', '一本被水浸过的日记'],
+  lines: ['"我知道你会这么说。"', '"你确定那玩意儿关了吗？"', '"我们再来一次。"', '"这不是我以为的样子。"', '"你闻到了吗？"', '"别告诉妈妈。"', '"这是我最后一次警告你。"', '"其实我一直想告诉你……"', '"你还留着那个？"', '"嘘——有人来了。"']
+};
+
+function generatePrompt() {
+  const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+  const place = pick(promptData.places);
+  const relation = pick(promptData.relations);
+  const emotion = pick(promptData.emotions);
+  const object = pick(promptData.objects);
+  const line = pick(promptData.lines);
+
+  const result = '<div style="margin-bottom:10px;"><strong style="color:var(--accent);">📍 地点：</strong>' + place + '</div>' +
+    '<div style="margin-bottom:10px;"><strong style="color:var(--accent);">👥 关系：</strong>' + relation + '</div>' +
+    '<div style="margin-bottom:10px;"><strong style="color:var(--accent);">💭 情绪：</strong>' + emotion + '</div>' +
+    '<div style="margin-bottom:10px;"><strong style="color:var(--accent);">📦 物件：</strong>' + object + '</div>' +
+    '<div style="margin-bottom:6px;"><strong style="color:var(--accent);">🗣️ 开场台词：</strong>' + line + '</div>';
+
+  const el = document.getElementById('prompt-result');
+  if (el) el.innerHTML = result;
+  window._lastPrompt = result;
+}
+
+function copyPrompt() {
+  if (!window._lastPrompt) { generatePrompt(); }
+  const text = window._lastPrompt.replace(/<[^>]+>/g, '').replace(/📍 /g, '\n📍 ').replace(/👥 /g, '\n👥 ').replace(/💭 /g, '\n💭 ').replace(/📦 /g, '\n📦 ').replace(/🗣️ /g, '\n🗣️ ').trim();
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.querySelector('#view-article .gen-btn-sm:last-child');
+      if (btn) { const orig = btn.textContent; btn.textContent = '✅ 已复制!'; setTimeout(() => btn.textContent = orig, 1500); }
+    }).catch(() => {});
+  }
+}
+
+// Homepage prompt generator
+function generateHomePrompt() {
+  const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+  const result = '<div style="margin-bottom:3px;"><span style="color:var(--accent);">📍 地点：</span>' + pick(promptData.places) + '</div>' +
+    '<div style="margin-bottom:3px;"><span style="color:var(--accent);">👥 关系：</span>' + pick(promptData.relations) + '</div>' +
+    '<div style="margin-bottom:3px;"><span style="color:var(--accent);">💭 情绪：</span>' + pick(promptData.emotions) + '</div>' +
+    '<div style="margin-bottom:3px;"><span style="color:var(--accent);">📦 物件：</span>' + pick(promptData.objects) + '</div>' +
+    '<div><span style="color:var(--accent);">🗣️ 台词：</span>' + pick(promptData.lines) + '</div>';
+  const el = document.getElementById('prompt-result-home');
+  if (el) el.innerHTML = result;
+  window._lastHomePrompt = result;
+}
+
+function copyHomePrompt() {
+  if (!window._lastHomePrompt) { generateHomePrompt(); }
+  const text = window._lastHomePrompt.replace(/<[^>]+>/g, '').replace(/📍/g, '\n📍').replace(/👥/g, '\n👥').replace(/💭/g, '\n💭').replace(/📦/g, '\n📦').replace(/🗣️/g, '\n🗣️').replace(/  \|  /g, '\n').trim();
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => {
+      const btns = document.querySelectorAll('#view-home .gen-btn-sm');
+      btns.forEach(btn => {
+        if (btn.textContent.includes('复制')) { const orig = btn.textContent; btn.textContent = '✅ 已复制!'; setTimeout(() => btn.textContent = orig, 1500); }
+      });
+    }).catch(() => {});
+  }
+}
+
+// Module 4 page standalone generator (kept for backward compatibility)
+function generatePromptMod4() { generateHomePrompt(); const el = document.getElementById('prompt-result-mod4'); if (el) el.innerHTML = window._lastHomePrompt || ''; }
+function copyPromptMod4() { copyHomePrompt(); }
+
+// ===== 能力测评 =====
+const quizDimensions = [
+  { name: '自发性', icon: '⚡', desc: '不假思索地行动和回应，绕过内心评判者', color: '#e8b860', articles: ['m1-1'] },
+  { name: 'Yes And 接纳力', icon: '🤝', desc: '接纳他人提议并创造性发展', color: '#60c0a0', articles: ['m1-2'] },
+  { name: '积极聆听', icon: '👂', desc: '真正听进对方的词、情绪和意图', color: '#60a0e0', articles: ['m1-4'] },
+  { name: '角色塑造', icon: '🎭', desc: '快速建立和切换不同角色', color: '#c080e0', articles: ['m1-6','m1-7'] },
+  { name: '情绪表达', icon: '💭', desc: '情绪范围的广度和切换灵活性', color: '#e08080', articles: ['m1-11'] },
+  { name: '空间与身体意识', icon: '🏃', desc: '用身体创造可见的物体和环境', color: '#80c080', articles: ['m1-7'] },
+  { name: '叙事构建', icon: '📖', desc: '推进故事、建立场景因果关系', color: '#e0a060', articles: ['m1-14','m1-15'] },
+  { name: '失败复原力', icon: '🔄', desc: '从错误中恢复、将意外变为燃料', color: '#80b0c0', articles: ['m1-3'] }
+];
+
+const quizQuestions = [
+  // 自发性 (5)
+  { dim: 0, q: '当有人突然让我"即兴表演一段"时，我能迅速行动而不犹豫。' },
+  { dim: 0, q: '在社交场合中，我通常是那个先开口说话的人。' },
+  { dim: 0, q: '想到一个好主意时，我会立刻行动，而不是反复权衡。' },
+  { dim: 0, q: '在头脑风暴中，我习惯于"想到什么说什么"而非在脑子里先编辑。' },
+  { dim: 0, q: '当计划突然改变时，我的第一反应是兴奋而不是焦虑。' },
+  // Yes And 接纳力 (4)
+  { dim: 1, q: '当别人提出一个我不喜欢的提议时，我能自然地接受并在其上发挥。' },
+  { dim: 1, q: '团队讨论中，我更倾向于在别人的想法上"添加"，而非提出全新的方向。' },
+  { dim: 1, q: '当对话中出现尴尬的沉默时，我能自然地接过话题并推进。' },
+  { dim: 1, q: '我很少说"是的，但是……"——更多时候我说"好，而且……"。' },
+  // 积极聆听 (4)
+  { dim: 2, q: '对话中，我能复述出对方刚才说的关键信息。' },
+  { dim: 2, q: '对方还没说完时，我不会在脑子里排练自己的回应。' },
+  { dim: 2, q: '我能从对方的语气和肢体语言中读出和语言内容不一致的情绪。' },
+  { dim: 2, q: '当多人同时说话时，我仍能跟踪每个人的核心意思。' },
+  // 角色塑造 (4)
+  { dim: 3, q: '我能用不同的声音或口音说话——并且不觉得尴尬。' },
+  { dim: 3, q: '改变走路姿态或身体重心后，我感觉自己也"变成了另一个人"。' },
+  { dim: 3, q: '讲故事时，我会不自觉地为不同角色配上不同的身体动作。' },
+  { dim: 3, q: '即使没有道具和服装，我也能用身体清晰表达一个角色的年龄和职业。' },
+  // 情绪表达 (4)
+  { dim: 4, q: '我能在 10 秒内从大笑切换到严肃的表情。' },
+  { dim: 4, q: '我的面部表情经常被朋友说"很丰富"。' },
+  { dim: 4, q: '看悲伤的电影时，我能真实地感受到并表达出悲伤。' },
+  { dim: 4, q: '我能在不诉诸刻板印象的情况下，表达愤怒、恐惧、喜悦等不同情绪。' },
+  // 空间与身体意识 (3)
+  { dim: 5, q: '我能用无实物动作让人看出我在"倒水"、"开门"或"刷牙"。' },
+  { dim: 5, q: '在空间中移动时，我清楚自己的身体在什么位置、占据了多少空间。' },
+  { dim: 5, q: '当我在一个空房间里时，我能想象并用身体表现出这个房间"有什么"。' },
+  // 叙事构建 (3)
+  { dim: 6, q: '朋友让我"讲个故事"时，我能顺畅地编出一个有开头、发展和结尾的故事。' },
+  { dim: 6, q: '看一个场景时，我能快速感知到"之前发生了什么"和"接下来会发生什么"。' },
+  { dim: 6, q: '我能在一段即兴叙事中自然地埋下伏笔并在后面回收。' },
+  // 失败复原力 (3)
+  { dim: 7, q: '当我在众人面前说错话或做错事时，我能自嘲并快速继续。' },
+  { dim: 7, q: '我把"失败"更多地看作学习机会，而非需要回避的事情。' },
+  { dim: 7, q: '当事情完全脱离计划时，我能找到新的方向而不是僵住。' }
+];
+
+const quizAnswers = {};
+
+function renderQuiz() {
+  // Clear all containers first to prevent duplicates on re-entry
+  for (let d = 0; d < 8; d++) {
+    const c = document.getElementById('quiz-items-' + d);
+    if (c) c.innerHTML = '';
+  }
+  quizQuestions.forEach((item, i) => {
+    const container = document.getElementById('quiz-items-' + item.dim);
+    if (!container) return;
+    const div = document.createElement('div');
+    div.className = 'quiz-item';
+    div.id = 'q-item-' + i;
+    div.innerHTML = '<span class="q-text">' + (i + 1) + '. ' + item.q + '</span>' +
+      '<div style="display:flex;align-items:center;gap:4px;flex-shrink:0;">' +
+      '<span style="font-size:0.6rem;color:var(--text-dim);">不符合</span>' +
+      '<div class="q-opts">' +
+      [1,2,3,4,5].map(v =>
+        '<button class="q-opt" data-q="' + i + '" data-v="' + v + '" onclick="selectAnswer(' + i + ',' + v + ',this)" title="' + ['完全不符合','不太符合','一般','比较符合','完全符合'][v-1] + '">' + v + '</button>'
+      ).join('') +
+      '</div>' +
+      '<span style="font-size:0.6rem;color:var(--text-dim);">符合</span>' +
+      '</div>';
+    container.appendChild(div);
+  });
+  updateQuizProgress();
+}
+
+function selectAnswer(qIdx, value, btn) {
+  quizAnswers[qIdx] = value;
+  const itemEl = document.getElementById('q-item-' + qIdx);
+  if (itemEl) {
+    itemEl.querySelectorAll('.q-opt').forEach(b => b.classList.remove('sel'));
+    btn.classList.add('sel');
+  }
+  updateQuizProgress();
+  // Enable submit button when all answered
+  const allAnswered = quizQuestions.every((_, i) => quizAnswers[i]);
+  document.getElementById('quiz-submit').disabled = !allAnswered;
+  document.getElementById('quiz-submit').textContent = allAnswered ? '📊 查看测评结果' : '请完成所有题目';
+}
+
+function updateQuizProgress() {
+  const answered = Object.keys(quizAnswers).length;
+  document.getElementById('quiz-progress').textContent = '已答 ' + answered + ' / ' + quizQuestions.length + ' 题';
+}
+
+function submitAssessment() {
+  const allAnswered = quizQuestions.every((_, i) => quizAnswers[i]);
+  if (!allAnswered) return;
+
+  // Calculate scores per dimension
+  const dimScores = quizDimensions.map((dim, dIdx) => {
+    const dimQuestions = quizQuestions.filter((_, i) => quizQuestions[i].dim === dIdx);
+    const total = dimQuestions.reduce((sum, q, qi) => {
+      const globalIdx = quizQuestions.indexOf(q);
+      return sum + (quizAnswers[globalIdx] || 1);
+    }, 0);
+    const max = dimQuestions.length * 5;
+    const score = Math.round((total / max) * 100);
+    return { ...dim, score, maxPossible: max, raw: total, count: dimQuestions.length };
+  });
+
+  const overall = Math.round(dimScores.reduce((s, d) => s + d.score, 0) / dimScores.length);
+
+  // Show results
+  document.getElementById('quiz-container').style.display = 'none';
+  document.getElementById('result-container').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Render radar chart
+  renderRadarChart(dimScores);
+
+  // Render dimension score cards
+  let cardsHtml = '';
+  dimScores.forEach(d => {
+    const level = d.score >= 80 ? '强项' : d.score >= 60 ? '发展中' : d.score >= 40 ? '待提升' : '起步区';
+    const levelColor = d.score >= 80 ? '#60c080' : d.score >= 60 ? '#e8b860' : d.score >= 40 ? '#e08860' : '#e06060';
+    const tip = getTip(d);
+    cardsHtml += '<div class="dim-score-card">' +
+      '<div class="ds-header"><span class="ds-name">' + d.icon + ' ' + d.name + '</span><span class="ds-val" style="color:' + levelColor + '">' + d.score + '</span></div>' +
+      '<div class="ds-bar"><div class="ds-fill" style="width:' + d.score + '%;background:' + d.color + ';"></div></div>' +
+      '<div class="ds-tip"><strong>' + level + '</strong> · ' + tip + '</div>' +
+      '</div>';
+  });
+  document.getElementById('dim-scores').innerHTML = cardsHtml;
+
+  // Overall analysis
+  const topDim = dimScores.reduce((a, b) => a.score > b.score ? a : b);
+  const lowDim = dimScores.reduce((a, b) => a.score < b.score ? a : b);
+  document.getElementById('overall-analysis').innerHTML =
+    '<h3 style="color:var(--accent);margin-bottom:10px;">📊 综合分析</h3>' +
+    '<p style="font-size:1.1rem;margin-bottom:12px;">你的即兴综合能力得分：<strong style="color:var(--accent);font-size:1.3rem;">' + overall + ' 分</strong></p>' +
+    '<p style="color:var(--text);line-height:1.7;">你的最强维度是<strong style="color:#60c080;">' + topDim.name + '</strong>（' + topDim.score + '分）——这是你的即兴超能力，在练习和演出中善用它来带动其他维度。最需要提升的维度是<strong style="color:#e08860;">' + lowDim.name + '</strong>（' + lowDim.score + '分）——建议优先学习相关文章并结合游戏库中的针对性游戏进行练习。</p>' +
+    '<p style="color:var(--text-dim);font-size:0.85rem;margin-top:8px;">💡 每个维度的卡片中包含了具体的学习建议。点击下方按钮进入对应模块开始提升。</p>';
+}
+
+function getTip(d) {
+  if (d.score >= 80) return '你已经在这个维度上很有自信。尝试在更高压的环境下练习（如公开演出），或帮助训练伙伴提升。';
+  if (d.score >= 60) return '你有不错的基础，但还有提升空间。建议每周聚焦此维度做 2-3 次专项练习。';
+  if (d.score >= 40) return '此维度是你的发展重点。从低威胁的练习开始，建立信心后再逐步升级。';
+  return '这是你最有成长潜力的领域。不需要焦虑——即兴的每个维度都可以通过刻意练习提升，而且提升速度往往很快。';
+}
+
+function renderRadarChart(dimScores) {
+  const cx = 200, cy = 200, r = 150, n = dimScores.length;
+  const svgParts = [];
+  svgParts.push('<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">');
+
+  // Background grid
+  [0.2, 0.4, 0.6, 0.8, 1.0].forEach(level => {
+    const points = [];
+    for (let i = 0; i < n; i++) {
+      const angle = (Math.PI * 2 * i) / n - Math.PI / 2;
+      points.push((cx + r * level * Math.cos(angle)).toFixed(1) + ',' + (cy + r * level * Math.sin(angle)).toFixed(1));
+    }
+    svgParts.push('<polygon points="' + points.join(' ') + '" fill="none" stroke="var(--card-border)" stroke-width="0.5"/>');
+  });
+
+  // Axis lines
+  for (let i = 0; i < n; i++) {
+    const angle = (Math.PI * 2 * i) / n - Math.PI / 2;
+    const ex = cx + r * Math.cos(angle), ey = cy + r * Math.sin(angle);
+    svgParts.push('<line x1="' + cx + '" y1="' + cy + '" x2="' + ex.toFixed(1) + '" y2="' + ey.toFixed(1) + '" stroke="var(--card-border)" stroke-width="0.5"/>');
+  }
+
+  // Data polygon
+  const dataPoints = [];
+  dimScores.forEach((d, i) => {
+    const angle = (Math.PI * 2 * i) / n - Math.PI / 2;
+    const dist = r * (d.score / 100);
+    dataPoints.push((cx + dist * Math.cos(angle)).toFixed(1) + ',' + (cy + dist * Math.sin(angle)).toFixed(1));
+  });
+  svgParts.push('<polygon points="' + dataPoints.join(' ') + '" fill="rgba(232,184,96,0.15)" stroke="var(--accent)" stroke-width="2"/>');
+
+  // Data points
+  dimScores.forEach((d, i) => {
+    const angle = (Math.PI * 2 * i) / n - Math.PI / 2;
+    const dist = r * (d.score / 100);
+    const px = (cx + dist * Math.cos(angle)).toFixed(1), py = (cy + dist * Math.sin(angle)).toFixed(1);
+    svgParts.push('<circle cx="' + px + '" cy="' + py + '" r="4" fill="var(--accent)"/>');
+  });
+
+  // Labels
+  dimScores.forEach((d, i) => {
+    const angle = (Math.PI * 2 * i) / n - Math.PI / 2;
+    const lx = cx + (r + 28) * Math.cos(angle), ly = cy + (r + 28) * Math.sin(angle);
+    const anchor = lx < cx - 10 ? 'end' : lx > cx + 10 ? 'start' : 'middle';
+    svgParts.push('<text x="' + lx.toFixed(1) + '" y="' + (ly + 4).toFixed(1) + '" text-anchor="' + anchor + '" fill="var(--text-dim)" font-size="11" font-family="var(--font)">' + d.name + ' ' + d.score + '</text>');
+  });
+
+  svgParts.push('</svg>');
+  document.getElementById('radar-chart').innerHTML = svgParts.join('');
+}
+
+function retakeAssessment() {
+  Object.keys(quizAnswers).forEach(k => delete quizAnswers[k]);
+  document.querySelectorAll('.q-opt').forEach(b => b.classList.remove('sel'));
+  document.getElementById('quiz-container').style.display = 'block';
+  document.getElementById('result-container').style.display = 'none';
+  document.getElementById('quiz-submit').disabled = true;
+  document.getElementById('quiz-submit').textContent = '请完成所有题目';
+  updateQuizProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Update navTo to support assess view
+const origNavTo = navTo;
+navTo = function(target) {
+  if (target === 'assess') {
+    showView('assess');
+    window.location.hash = 'assess';
+    currentArticle = null;
+    updateNavHighlight('assess');
+    renderQuiz();
+    // Reset quiz if returning
+    if (document.getElementById('result-container').style.display === 'block') {
+      retakeAssessment();
+    }
+    return;
+  }
+  origNavTo(target);
+};
+
+// Update updateNavHighlight to support assess
+const origUpdateNavHighlight = updateNavHighlight;
+updateNavHighlight = function(target) {
+  if (target === 'assess') {
+    document.querySelectorAll('#nav-links a').forEach(a => a.classList.remove('active'));
+    const link = document.querySelector('#nav-links a[data-nav="assess"]');
+    if (link) link.classList.add('active');
+    return;
+  }
+  origUpdateNavHighlight(target);
+};
+
+// ===== 智能 FAQ =====
+let faqIndex = null;
+
+function buildFAQIndex() {
+  if (faqIndex) return faqIndex;
+  faqIndex = [];
+  const stopWords = new Set(['的','了','在','是','我','有','和','就','不','人','都','一','一个','上','也','很','到','说','要','去','你','会','着','没有','看','好','自己','这','他','她','它','们','那','些','什么','怎么','哪','吗','吧','呢','啊','哦','嗯','但','被','从','把','让','对','与','或','可以','能','会','更','最','为','所以','因为','如果','虽然','然后','这个','那个','一个']);
+  Object.keys(articles).forEach(id => {
+    const art = articles[id];
+    const text = (art.title + ' ' + art.subtopic + ' ' + art.content).replace(/<[^>]+>/g, '').replace(/&[^;]+;/g, '').toLowerCase();
+    // Build word frequency
+    const words = text.split(/[\s，。！？、；：""''（）《》【】\n\r\t,.!?;:()\[\]{}]+/).filter(w => w.length >= 1 && !stopWords.has(w));
+    const wordFreq = {};
+    words.forEach(w => { wordFreq[w] = (wordFreq[w] || 0) + 1; });
+    faqIndex.push({ id, art, text, wordFreq, words: words.join(' ') });
+  });
+  return faqIndex;
+}
+
+function searchFAQ() {
+  const query = document.getElementById('faq-input').value.trim();
+  if (!query) return;
+  const idx = buildFAQIndex();
+  const qWords = query.toLowerCase().split(/[\s，。！？、；：""''（）《》【】]+/).filter(w => w.length >= 1);
+
+  // Score each article
+  const scored = idx.map(entry => {
+    let score = 0;
+    const textLower = entry.text;
+    const titleLower = entry.art.title.toLowerCase();
+    qWords.forEach(w => {
+      // Title match (high weight)
+      if (titleLower.includes(w)) score += 8;
+      // Content word frequency
+      score += (entry.wordFreq[w] || 0);
+      // Exact phrase bonus
+      if (textLower.includes(query.toLowerCase())) score += 15;
+    });
+    return { ...entry, score };
+  });
+
+  // Sort and take top 5
+  const top = scored.filter(s => s.score > 0).sort((a, b) => b.score - a.score).slice(0, 5);
+
+  const container = document.getElementById('faq-results');
+  if (top.length === 0) {
+    container.innerHTML = '<div style="text-align:center;padding:32px;color:var(--text-dim);"><p style="font-size:1.1rem;">😕 没有找到直接匹配的内容</p><p style="margin-top:8px;">试试换个说法，或者使用更简短的词语提问。例如："即兴入门""克服紧张""长即兴格式"</p></div>';
+    return;
+  }
+
+  let html = '<p style="color:var(--text-dim);font-size:0.82rem;margin-bottom:16px;">找到 ' + top.length + ' 篇相关内容：</p>';
+  top.forEach((entry, i) => {
+    const art = entry.art;
+    // Generate snippet: find the most relevant paragraph
+    const paragraphs = entry.text.split(/\n+/);
+    let bestPara = paragraphs[0] || '';
+    let bestParaScore = 0;
+    paragraphs.forEach(p => {
+      let ps = 0;
+      qWords.forEach(w => { ps += (p.match(new RegExp(w, 'gi')) || []).length; });
+      if (ps > bestParaScore) { bestParaScore = ps; bestPara = p; }
+    });
+    const snippet = bestPara.length > 200 ? bestPara.substring(0, 200) + '...' : bestPara;
+
+    html += '<div class="card" style="margin-bottom:12px;cursor:pointer;padding:16px 20px;" onclick="openArticle(\'' + entry.id + '\')">' +
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">' +
+      '<div><div style="font-weight:700;color:var(--text-bright);margin-bottom:4px;">' + art.title + '</div>' +
+      '<div style="font-size:0.84rem;color:var(--text-dim);line-height:1.6;">' + snippet + '</div></div>' +
+      '<span style="font-size:0.74rem;color:var(--accent);white-space:nowrap;flex-shrink:0;">' + art.moduleName + ' →</span>' +
+      '</div></div>';
+  });
+  container.innerHTML = html;
+
+  // Save search for suggestions
+  try { localStorage.setItem('faq-last-query', query); } catch(e) {}
+}
+
+// Quick questions
+function renderFAQQuick() {
+  const questions = ['什么是即兴戏剧？', '如何克服上台紧张？', 'Yes And 怎么练？', '新手从哪个游戏开始？', '长即兴和短即兴的区别？', '一个人怎么练习即兴？', '即兴演出如何准备？', '怎样建立角色？'];
+  const el = document.getElementById('faq-quick');
+  if (!el) return;
+  let html = '<span style="font-size:0.78rem;color:var(--text-dim);margin-right:4px;">快速提问：</span>';
+  questions.forEach(q => {
+    html += '<button onclick="document.getElementById(\'faq-input\').value=\'' + q + '\';searchFAQ()" style="font-size:0.74rem;padding:4px 12px;border-radius:14px;border:1px solid var(--card-border);background:transparent;color:var(--text-dim);cursor:pointer;font-family:var(--font);transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.borderColor=\'var(--accent-dim)\';this.style.color=\'var(--text)\'" onmouseout="this.style.borderColor=\'var(--card-border)\';this.style.color=\'var(--text-dim)\'">' + q + '</button>';
+  });
+  el.innerHTML = html;
+}
+
+// Update navTo to support faq view
+const origNavTo2 = navTo;
+navTo = function(target) {
+  if (target === 'faq') {
+    showView('faq');
+    window.location.hash = 'faq';
+    currentArticle = null;
+    updateNavHighlight('faq');
+    renderFAQQuick();
+    document.getElementById('faq-results').innerHTML = '';
+    document.getElementById('faq-input').value = '';
+    document.getElementById('faq-input').focus();
+    return;
+  }
+  if (target === 'assess') {
+    showView('assess');
+    window.location.hash = 'assess';
+    currentArticle = null;
+    updateNavHighlight('assess');
+    renderQuiz();
+    if (document.getElementById('result-container').style.display === 'block') {
+      retakeAssessment();
+    }
+    return;
+  }
+  origNavTo2(target);
+};
+
+// Update updateNavHighlight to support faq
+const origUpdateNavHighlight2 = updateNavHighlight;
+updateNavHighlight = function(target) {
+  if (target === 'faq') {
+    document.querySelectorAll('#nav-links a').forEach(a => a.classList.remove('active'));
+    const link = document.querySelector('#nav-links a[data-nav="faq"]');
+    if (link) link.classList.add('active');
+    return;
+  }
+  if (target === 'assess') {
+    document.querySelectorAll('#nav-links a').forEach(a => a.classList.remove('active'));
+    const link = document.querySelector('#nav-links a[data-nav="assess"]');
+    if (link) link.classList.add('active');
+    return;
+  }
+  origUpdateNavHighlight2(target);
+};
+
 function init() {
   loadChecks();
   const hash = window.location.hash.replace('#', '');
   if (hash) {
-    if (hash === 'module0' || hash === 'module1' || hash === 'module2' || hash === 'module3' || hash === 'module4') { navTo(hash); }
+    if (hash === 'module0' || hash === 'module1' || hash === 'module2' || hash === 'module3' || hash === 'module4' || hash === 'assess' || hash === 'faq') { navTo(hash); }
     else if (articles[hash]) { openArticle(hash); }
   } else {
     updateNavHighlight('home');
@@ -2480,7 +3325,7 @@ function init() {
   window.addEventListener('hashchange', () => {
     const h = window.location.hash.replace('#', '');
     if (!h) { navTo('home'); return; }
-    if (h === 'module0' || h === 'module1' || h === 'module2' || h === 'module3' || h === 'module4') { navTo(h); return; }
+    if (h === 'module0' || h === 'module1' || h === 'module2' || h === 'module3' || h === 'module4' || h === 'assess' || h === 'faq') { navTo(h); return; }
     if (articles[h]) { openArticle(h); }
   });
 }
