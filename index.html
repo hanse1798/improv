@@ -204,9 +204,11 @@ body::before {
 .active-tag .tag-x:hover { opacity: 1; }
 
 .toolbar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
-.toolbar-row .gen-btn-sm { display: inline-flex; align-items: center; gap: 4px; padding: 8px 18px; background: var(--accent); color: var(--bg); border: none; border-radius: 20px; font-size: 0.8rem; font-weight: 600; cursor: pointer; font-family: var(--font); transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 2px 8px var(--accent-glow); white-space: nowrap; }
-.toolbar-row .gen-btn-sm:hover { transform: scale(1.04); }
 .toolbar-row .gen-result-inline { font-size: 0.84rem; color: var(--text); font-weight: 500; min-width: 0; flex: 1; }
+
+/* 通用小按钮 */
+.gen-btn-sm { display: inline-flex; align-items: center; gap: 4px; padding: 8px 18px; background: var(--accent); color: var(--bg); border: none; border-radius: 20px; font-size: 0.8rem; font-weight: 600; cursor: pointer; font-family: var(--font); transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 2px 8px var(--accent-glow); white-space: nowrap; }
+.gen-btn-sm:hover { transform: scale(1.04); }
 
 .game-card { cursor: pointer; padding: 16px 20px; border-radius: var(--radius-sm); border: 1px solid var(--card-border); background: var(--card); transition: all 0.2s; margin-bottom: 8px; }
 .game-card:hover { background: var(--card-hover); transform: translateX(3px); }
@@ -252,15 +254,21 @@ body::before {
 
 @media (min-width: 740px) {
   .module-grid { grid-template-columns: repeat(3, 1fr); }
-  .tool-grid { grid-template-columns: 2fr 1fr; }
-  .prompt-tool { grid-row: 1 / 3; }
+  .tool-grid { grid-template-columns: repeat(3, 1fr); }
+  .tool-grid > :nth-child(1) { grid-column: 1; grid-row: 1; }
+  .tool-grid > :nth-child(2) { grid-column: 2; grid-row: 1; }
+  .tool-grid > :nth-child(4) { grid-column: 3; grid-row: 1; }
+  .prompt-tool { grid-column: 1 / -1; grid-row: 2; }
   .hero h1 { font-size: 2.4rem; }
 }
 
 @media (min-width: 1000px) {
   .module-grid { grid-template-columns: repeat(3, 1fr); max-width: 780px; margin-left: auto; margin-right: auto; }
-  .tool-grid { grid-template-columns: 2fr 1fr; max-width: 780px; margin-left: auto; margin-right: auto; }
-  .prompt-tool { grid-row: 1 / 3; }
+  .tool-grid { grid-template-columns: repeat(3, 1fr); max-width: 780px; margin-left: auto; margin-right: auto; }
+  .tool-grid > :nth-child(1) { grid-column: 1; grid-row: 1; }
+  .tool-grid > :nth-child(2) { grid-column: 2; grid-row: 1; }
+  .tool-grid > :nth-child(4) { grid-column: 3; grid-row: 1; }
+  .prompt-tool { grid-column: 1 / -1; grid-row: 2; }
   .module-card { padding: 28px; }
   .module-card .module-title { font-size: 1.2rem; }
   .module-card .module-desc { font-size: 0.86rem; }
@@ -284,10 +292,9 @@ body::before {
   .article-row .art-check { margin-top: 0.05em; }
   html { font-size: 15px; }
 }
-.prompt-gen .gen-btn-sm:last-child:hover { border-color: var(--accent); background: rgba(232,184,96,0.1); }
 
 /* ===== 能力测评 ===== */
-.assess-intro { text-align: center; padding: 30px 0 10px; }
+.assess-intro { text-align: center; padding: 20px 0 32px; }
 .assess-intro h2 { font-size: 1.6rem; color: var(--text-bright); margin-bottom: 8px; }
 .assess-intro p { color: var(--text-dim); font-size: 0.9rem; }
 
@@ -328,6 +335,34 @@ body::before {
   .quiz-item { flex-direction: column; align-items: flex-start; }
   .dim-scores { grid-template-columns: 1fr; }
 }
+.review-quad-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.review-quad { border-radius: var(--radius-sm); padding: 20px 22px; }
+.review-quad h4 { font-size: 0.95rem; margin-bottom: 6px; }
+.review-quad .quad-hint { font-size: 0.74rem; color: var(--text-dim); margin-bottom: 8px; }
+.review-quad textarea { width: 100%; background: var(--bg); border: 1px solid var(--card-border); border-radius: var(--radius-sm); color: var(--text); font-family: var(--font); font-size: 0.82rem; padding: 10px; resize: vertical; outline: none; transition: border-color 0.2s; line-height: 1.6; }
+.review-quad textarea:focus { border-color: var(--accent-dim); }
+.review-quad.keep { background: rgba(96,192,128,0.06); border: 1px solid rgba(96,192,128,0.25); }
+.review-quad.keep h4 { color: #60c080; }
+.review-quad.improve { background: rgba(232,184,96,0.06); border: 1px solid rgba(232,184,96,0.25); }
+.review-quad.improve h4 { color: var(--accent); }
+.review-quad.start { background: rgba(96,160,224,0.06); border: 1px solid rgba(96,160,224,0.25); }
+.review-quad.start h4 { color: #60a0e0; }
+.review-quad.stop { background: rgba(224,96,96,0.06); border: 1px solid rgba(224,96,96,0.25); }
+.review-quad.stop h4 { color: #e06060; }
+.review-quick { border-radius: var(--radius-sm); padding: 20px 22px; border-left: 3px solid var(--accent-dim); background: var(--card); transition: background 0.2s; }
+.review-quick.highlight { background: rgba(96,192,128,0.06); border: 1px solid rgba(96,192,128,0.25); border-left: 3px solid #60c080; }
+.review-quick.highlight h4 { color: #60c080; }
+.review-quick.polish { background: rgba(232,184,96,0.06); border: 1px solid rgba(232,184,96,0.25); border-left: 3px solid var(--accent); }
+.review-quick.polish h4 { color: var(--accent); }
+.review-quick.trynext { background: rgba(96,160,224,0.06); border: 1px solid rgba(96,160,224,0.25); border-left: 3px solid #60a0e0; }
+.review-quick.trynext h4 { color: #60a0e0; }
+.review-meta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+.review-meta-row input, .review-meta-row select { background: var(--bg); border: 1px solid var(--card-border); border-radius: var(--radius-sm); color: var(--text); font-family: var(--font); font-size: 0.84rem; padding: 10px 14px; outline: none; transition: border-color 0.2s; }
+.review-meta-row input:focus, .review-meta-row select:focus { border-color: var(--accent-dim); }
+@media (max-width: 540px) {
+  .review-quad-grid { grid-template-columns: 1fr; }
+  .review-meta-row { flex-direction: column; }
+}
 </style>
 </head>
 <body>
@@ -348,6 +383,7 @@ body::before {
         <a data-nav="module4" onclick="navTo('module4');document.getElementById('nav-menu-check').checked=false">演出资源</a>
         <a data-nav="assess" onclick="navTo('assess');document.getElementById('nav-menu-check').checked=false">能力测评</a>
         <a data-nav="faq" onclick="navTo('faq');document.getElementById('nav-menu-check').checked=false" title="AI智能问答">💬 问答</a>
+        <a data-nav="review" onclick="navTo('review');document.getElementById('nav-menu-check').checked=false">📋 复盘</a>
       </div>
     </div>
   </nav>
@@ -356,7 +392,7 @@ body::before {
   <section class="view active" id="view-home">
     <div class="hero">
       <h1>即兴戏剧<span class="accent-dot"> · </span>从入门到高阶</h1>
-      <p class="subtitle">从即兴的历史起源到核心技巧，从系统学习路径到 60 个实战游戏 —— 适合零基础新手，也适合有经验的演员精进。</p>
+      <p class="subtitle">从即兴的历史起源到核心技巧，从系统学习路径到 113 个实战游戏 —— 适合零基础新手，也适合有经验的演员精进。</p>
     </div>
 
     <details class="quickstart card">
@@ -399,8 +435,8 @@ body::before {
         <div class="module-icon">🎪</div>
         <div class="module-num">模块四</div>
         <div class="module-title">即兴游戏库</div>
-        <div class="module-desc">60 个短即兴游戏，按能力分类，每个游戏附训练目标与教学提示。</div>
-        <div class="module-meta">6 个分类 · 60 个游戏</div>
+        <div class="module-desc">113 个即兴游戏，按能力分类，每个游戏附训练目标与教学提示。</div>
+        <div class="module-meta">8 个分类 · 113 个游戏</div>
       </div>
 
       <div class="card module-card" onclick="navTo('module4')">
@@ -408,7 +444,7 @@ body::before {
         <div class="module-num">模块五</div>
         <div class="module-title">资源与演出</div>
         <div class="module-desc">练习导航、演出准备、提示词指南与推荐资源——从学习到上台一条龙。</div>
-        <div class="module-meta">5 个板块 · 12 篇文章</div>
+        <div class="module-meta">6 个板块 · 13 篇文章</div>
       </div>
     </div>
 
@@ -436,19 +472,26 @@ body::before {
           <div style="flex:1;min-width:180px;">
             <div style="font-size:0.7rem;color:var(--text-dim);margin-bottom:4px;">🎲 场景灵感</div>
             <div id="prompt-result-home" style="font-size:0.8rem;color:var(--accent);line-height:1.5;min-height:24px;margin-bottom:6px;"></div>
-            <span class="gen-btn-sm" onclick="event.stopPropagation();generateHomePrompt()" style="font-size:0.76rem;padding:6px 14px;cursor:pointer;">提示词生成</span>
-            <span class="gen-btn-sm" onclick="event.stopPropagation();copyHomePrompt()" style="font-size:0.76rem;padding:6px 14px;cursor:pointer;background:transparent;border:1px solid var(--accent);color:var(--accent);margin-left:4px;">📋 复制</span>
+            <span class="gen-btn-sm" onclick="event.stopPropagation();generateHomePrompt()" style="font-size:0.76rem;padding:6px 14px;">提示词生成</span>
+            <span class="gen-btn-sm" onclick="event.stopPropagation();copyHomePrompt()" style="font-size:0.76rem;padding:6px 14px;background:transparent;border:1px solid var(--accent);color:var(--accent);margin-left:4px;">📋 复制</span>
           </div>
           <div style="flex:1;min-width:180px;border-left:1px solid var(--card-border);padding-left:16px;">
             <div style="font-size:0.7rem;color:var(--text-dim);margin-bottom:4px;">🔄 今天练什么</div>
             <div id="practice-result-home" style="font-size:0.8rem;color:var(--text);line-height:1.4;min-height:24px;margin-bottom:6px;"></div>
-            <span class="gen-btn-sm" onclick="event.stopPropagation();randomPracticeHome()" style="font-size:0.76rem;padding:6px 14px;cursor:pointer;background:transparent;border:1px solid var(--card-border);color:var(--text-dim);">换个练习</span>
+            <span class="gen-btn-sm" onclick="event.stopPropagation();randomPracticeHome()" style="font-size:0.76rem;padding:6px 14px;">🔄 换个练习</span>
           </div>
         </div>
       </div>
+
+      <div class="card tool-card" onclick="navTo('review')" style="border-left-color:#60c080;">
+        <div class="tool-icon">📋</div>
+        <div class="tool-title">排练/演出复盘</div>
+        <div class="tool-desc">KISS · 三问复盘 · 三点复盘 —— 三种模型，快速记录每次排练演出的收获</div>
+        <div class="tool-action">开始复盘 →</div>
+      </div>
     </div>
 
-    <div class="footer">共 5 个模块 + 3 个工具 · 110 篇文章 · 60 个游戏 · 能力测评 · 智能问答 · 快速开始 · 学习进度本地存储</div>
+    <div class="footer">共 5 个模块 + 4 个工具 · 110+ 篇文章 · 113 个游戏 · 能力测评 · 智能问答 · 快速开始 · 复盘 · 学习进度本地存储</div>
   </section>
 
   <!-- ==================== 模块零：认识即兴（新增） ==================== -->
@@ -576,7 +619,7 @@ body::before {
     <div class="back-link" onclick="navTo('home')">← 返回首页</div>
     <div class="list-header">
       <h2>即兴游戏库</h2>
-      <p class="list-subtitle">60 个短即兴游戏，按能力分类，每个游戏附训练目标与教学提示</p>
+      <p class="list-subtitle">113 个即兴游戏，按能力分类，每个游戏附训练目标与教学提示</p>
     </div>
 
     <div class="game-filters" id="game-filters">
@@ -588,6 +631,8 @@ body::before {
       <button class="filter-btn" data-filter="场景">📖 场景</button>
       <button class="filter-btn" data-filter="地位情绪">⚡ 地位情绪</button>
       <button class="filter-btn" data-filter="竞技">🏆 竞技</button>
+      <button class="filter-btn" data-filter="语言">📝 语言</button>
+      <button class="filter-btn" data-filter="长即兴">📐 长即兴</button>
     </div>
     <div class="game-filters" style="margin-bottom:6px;">
       <span class="filter-label">人数：</span>
@@ -613,7 +658,7 @@ body::before {
         <option value="warmup">🔥 热身破冰</option>
       </select>
       <span class="filter-divider"></span>
-      <input type="text" id="game-search" placeholder="🔍 搜索游戏名..." style="width:170px;padding:6px 12px;border-radius:20px;border:1px solid var(--card-border);background:var(--card);color:var(--text);font-size:0.78rem;font-family:var(--font);outline:none;transition:border-color 0.2s;" oninput="renderGameList()">
+      <input type="text" id="game-search" placeholder="🔍 搜索游戏名..." style="width:170px;padding:10px 14px;border-radius:20px;border:1px solid var(--card-border);background:var(--card);color:var(--text);font-size:0.78rem;font-family:var(--font);outline:none;transition:border-color 0.2s;" oninput="renderGameList()">
       <button class="gen-btn-sm" onclick="randomGame()" style="font-size:0.78rem;padding:6px 14px;">🎲 随机</button>
     </div>
     <div class="active-tags" id="active-tags"></div>
@@ -669,6 +714,11 @@ body::before {
     </div>
 
     <div class="subtopic-group">
+      <div class="subtopic-title">复盘方法</div>
+      <div class="article-row" onclick="openArticle('m4-14')"><div class="art-dot"></div><div class="art-title">排练与演出的复盘方法论 —— 如何用结构化复盘持续提升</div><span class="art-badge">方法</span><div class="art-check" id="check-m4-14" onclick="event.stopPropagation();toggleCheck('m4-14')"></div></div>
+    </div>
+
+    <div class="subtopic-group">
       <div class="subtopic-title">推荐资源</div>
       <div class="article-row" onclick="openArticle('m4-11')"><div class="art-dot"></div><div class="art-title">书单、视频频道与播客 —— 即兴戏剧优质学习资源推荐</div><span class="art-badge">资源</span><div class="art-check" id="check-m4-11" onclick="event.stopPropagation();toggleCheck('m4-11')"></div></div>
     </div>
@@ -678,7 +728,7 @@ body::before {
       <div class="article-row" onclick="openArticle('m4-12')"><div class="art-dot"></div><div class="art-title">每日 15 分钟计划 + 加入社群指南 —— 从今天开始行动</div><span class="art-badge">行动</span><div class="art-check" id="check-m4-12" onclick="event.stopPropagation();toggleCheck('m4-12')"></div></div>
     </div>
 
-    <div class="card generator" style="margin-top: 24px;">
+    <div class="card generator" style="margin-top: 28px;">
       <h3 style="color:var(--text-bright);margin-bottom:6px;">🎲 今日练习随机生成器</h3>
       <p style="color:var(--text-dim);font-size:0.88rem;margin-bottom:16px;">不知道今天练什么？点一下随机推荐一个练习</p>
       <button class="gen-btn" onclick="randomPractice()">随机抽取</button>
@@ -748,8 +798,7 @@ body::before {
       <p>输入你的问题，从全站 109 篇文章中智能匹配最相关的内容</p>
     </div>
 
-    <div style="max-width:640px;margin:0 auto;">
-      <div style="display:flex;gap:10px;margin-bottom:24px;">
+    <div style="display:flex;gap:10px;margin-bottom:24px;">
         <input type="text" id="faq-input" placeholder="例如：什么是 Yes And？如何开始学即兴？怎样克服紧张？..." style="flex:1;padding:12px 18px;border-radius:24px;border:1px solid var(--card-border);background:var(--card);color:var(--text);font-size:0.92rem;font-family:var(--font);outline:none;transition:border-color 0.2s;" onkeydown="if(event.key==='Enter')searchFAQ()">
         <button onclick="searchFAQ()" style="padding:12px 24px;background:var(--accent);color:var(--bg);border:none;border-radius:24px;font-weight:700;cursor:pointer;font-family:var(--font);font-size:0.92rem;transition:transform 0.2s;white-space:nowrap;">🔍 搜索</button>
       </div>
@@ -759,6 +808,121 @@ body::before {
       </div>
 
       <div id="faq-results"></div>
+  </section>
+
+  <!-- ==================== 复盘工具 ==================== -->
+  <section class="view" id="view-review">
+    <div class="back-link" onclick="navTo('home')">← 返回首页</div>
+    <div class="list-header">
+      <h2>📋 排练/演出复盘</h2>
+      <p class="list-subtitle">支持 KISS 与三问复盘两种复盘模型 —— 每次排练演出都离更好更近一步</p>
+    </div>
+
+    <div id="review-form-panel">
+      <div class="card" style="margin-bottom:28px;">
+        <div class="review-meta-row">
+          <input type="date" id="review-date" class="input" style="flex:0 0 150px;">
+          <input type="text" id="review-title" class="input" placeholder="活动标题（如：周五排练）" style="flex:2;min-width:180px;">
+          <select id="review-type" class="input" style="flex:1;min-width:100px;">
+            <option value="rehearsal">排练</option>
+            <option value="performance">演出</option>
+            <option value="workshop">工作坊</option>
+          </select>
+          <input type="text" id="review-participants" class="input" placeholder="参与人员（逗号分隔）" style="flex:2;min-width:150px;">
+        </div>
+
+        <div style="margin-bottom:14px;display:flex;align-items:center;gap:8px;">
+          <span style="font-size:0.78rem;color:var(--text-dim);">模型：</span>
+          <select id="review-model" onchange="switchReviewModel()" style="background:var(--bg);border:1px solid var(--card-border);border-radius:var(--radius-sm);color:var(--text);font-family:var(--font);font-size:0.82rem;padding:8px 12px;outline:none;cursor:pointer;">
+            <option value="kiss">KISS（保留·改进·开始·停止）</option>
+            <option value="www">三问复盘（What? So What? Now What?）</option>
+            <option value="quick">⚡ 三点复盘（30秒快速记录）</option>
+          </select>
+        </div>
+
+        <div id="review-kiss-panel">
+          <div class="review-quad-grid">
+            <div class="review-quad keep">
+              <h4>✅ Keep（保留）</h4>
+              <div class="quad-hint">角色塑造、肢体表达、队友配合……哪些让你满意？</div>
+              <textarea id="review-keep" rows="3" placeholder="比如：老太太角色的驼背姿态保持了一整场，队友接住了我的情绪转换……"></textarea>
+            </div>
+            <div class="review-quad improve">
+              <h4>🔧 Improve（改进）</h4>
+              <div class="quad-hint">场景转换、节奏把控、情绪层次……哪些还能打磨？</div>
+              <textarea id="review-improve" rows="3" placeholder="比如：第三场场景转换有点拖，可以更干脆地黑场切换……"></textarea>
+            </div>
+            <div class="review-quad start">
+              <h4>🚀 Start（开始）</h4>
+              <div class="quad-hint">一直想做但还没试的——新角色类型、新表演形式？</div>
+              <textarea id="review-start" rows="3" placeholder="比如：下周想试试无实物表演练习，或者挑战一次反派角色……"></textarea>
+            </div>
+            <div class="review-quad stop">
+              <h4>🛑 Stop（停止）</h4>
+              <div class="quad-hint">什么习惯/做法在拖后腿？</div>
+              <textarea id="review-stop" rows="3" placeholder="比如：开场前过度解释规则，打断队友台词的冲动……"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div id="review-www-panel" style="display:none;">
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div class="review-quad" style="border-left:3px solid #60c080;">
+              <h4 style="color:#60c080;">① What?（发生了什么）</h4>
+              <div class="quad-hint">客观描述排练中发生了什么——不评判对错，只是观察</div>
+              <textarea id="review-www-what" rows="3" placeholder="比如：今天做了三轮场景练习，第二轮的场景转换特别顺，但第三轮节奏明显拖了……"></textarea>
+            </div>
+            <div class="review-quad" style="border-left:3px solid var(--accent);">
+              <h4 style="color:var(--accent);">② So What?（意味着什么）</h4>
+              <div class="quad-hint">这对你有什么影响？学到了什么？什么让你意外？</div>
+              <textarea id="review-www-sowhat" rows="3" placeholder="比如：我发现热身充分的时候大家更容易进入状态，今天的失误大多是因为太着急……"></textarea>
+            </div>
+            <div class="review-quad" style="border-left:3px solid #60a0e0;">
+              <h4 style="color:#60a0e0;">③ Now What?（接下来做什么）</h4>
+              <div class="quad-hint">具体做一件不同的事——小到下次排练就能执行</div>
+              <textarea id="review-www-nowwhat" rows="3" placeholder="比如：下次排练前 10 分钟开始做身体热身，每个场景练习后留 2 分钟快速回顾……"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div id="review-quick-panel" style="display:none;">
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div class="review-quick highlight">
+              <h4>🌟 亮点时刻</h4>
+              <div class="quad-hint">一个让你心头一亮的时刻——自己的、队友的、观众的都可以</div>
+              <textarea id="review-quick-highlight" rows="2" placeholder="比如：队友在我忘词时无缝接了一句'天气真好'，全场爆笑……"></textarea>
+            </div>
+            <div class="review-quick polish">
+              <h4>⚡ 待打磨</h4>
+              <div class="quad-hint">一个下次想做得更好的地方——不用多，一个就好</div>
+              <textarea id="review-quick-polish" rows="2" placeholder="比如：S 形走位时总挡住队友，下次注意站位朝向……"></textarea>
+            </div>
+            <div class="review-quick trynext">
+              <h4>💡 下次试试</h4>
+              <div class="quad-hint">一个新想法、新角色、新形式——小而具体</div>
+              <textarea id="review-quick-trynext" rows="2" placeholder="比如：下回想用'拍手接力'的方式做场景转换……"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:14px;">
+          <label style="font-size:0.82rem;color:var(--text-dim);">📝 自由笔记</label>
+          <textarea id="review-notes" rows="3" placeholder="任何额外的观察、想法……" style="width:100%;background:var(--bg);border:1px solid var(--card-border);border-radius:var(--radius-sm);color:var(--text);font-family:var(--font);font-size:0.82rem;padding:10px;resize:vertical;outline:none;line-height:1.6;margin-top:4px;"></textarea>
+        </div>
+
+        <div style="margin-top:14px;display:flex;gap:10px;">
+          <span class="gen-btn-sm" onclick="saveReview()">💾 保存复盘</span>
+          <span class="gen-btn-sm" onclick="clearReviewForm()" style="background:transparent;border:1px solid var(--card-border);color:var(--text-dim);">清空表单</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:32px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <h3 style="color:var(--text-bright);font-size:1.1rem;">📚 复盘历史</h3>
+        <span class="gen-btn-sm" onclick="exportAllReviews()" style="font-size:0.76rem;padding:6px 14px;background:transparent;border:1px solid var(--accent);color:var(--accent);">📋 导出全部</span>
+      </div>
+      <div id="review-history-list"></div>
     </div>
   </section>
 
@@ -779,6 +943,7 @@ body::before {
 
 </div>
 
+<script src="games.js"></script>
 <script>
 // ===== 文章数据 =====
 const articles = {
@@ -1528,681 +1693,10 @@ const articles = {
 <p>许多喜剧剧集（如《办公室》美版、《公园与游憩》）在拍摄中允许大量即兴发挥，很多经典片段是演员在现场即兴创造的。动画电影《玩具总动员》的部分对话也是由演员在录音棚中即兴产生。</p>`
   },
 
-  // ========== 模块三：即兴游戏库（60 篇，新增） ==========
-
-  // ---- A. 热身破冰（10 个） ----
-
-  'm3-1': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '热身破冰', skills: ['热身','反应力','能量'],
-    usage: 'warmup', players: {min:4, max:20, label:'4-20 人'}, difficultyNum: 1,
-    title: 'Zip Zap Zop —— 经典即兴热身游戏',
-    level: '★☆☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">4-20 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">反应力 · 能量 · 专注</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>所有人站成一圈。</li><li>第一个人拍手并指向圈中任意一人，同时说"Zip"。</li><li>被指到的人立刻拍手指向另一人，说"Zap"。</li><li>第三个人拍手指向再一人，说"Zop"。</li><li>循环继续：Zip → Zap → Zop → Zip → Zap → Zop……</li><li>如果有人犹豫、说错词、或节奏断掉——所有人一起做"失败庆祝"（高举双手大喊"哇哦！"），然后从出错的人重新开始。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>加速版</strong>：带领者不断喊"快一点！"，迫使反应时间越来越短</li><li><strong>反向版</strong>：用眼神和点头代替拍手和说话——更考验专注和团体连接</li><li><strong>加入动作</strong>：不说 Zip/Zap/Zop，而是做不同的身体动作（拍头→拍肩→拍膝盖→指向）</li><li><strong>淘汰模式</strong>：出错的人退出圈外，最后两人对决（适合竞技氛围）</li></ul>
-<h2>教学提示</h2><p>这是全球即兴团体最常用的热身游戏。关键不是"不出错"，而是<strong>如何对待错误</strong>——庆祝失败、快速恢复、继续前进。带领者要注意：如果有人连续出错开始紧张，带头为他们欢呼鼓掌。不要让任何一个参与者感到尴尬。</p><p><strong>训练的核心能力</strong>：在压力下保持放松、快速反应、与团队建立节奏连接。</p>`
-  },
-
-  'm3-2': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '热身破冰', skills: ['热身','破冰','记忆'],
-    usage: 'warmup', players: {min:4, max:20, label:'4-20 人'}, difficultyNum: 1,
-    title: '名字+动作（Name + Motion）—— 用身体记住彼此',
-    level: '★☆☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">4-20 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">破冰 · 记忆 · 自发性</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>所有人站成一圈。</li><li>第一个人大声说出自己的名字，同时做一个简单的身体动作（如挥手、转圈、拍膝盖——任何动作都可以）。</li><li>全组所有人一起用力重复这个人的名字 + 动作。</li><li>顺时针轮到下一个人，重复步骤 2-3。</li><li>绕完一圈后，带领者喊"加速再来一轮！"——这次速度更快。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>逆序挑战</strong>：第二轮反向进行，看大家是否记住了名字和动作</li><li><strong>名字接龙</strong>：每人说名字之前，必须先说出前面所有人的名字和动作（适合 8 人以下小团体）</li><li><strong>情绪版</strong>：名字同样，但动作必须用不同的情绪来做——开心的挥手 vs 悲伤的挥手</li></ul>
-<h2>教学提示</h2><p>这是团体第一次见面时的绝佳破冰游戏。关键原则：<strong>带领者先做示范</strong>——做一个大胆的、搞笑的、不完美的动作，给大家树立"这里可以傻"的心理安全感。如果有人做的动作很保守（只是挥了下手），带领者可以笑着说"再来一个更大胆的！"，但绝不强迫。</p><p><strong>训练的核心能力</strong>：在一个新团体中快速建立安全感、用身体联想帮助记忆、敢于在众人面前做自己。</p>`
-  },
-
-  'm3-3': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '热身破冰', skills: ['团体意识','聆听','耐心'],
-    usage: 'warmup', players: {min:5, max:20, label:'5-20 人'}, difficultyNum: 2,
-    title: '团体计数（Group Count）—— 闭上眼，用心听',
-    level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">5-20 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">团体意识 · 聆听 · 耐心</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>所有人闭眼站立或坐下。</li><li>目标：团体从 1 数到 20（或更高）。</li><li>规则：每次只能有一个人说出一个数字。如果两个或更多人同时说出同一个数字——从 1 重新开始。</li><li>不能有预设的节奏、不能有信号、不能用手势（因为都闭着眼）。</li><li>纯粹靠团体直觉来感知"现在该谁说了"。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>更高目标</strong>：从数到 20 挑战到数到 30 或 50</li><li><strong>无数字版</strong>：不用数字，而是每人说一个任意单词，但由团体共同完成一个有意义的句子</li><li><strong>移动版</strong>：睁眼，在空间中自由行走同时计数——更难，因为所有人都能看到彼此的动作</li></ul>
-<h2>教学提示</h2><p>这个游戏训练的是即兴中非常重要但常常被忽视的能力：<strong>在不确定中等待、感知集体的节奏、而非抢占发言权</strong>。带领者要注意：如果团体反复在 5-8 左右失败，不要着急——这正是学习的时刻。结束后引导讨论："你是在什么感觉下决定开口的？你是怎么知道'现在不该我'的？"</p><p><strong>训练的核心能力</strong>：团体感知力、耐心、在集体中不抢占也不退缩。</p>`
-  },
-
-  'm3-4': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '热身破冰', skills: ['自发性','联想','反应力'],
-    usage: 'warmup', players: {min:4, max:20, label:'4-20 人'}, difficultyNum: 1,
-    title: '快速联想圈（Word Association Circle）—— 说出口之前不要想',
-    level: '★☆☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">4-20 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">自发性 · 联想能力 · 反应力</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>所有人站成一圈。</li><li>第一个人任意说一个词（如"苹果"）。</li><li>顺时针下一个必须在 <strong>1 秒内</strong> 说出由该词联想到的任意词（如"红色"→"红色"→"消防车"→"火"→"水"……）。</li><li>如果有人犹豫超过 1 秒，全组一起欢呼"耶！犹豫了！"然后从该人继续。</li><li>持续进行，由慢到快。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>主题限定</strong>：所有联想词必须属于一个主题（如"食物""电影""情绪"）</li><li><strong>反义词版</strong>：每个人说的必须是上一个词的反义词</li><li><strong>故事串联</strong>：不仅是联想词，而是两句话——前一句回应上一个词，后一句引入新词</li></ul>
-<h2>教学提示</h2><p>这个游戏直击即兴的核心问题：<strong>大脑的"编辑者"</strong>。当你在 1 秒内必须说出口时，你的评判者来不及工作——你听到自己的第一直觉冒出来。这就是自发性的训练。带领者要强调："目标不是说出'好的'联想，而是<strong>在评判者反应过来之前已经说出口</strong>。"</p><p><strong>训练的核心能力</strong>：绕过内心评判、信任第一直觉、快速思维连接。</p>`
-  },
-
-  'm3-5': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '热身破冰', skills: ['能量','团体','身体'],
-    usage: 'warmup', players: {min:4, max:20, label:'4-20 人'}, difficultyNum: 1,
-    title: '能量传递（Pass the Energy）—— 用身体传递无形的能量球',
-    level: '★☆☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">4-20 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">能量感知 · 身体表达 · 团体连接</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>所有人站成一圈。</li><li>第一个人用双手"抱起"一个想象的能量球，做一个夸张的声音和身体动作（如"哇——！"把能量球举过头顶），然后"扔"给圈中另一个人。</li><li>接到的人必须<strong>匹配并放大</strong>这个能量的质感——如果扔过来的能量是"爆炸式的"，你要用更爆炸的方式接住和传递。</li><li>每个人传递的能量质感要有所变化——大小、重量、速度、声音都可以变。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>情绪能量</strong>：传递的不只是物理能量，而是带情绪的——愤怒的球、害羞的球、狂喜的球</li><li><strong>慢动作版</strong>：整个传递过程用极慢的速度进行，训练身体控制</li><li><strong>无声版</strong>：不允许发出声音，只用身体表达能量的大小和质感</li></ul>
-<h2>教学提示</h2><p>这个游戏帮助演员发展<strong>身体和声音的表达范围</strong>。很多人一开始只会传"大能量"（大声+大动作），带领者应鼓励大家探索小能量、尖锐的能量、粘稠的能量——能量的多样性才是这个游戏的价值。</p><p><strong>训练的核心能力</strong>：用身体和声音表达不同程度的能量、感知和匹配伙伴的能量。</p>`
-  },
-
-  'm3-6': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '热身破冰', skills: ['反应力','专注','能量'],
-    usage: 'warmup', players: {min:6, max:20, label:'6-20 人'}, difficultyNum: 1,
-    title: 'Bunny Bunny —— 疯狂兔子接力赛',
-    level: '★☆☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">6-20 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">反应力 · 专注力 · 能量</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>所有人站成一圈。</li><li>一个人在圈中心做"兔子"——双手放在头两侧做耳朵状，快速上下摆动，同时大声说"Bunny Bunny Bunny Bunny……"。</li><li>此人左右两边的邻居各自用一只手做"耳朵"朝外摆动，同时快速说"Tooky Tooky Tooky Tooky……"。</li><li>中间的"兔子"随时可以将"兔子身份"传给别人——用眼神锁定圈中另一人，然后两人交换位置，新一轮开始。</li><li>如果任何人节奏断了或反应慢了——全组欢呼庆祝！</li></ol>
-<h2>进阶变体</h2><ul><li><strong>加速版</strong>：中间的人越快传给下一人，节奏越紧张</li><li><strong>动物变体</strong>：把 Bunny 换成其他动物——大象（长鼻子动作）、猴子（挠头动作）、鱼（吐泡泡动作）</li></ul>
-<h2>教学提示</h2><p>这是一个纯粹的能量和反应力游戏，没有"对错"，只有<strong>越快越疯狂越好</strong>。非常适合在排练刚开场时使用，让所有人从"日常模式"切换到"表演模式"。注意：这个游戏可能导致笑场失控——那也没关系，笑声就是最好的热身。</p><p><strong>训练的核心能力</strong>：快速反应、在疯狂中保持专注、享受纯粹的傻气。</p>`
-  },
-
-  'm3-7': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '热身破冰', skills: ['反应力','反差','自发性'],
-    usage: 'warmup', players: {min:3, max:10, label:'3-10 人'}, difficultyNum: 2,
-    title: '我在做什么？（What Are You Doing?）—— 说一套，做一套',
-    level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">3-10 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">反应力 · 反差思维 · 自发性</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>A 上台开始做一个重复性的身体动作（如搅拌咖啡、刷牙、跳绳——用无实物表演）。</li><li>B 走向 A，问："你在做什么？"</li><li>A 的回答必须和当前正在做的动作<strong>完全无关</strong>（如正在做"搅拌咖啡"但回答"我在爬珠穆朗玛峰"）。</li><li>B 立即开始做 A 说出的那个动作（开始"爬珠穆朗玛峰"）。</li><li>C 走向 B，问"你在做什么？"，循环继续。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>主题连环</strong>：所有人的回答必须围绕一个主题（如"极限运动""奇怪的工作"）</li><li><strong>情绪限定</strong>：做的动作和说的回答都必须带有一种指定情绪</li></ul>
-<h2>教学提示</h2><p>这个游戏的笑点在于<strong>动作和语言之间的巨大反差</strong>。带领者要鼓励大家大胆说出来——越荒诞越好！同时，做动作的人要认真地用无实物表演——动作的认真度越高，反差笑果越强。这是一个非常好的"降低标准"练习——你不需要想出一个聪明的答案，任何答案都行。</p><p><strong>训练的核心能力</strong>：快速产生想法、无实物表演、在荒诞中保持投入。</p>`
-  },
-
-  'm3-8': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '热身破冰', skills: ['观察力','同步','非语言'],
-    usage: 'both', players: {min:2, max:2, label:'2 人一组'}, difficultyNum: 1,
-    title: '镜像（Mirror）—— 像照镜子一样跟随伙伴',
-    level: '★☆☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2 人一组</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">观察力 · 同步能力 · 非语言连接</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>两人面对面站立，距离约一米。</li><li>一人做"带领者"，一人做"镜像"。</li><li>带领者开始做缓慢的、连续的身体动作——抬起手臂、转动身体、改变面部表情……</li><li>镜像必须<strong>同时</strong>做出镜像动作（像照镜子一样）——带领者举左手，镜像举右手。</li><li>目标是动作流畅到让旁观者很难分辨谁是带领者。</li><li>60 秒后交换带领者和镜像角色。</li><li>进阶：不需要指定带领者——两个人都同时带领也同时跟随。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>全身版</strong>：坐姿→站姿→在空间中移动——动作幅度逐渐增大</li><li><strong>情绪镜像</strong>：不仅镜像动作，还要镜像对方脸上的情绪</li><li><strong>声音版</strong>：加入声音——带领者发出的声音，镜像也同步发出</li></ul>
-<h2>教学提示</h2><p>镜像练习是培养<strong>深度观察力和非语言连接</strong>的最佳方式之一。它直接训练即兴中"聆听你的伙伴"的能力——不只是语言层面，而是身体和能量层面。带领者可以提示："不要想'我怎么跟随'——只是<strong>看</strong>，让你的身体自然地响应你眼睛看到的东西。"</p><p><strong>训练的核心能力</strong>：非语言观察力、身体控制、与伙伴建立深层连接。</p>`
-  },
-
-  'm3-9': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '热身破冰', skills: ['聆听','连接','自发性'],
-    usage: 'both', players: {min:6, max:30, label:'6-30 人'}, difficultyNum: 1,
-    title: '同心圆问答（Concentric Circles）—— 快速连接的破冰利器',
-    level: '★☆☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">6-30 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">聆听 · 连接 · 自发性</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>所有人分成内外两个圈，面对面站立——两人一组。</li><li>带领者给出一个话题（如"你小时候最害怕的东西""你的第一个宠物""你最近学到的一件事"）。</li><li>两人有 60 秒时间互相分享。规则：听完后才能分享自己的——不能打断。</li><li>60 秒后带领者喊"换！"，外圈的人向顺时针移动一个位置，面对新伙伴。</li><li>带领者给出新话题，重复 4-6 轮。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>即兴关联</strong>：不说真实经历，而是由对方刚才说的话即兴编一个故事</li><li><strong>单字版</strong>：每人每次只能说一个词，两人共同用单字交替完成一个句子</li><li><strong>无声版</strong>：不允许说话，用表情和手势沟通</li></ul>
-<h2>教学提示</h2><p>这是一个低威胁的社交连接练习，非常适合有新人加入时的热身。关键原则：<strong>它训练的不是"说"，而是"听"</strong>——听完对方的分享再回应，而不是在脑子里排练自己的分享。带领者选的话题应该轻松、不需要深度自我暴露。</p><p><strong>训练的核心能力</strong>：积极聆听、快速连接陌生人、在交流中保持开放。</p>`
-  },
-
-  'm3-10': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '热身破冰', skills: ['破冰','角色','能量'],
-    usage: 'both', players: {min:4, max:20, label:'4-20 人'}, difficultyNum: 1,
-    title: '疯狂握手（Crazy Handshake）—— 用握手建立角色',
-    level: '★☆☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">4-20 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">破冰 · 角色建立 · 能量</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>所有人在空间中自由行走。</li><li>带领者喊"握手！"——所有人就近找一个人握手。</li><li>第一次：正常握手，交换名字。</li><li>第二次：带领者加上一个角色提示——"像你们是失散多年的老朋友那样握手！""像你们互相暗恋但不敢说那样握手！""像你是机器人那样握手！"</li><li>每次握手约 15-20 秒，然后换人。5-6 轮后结束。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>即兴延续</strong>：某次握手后不喊换——而是从握手的角色关系开始一个即兴场景</li><li><strong>情绪握手</strong>：不以角色为引导，而是以情绪（愤怒的握手/悲伤的握手/狂喜的握手）</li><li><strong>慢动作版</strong>：所有握手动作用极慢速度进行，像在水中一样</li></ul>
-<h2>教学提示</h2><p>握手的物理动作本身就包含了丰富的信息——力度、持续时间、眼神接触、身体距离。改变握手中的任何一个参数，你就改变了一个"角色"。这个游戏非常适合让新手体验<strong>"身体决定角色"</strong>的原理——不需要提前想好角色，你的握手方式已经创造了角色。</p><p><strong>训练的核心能力</strong>：通过身体接触建立角色、在互动中感知对方、打破社交距离的顾忌。</p>`
-  },
-
-  // ---- B. Yes And 与接纳（8 个） ----
-
-  'm3-11': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: 'Yes And 与接纳', skills: ['Yes And','自发性','场景'],
-    usage: 'training', players: {min:2, max:2, label:'2 人一组'}, difficultyNum: 1,
-    title: 'Yes, And 接龙 —— 练习即兴的第一行为准则',
-    level: '★☆☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2 人一组</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">Yes And · 自发性 · 场景推进</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>两人面对面。A 说一句简单的提议（如"我们去海边吧"）。</li><li>B 必须以"好，而且……"开头回应，并添加一个新信息（如"好，而且我们带上那个你从没用过的冲浪板"）。</li><li>A 继续以"好，而且……"回应，添加更多信息。</li><li>连续 5-6 轮不停，创造一个越来越丰富的场景。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>情绪 Yes And</strong>：不只用台词 Yes And，每次回应前必须先接受对方刚才的情绪并放大</li><li><strong>身体 Yes And</strong>：不允许说话——A 做一个动作，B 用动作接纳并添加新动作</li><li><strong>负面体验版</strong>：先用"不，但是……"做一轮，再用"Yes, And"做同样场景，对比感受</li></ul>
-<h2>教学提示</h2><p>这个游戏是即兴训练的"第一课"。重点不是想出一个聪明的 And，而是<strong>无条件地接纳</strong>。带领者要注意：如果有人开始 And 得过于跳跃（"我们去海边吧""好，而且外星人来了！"），提醒他们——And 应该在伙伴给出的世界里添加，不是炸毁它。</p><p><strong>训练的核心能力</strong>：无条件接纳伙伴的提议、在接纳的基础上创造性地添加。</p>`
-  },
-
-  'm3-12': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: 'Yes And 与接纳', skills: ['Yes And','自发性','对比体验'],
-    usage: 'training', players: {min:2, max:3, label:'2-3 人'}, difficultyNum: 1,
-    title: '否定即兴（No, But Scene）—— 感受被拒绝的滋味',
-    level: '★☆☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-3 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">Yes And（反向学习）</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>两人开始一个即兴场景。</li><li>规则：每一句话必须以"不"或"但是"开头。<strong>绝不能接纳</strong>对方的提议。</li><li>做 60-90 秒后停止。</li><li>讨论感受——发生了什么？场景怎么样了？</li><li>然后用同样的情境，做一轮 Yes And 版本。对比两种体验的天壤之别。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>隐性否定</strong>：不允许直接用"不"，但要用各种方式躲避和转移——这更难，也更像真实生活中人们"假接纳"的样子</li><li><strong>Yes But</strong>：表面接纳但实际否定——"好主意，但现在已经太晚了""好啊，可是我不太舒服"</li></ul>
-<h2>教学提示</h2><p>通过<strong>反面体验</strong>来学习正面原则是最有效的教学方式之一。这个游戏让学生亲身体验 Block 如何杀死场景——不需要讲道理，身体会记住被拒绝的感觉。带领者可以在结束后引导讨论："当你被连续拒绝时，你的身体感觉是怎样的？你的大脑发生了什么？"</p><p><strong>训练的核心能力</strong>：通过反差体验理解 Yes And 的重要性、识别日常生活和舞台上的各种"隐性 Block"。</p>`
-  },
-
-  'm3-13': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: 'Yes And 与接纳', skills: ['接纳','无实物','联想'],
-    usage: 'both', players: {min:2, max:2, label:'2 人一组'}, difficultyNum: 1,
-    title: '礼物传递（Gift Giving）—— 接纳你收到的每一个"礼物"',
-    level: '★☆☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2 人一组</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">接纳 · 无实物 · 联想</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>A 用无实物动作"拿出"一个礼物送给 B——但不说什么，只用动作表达礼物的重量/大小/形状。</li><li>B 接过"礼物"，仔细观察（感受其重量和形状），然后说："谢谢你的[礼物名]，我正需要它因为……"，并给出一个有趣的理由。</li><li>然后 B 再送一个新的礼物给 A。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>糟糕礼物版</strong>：送礼的人故意想一个非常糟糕的礼物，收礼的人必须真诚地找到它的用途</li><li><strong>连锁送礼</strong>：三人或更多人围成圈，礼物不断传递和变形——每人收到后把它变成新的礼物传给下一个人</li></ul>
-<h2>教学提示</h2><p>礼物传递是 <strong>Yes And 的完美隐喻</strong>。你收到的礼物不一定是你想要的——但你的工作是接纳它，找到它的价值，然后基于它创造新的东西。带领者要强调：收礼人的反应越真诚、越具体，场景越有趣。不要说"谢谢，这很好"，要说"谢谢你送我的这把左撇子剪刀——我明天就要用它来修理我那只总往右偏的盆栽！"</p><p><strong>训练的核心能力</strong>：无实物表演、将任意 Offer 转化为场景燃料、用具体性代替空泛。</p>`
-  },
-
-  'm3-14': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: 'Yes And 与接纳', skills: ['完全接纳','团体','能量'],
-    usage: 'training', players: {min:5, max:20, label:'5-20 人'}, difficultyNum: 1,
-    title: '超-YES（Mega-Yes）—— 体验被完全接纳的力量',
-    level: '★☆☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">5-20 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">完全接纳 · 团体支持 · 能量</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>一个人站到圈子中间，做一个大胆的动作或喊出一句话（任何东西！）。</li><li>周围的所有人立刻用最大的热情和能量回应"YES！！"，并以更夸张的方式全部加入那个动作。</li><li>每个人轮流到中间当发起者。确保每个人都体验过被全组狂热接纳的感觉。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>连续超-YES</strong>：当全组正在做第一个动作时，圈中的人立刻发起第二个动作——全组无缝切换继续 YES</li><li><strong>"无聊"的动作</strong>：发起者故意做一个无聊的、微小的动作——全组用同样的狂热去 YES——对比体验"就算是微小的提议，也可以被全力接纳"</li></ul>
-<h2>教学提示</h2><p>Mega-Yes 的情感冲击力很强——即使你知道这只是一个练习，当你站在中间看到全组人冲向你、接纳你的提议时，很多人会感动。这个练习建立了<strong>团体心理安全感</strong>的核心。带领者要注意：确保每个人都在中间站过——不要只让外向的人霸占中间位。</p><p><strong>训练的核心能力</strong>：体验被完全接纳的心理感受、建立团体的无条件支持文化。</p>`
-  },
-
-  'm3-15': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: 'Yes And 与接纳', skills: ['聆听','协作','叙事'],
-    usage: 'training', players: {min:3, max:8, label:'3-8 人'}, difficultyNum: 1,
-    title: '一词一句故事（One Word Story）—— 每个人只说一个字',
-    level: '★☆☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">3-8 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">聆听 · 协作叙事 · 耐心</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>所有人站成一排。</li><li>轮流，每人每次只能说<strong>一个字</strong>，共同讲述一个完整的故事。</li><li>需要有一个主持人在恰当的时候用一个完整的句子结束故事。</li><li>故事应该有一个明确的开头、发展和结局——但每个人只贡献一个字。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>标点版</strong>：允许说标点符号（"逗号""句号""感叹号"），增加了叙事的节奏感</li><li><strong>类型限定</strong>：故事必须是特定类型的（恐怖故事/爱情故事/侦探故事）</li><li><strong>反向版</strong>：从故事的最后一句话开始，倒着讲</li></ul>
-<h2>教学提示</h2><p>一词一句故事训练的是即兴中最核心也最反直觉的能力：<strong>放下控制</strong>。你无法"计划"故事情节——因为你只能说一个字，下一个字是别人说的。你只能做一件事：认真听，然后在你的那一轮贡献一个让句子继续下去的字。带领者要提醒："不要试图用你的一个字去'改变'故事方向——信任集体，故事会自己去到它该去的地方。"</p><p><strong>训练的核心能力</strong>：极致聆听、放弃个人控制、信任集体智慧。</p>`
-  },
-
-  'm3-16': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: 'Yes And 与接纳', skills: ['接纳转折','叙事','自发性'],
-    usage: 'training', players: {min:3, max:8, label:'3-8 人'}, difficultyNum: 2,
-    title: '幸运/不幸（Fortunately/Unfortunately）—— 每个转折都接纳',
-    level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">3-8 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">接纳转折 · 叙事 · 自发性</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>所有人轮流，共同讲一个故事。</li><li>第一个人以"幸运的是……"开头，说一句正面发展（如"幸运的是，我买到了最后一张火车票"）。</li><li>下一个人必须以"不幸的是……"开头，在上一句基础上添加一个负面转折。</li><li>再下一人以"幸运的是……"回应，将负面转折再转回正面。</li><li>持续交替，每个转折都必须<strong>接纳</strong>上一个转折为已发生的事实。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>快速版</strong>：每人 5 秒内必须接上，不能犹豫</li><li><strong>类型版</strong>：故事限定为特定类型——恐怖片的"幸运/不幸"、职场版的"幸运/不幸"</li></ul>
-<h2>教学提示</h2><p>这个游戏训练的是<strong>无论发生什么，都把它变成故事的一部分</strong>——这正是即兴中"拥抱失败"的核心精神。带领者要观察：是否有人在"不幸"后拼命想把故事拉回自己预设的方向？那就是在 Block 上一个转折。好的接法是<strong>在别人给的不幸里发现幸运的种子</strong>。</p><p><strong>训练的核心能力</strong>：接纳任何转折（即使是负面的）、在限制中发现可能性。</p>`
-  },
-
-  'm3-17': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: 'Yes And 与接纳', skills: ['团体接纳','联想','空间'],
-    usage: 'both', players: {min:4, max:20, label:'4-20 人'}, difficultyNum: 1,
-    title: '我是树（I Am a Tree）—— 一个人变成一棵树，两个人为它添上世界',
-    level: '★☆☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">4-20 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">团体接纳 · 联想 · 空间构建</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>A 走到舞台中间，摆出一个姿势，说"我是一棵树"。</li><li>B 上台，用自己的身体添加一个与树相关的元素，说"我是树上的一只鸟"。</li><li>C 上台，继续添加，说"我是树下的一个看书的人"。</li><li>A 从三人画面中选择一人留下（如说"我带走看书的人"），两人离开舞台。</li><li>留下的人保持姿势，重复自己的身份（"我是树下的一个看书的人"），成为新一轮的起点。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>抽象版</strong>：不只是具体物件，可以是抽象概念——"我是知识""我是风"</li><li><strong>声音版</strong>：每个上台的人不仅摆姿势，还要发出声音</li><li><strong>故事串联</strong>：三个人的画面形成后，从静止变成动态——即兴一个 30 秒场景</li></ul>
-<h2>教学提示</h2><p>我是树是即兴中最经典的"接纳与添加"游戏之一。它完美展示了 Yes And 的即兴原理——每个人都在前面的人建立的世界里添加，而不是创建自己的世界。带领者要鼓励大家<strong>上台要快</strong>——不要站着想"最好的"添加，第一个想到的就是最好的。</p><p><strong>训练的核心能力</strong>：团体接纳、快速联想、用身体构建空间画面。</p>`
-  },
-
-  'm3-18': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: 'Yes And 与接纳', skills: ['灵活性','场景','接纳'],
-    usage: 'both', players: {min:2, max:4, label:'2-4 人'}, difficultyNum: 2,
-    title: '新选择（New Choice）—— 每个选择都可以重来',
-    level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-4 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">灵活性 · 场景 · 接纳外部输入</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>两人开始一个即兴场景。</li><li>带领者（或观众）可以随时喊"新选择！"——刚刚说了台词或做了动作的演员，必须立刻用<strong>完全不同的台词或动作</strong>重来一遍。</li><li>如果不好笑/不合适，带领者可以继续喊"新选择！新选择！"直到找到一个有趣的方向。</li><li>场景在新选择的基础上继续推进。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>情绪新选择</strong>：带领者喊的不是"新选择"而是具体情绪——"更愤怒！""更悲伤！""像老鼠一样害怕！"</li><li><strong>类型新选择</strong>：喊出不同的类型——"恐怖片版本！""韩剧版本！"</li></ul>
-<h2>教学提示</h2><p>新选择游戏训练的核心是：<strong>你的第一个选择不一定是最好的——但没关系，你可以换一个</strong>。这打破了"我必须第一次就做对"的心理压力。带领者要注意：不要让一个演员被喊 5 次以上"新选择"还没有满意的结果——那会让人焦虑，反而适得其反。2-3 次就够了。</p><p><strong>训练的核心能力</strong>：接受外部指导、快速产生多种选择、不执着于第一个想法。</p>`
-  },
-
-  // ---- C. 角色塑造（8 个） ----
-
-  'm3-19': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '角色塑造', skills: ['角色切换','身体','反应力'],
-    usage: 'training', players: {min:3, max:6, label:'3-6 人'}, difficultyNum: 2,
-    title: '角色旋转门（Character Revolving Door）—— 瞬间转换角色',
-    level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">3-6 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">角色切换 · 身体 · 反应力</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>两人开始一个即兴场景。</li><li>第三个人站在一旁，随时拍手喊"换角色！"</li><li>正在表演的两人必须立刻甩掉当前角色，用全新的身体质感、声音和动作建立全新角色——但场景情境和环境保持不变。</li><li>可以连续切换多次，每次都是全新角色。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>保留情绪版</strong>：换角色，但保留上一个角色的情绪</li><li><strong>传递角色</strong>：换角色时，其中一人保留角色，另一人切换——然后被切换的人回来时，又带回一个新角色</li></ul>
-<h2>教学提示</h2><p>角色旋转门训练的是<strong>不依附于任何一个角色</strong>。有些演员会不自觉地陷入"这一个角色我演得好"的执着——切换迫使你放手。带领者要鼓励大家每次切换都在身体上做出明确变化——换重心、换节奏、换声音。是身体切换驱动角色切换，而不是脑子。</p><p><strong>训练的核心能力</strong>：快速建立和丢弃角色、用身体而非大脑驱动角色切换。</p>`
-  },
-
-  'm3-20': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '角色塑造', skills: ['身体意识','角色','空间'],
-    usage: 'training', players: {min:4, max:20, label:'4-20 人'}, difficultyNum: 1,
-    title: '身体带领（Body Lead）—— 让你的身体部位为你选角色',
-    level: '★☆☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">4-20 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">身体意识 · 角色建立 · 空间行走</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>所有人在空间中自由行走。</li><li>带领者喊出一个身体部位——"鼻子！""胸部！""膝盖！""额头！""肚子！"</li><li>所有人立刻让这个身体部位"带领"走路——如果是鼻子，就像鼻子在拖着你往前走。</li><li>体会每个身体部位如何改变你的心理状态——鼻子带领带来好奇心，胸部带领带来自信/骄傲，膝盖带领带来卑微/畏缩。</li><li>每个部位 30 秒，切换 5-6 个部位。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>两人互动版</strong>：在身体带领行走中找到另一个同样"部位"的人，互动 30 秒</li><li><strong>场景开始版</strong>：最后随机停在一个部位，和最近的人以此为角色开始一个场景</li></ul>
-<h2>教学提示</h2><p>这是 Viola Spolin 最经典的练习之一。它直观地展示了<strong>身体先于大脑</strong>的即兴原则——你不需要"想"一个角色，你的身体已经在为你创造一个。带领者要示范：自己做第一个部位的夸张版本，让所有人看到"夸张是被鼓励的"。</p><p><strong>训练的核心能力</strong>：用身体改变心理、探索身体与角色之间的直接联系。</p>`
-  },
-
-  'm3-21': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '角色塑造', skills: ['角色','观察','身体'],
-    usage: 'training', players: {min:4, max:20, label:'4-20 人'}, difficultyNum: 2,
-    title: '动物人性化（Animal to Human）—— 把动物的质地带给人类角色',
-    level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">4-20 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">角色质感 · 观察力 · 身体转化</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>每人选一种动物。第一阶段 1 分钟：四脚着地纯粹模仿该动物。</li><li>第二阶段 1 分钟：慢慢站起来，保留动物的身体质感（乌龟的慢、蜂鸟的快）。</li><li>第三阶段：加上人的行为和语言——身体质感仍是动物——创造出一个独特的人。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>动物互动</strong>：两个"动物人"相遇互动一个场景</li><li><strong>动物职业</strong>：给每个动物人分配一个职业——乌龟 CEO、猫哲学家</li></ul>
-<h2>教学提示</h2><p>动物练习通过外部参照建立角色质感。观察真实动物是关键：它的呼吸节奏？如何回应环境？带领者提示："不要演'你认为的猫'——演你观察到的猫。"</p><p><strong>训练的核心能力</strong>：通过外部参考建立角色身体质感、拓展角色类型的范围。</p>`
-  },
-
-  'm3-22': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '角色塑造', skills: ['声音角色','角色范围','表达'],
-    usage: 'both', players: {min:2, max:4, label:'2-4 人'}, difficultyNum: 1,
-    title: '声音面具（Voice Mask）—— 用声音创造完全不同的人',
-    level: '★☆☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-4 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">声音角色 · 角色范围 · 表达</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>选一句中性台词（如"请把那个给我"）。</li><li>每人用 5 种完全不同的声音说出来——改变音高、语速、音色、共鸣位置。</li><li>每种声音应暗示不同角色。进阶：两人用各自的声音角色开始场景。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>声音接力</strong>：A 用一个声音说台词，B 用同一个声音回应</li><li><strong>声音+身体</strong>：每个声音配合身体姿态互相强化</li></ul>
-<h2>教学提示</h2><p>很多新手只用"自己的声音"演戏，声音面具帮他们探索声音作为角色入口。带领者鼓励极端声音——包括"不好听"的声音，也可能是好角色。关键原则：声音变→角色变→心理变。</p><p><strong>训练的核心能力</strong>：拓展声音表达范围、通过声音快速进入角色。</p>`
-  },
-
-  'm3-23': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '角色塑造', skills: ['角色深度','聆听','即兴回答'],
-    usage: 'both', players: {min:3, max:10, label:'3-10 人'}, difficultyNum: 2,
-    title: '角色热椅（Character Hot Seat）—— 采访一个角色直到你认识他',
-    level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">3-10 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">角色深度 · 即兴回答 · 角色一致性</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>一人坐在"热椅"上，以角色身份面对观众。</li><li>观众/其他演员可问任何问题——关于角色的生活、秘密、喜好。</li><li>角色必须在角色中即兴回答所有问题。5-10 分钟后结束。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>双人热椅</strong>：两个角色同时接受采访，关系在问答中展开</li><li><strong>类型限定</strong>：角色来自特定类型——奇幻、历史、未来</li></ul>
-<h2>教学提示</h2><p>角色热椅训练角色一致性和压力下保持角色的能力。对新手的提示：如果卡住，带领者可以问更简单的问题（"你早餐吃了什么？"）。好的热椅能让人惊喜地发现角色比自己想象中丰富得多。</p><p><strong>训练的核心能力</strong>：无准备下维持角色、通过回答发现角色的深度。</p>`
-  },
-
-  'm3-24': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '角色塑造', skills: ['角色范围','身体','年龄表达'],
-    usage: 'training', players: {min:4, max:20, label:'4-20 人'}, difficultyNum: 2,
-    title: '年龄行走（Age Walk）—— 从 3 岁走到 90 岁',
-    level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">4-20 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">角色范围 · 身体控制 · 年龄表达</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>所有人在空间中行走。带领者喊出年龄——"3 岁！""45 岁！""78 岁！"</li><li>所有人立刻调整为该年龄的身体质感——重心、关节灵活度、呼吸、好奇心。</li><li>不只是走路——和空间中其他人以该年龄的方式互动。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>年龄渐变</strong>：带领者慢慢数年龄，所有人连续渐变</li><li><strong>年龄+环境</strong>：加上环境——"3 岁在超市""78 岁在夜店"</li></ul>
-<h2>教学提示</h2><p>年龄行走帮演员拓展角色年龄范围，注意不同年龄段的身体细节：3 岁重心低不稳、78 岁关节可能僵硬。带领者提示："这不是演'老人'的刻板印象——找到那个年龄段的真实身体记忆。"</p><p><strong>训练的核心能力</strong>：拓展年龄范围、用身体细节建立年龄真实感。</p>`
-  },
-
-  'm3-25': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '角色塑造', skills: ['非语言','角色','观察'],
-    usage: 'training', players: {min:2, max:4, label:'2-4 人'}, difficultyNum: 1,
-    title: '职业默剧（Job Mime）—— 让身体说话，别用台词',
-    level: '★☆☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-4 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">非语言表达 · 角色建立 · 观察力</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>A 上台用无实物默剧展示一个职业。B 猜到时上台——不说职业名——以相关角色加入。"医生，手术会疼吗？"两人继续场景 60 秒。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>冷门职业版</strong>：选非常冷门的职业——火龙饲养员、云朵分类师</li></ul>
-<h2>教学提示</h2><p>身体细节揭示角色——好的外科医生默剧不止戴口罩，还有精准手势和对突发状况的冷静。不要急着让对方猜出来——享受用身体讲故事的乐趣。训练非语言角色建立。</p><p><strong>训练的核心能力</strong>：非语言角色建立、无实物表演精准度。</p>`
-  },
-
-  'm3-26': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '角色塑造', skills: ['协作','聆听','角色'],
-    usage: 'both', players: {min:3, max:3, label:'3 人以上'}, difficultyNum: 3,
-    title: '双头专家（Two-Headed Expert）—— 二人合体，一字一人',
-    level: '★★★', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">3 人以上</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★★</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">协作 · 极致聆听 · 角色融合</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>两人并排站立，合体成一个"专家"——交替，每人每次只说一个字，共同回答观众提问。</li><li>主持人向专家提问（"怎么修好坏掉的自行车？"）。两人一字一字合作回答，听起来像一个完整的人。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>三头专家</strong>：三人时难度指数级增加</li><li><strong>情绪统一</strong>：必须用统一的情绪表达</li></ul>
-<h2>教学提示</h2><p>双头专家是极致聆听的终极训练。无法提前计划——只知前一个人的一个字。目标不是"说出聪明的话"，而是让句子自然完成。两人都不知道走向何处，结束时却发现说出了一句完整的话——团体的奇迹。</p><p><strong>训练的核心能力</strong>：极端聆听、放弃控制、感知伙伴的语言节奏。</p>`
-  },
-
-  // ---- D. 场景与叙事（12 个） ----
-
-  'm3-27': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '场景与叙事', skills: ['CROW','场景效率','叙事'],
-    usage: 'both', players: {min:2, max:2, label:'2 人'}, difficultyNum: 2,
-    title: '三句话场景（Three-Line Scene）—— 三句话，一个完整世界',
-    level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">CROW 快速建立 · 场景效率</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>两人只用三句话完成完整场景。A 首句建立角色+地点。B 首句接收并建立关系+目标。A 次句推向高潮。B 次句深化。A 末句收束。总共不超过 30 秒。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>极简版</strong>：每句话限 5 字以内</li><li><strong>类型限定</strong>：三句话完成特定类型故事</li></ul>
-<h2>教学提示</h2><p>三句话场景训练即兴的"经济性"——每句台词同时做多件事。带领者提示："不要在第一句话提问——第一句话就是 Offer。"训练高效场景建立、用最少的话说最多的故事。</p><p><strong>训练的核心能力</strong>：高效场景建立、信息密度、简约的力量。</p>`
-  },
-
-  'm3-28': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '场景与叙事', skills: ['内心独白','角色层次','场景深度'],
-    usage: 'both', players: {min:4, max:4, label:'4 人'}, difficultyNum: 2,
-    title: '字幕机（Subtitles）—— 嘴上说的 vs 心里想的',
-    level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">4 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">内心独白 · 角色层次 · 场景深度</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>两人表演即兴场景。另外两人各站在一个演员身后，做该演员的"内心独白"——说角色此刻内心真实想法。</li><li>演员听到内心独白后，必须融入表演——影响角色的情绪、决定或下一句台词。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>对立字幕</strong>：内心独白故意和角色行为相反制造张力</li></ul>
-<h2>教学提示</h2><p>字幕机训练角色"里层"和"表层"的张力——戏剧中最有力的工具之一。做字幕机的人：你的独白要丰富角色，不是拆台。说出来的内心想法应该让角色更复杂、更人性化。</p><p><strong>训练的核心能力</strong>：表达角色隐藏层次、接受外部信息并有机融入。</p>`
-  },
-
-  'm3-29': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '场景与叙事', skills: ['接收指导','灵活性','场景'],
-    usage: 'both', players: {min:3, max:3, label:'3 人以上'}, difficultyNum: 2,
-    title: '导演椅（Director\'s Chair）—— 导演随时喊停',
-    level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">3 人以上</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">接受指导 · 灵活性 · 场景调整</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>两人表演场景。一位"导演"可随时喊停并给出调整——换情绪、慢速度、交换角色、回退、加类型。演员必须立刻执行。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>观众导演</strong>：观众喊指令，增加不可预测性</li></ul>
-<h2>教学提示</h2><p>导演椅训练的核心是"放下自我，接受外部输入"。把导演的每个指令当作礼物而非批评。训练立即执行外部指导、在被打断后快速恢复场景。</p><p><strong>训练的核心能力</strong>：立即接受外部指导、在被打断后快速恢复。</p>`
-  },
-
-  'm3-30': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '场景与叙事', skills: ['身体控制','灵活性','叙事'],
-    usage: 'both', players: {min:2, max:4, label:'2-4 人'}, difficultyNum: 2,
-    title: '倒退剧（Rewind）—— 倒带重来，换个方向',
-    level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-4 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">身体控制 · 灵活性 · 叙事意识</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>两人表演场景。带领者随时喊"倒退！"——演员将刚才的动作和台词倒着演一遍（像视频倒放）。然后喊"播放！"——场景从那个时间点重新前进，可能走向完全不同方向。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>定点倒退</strong>：指定倒退到某个具体时刻——"倒退到他说'我爱你'之前！"</li></ul>
-<h2>教学提示</h2><p>倒退剧训练身体控制精准度和情境意识。倒退不仅是物理倒退，也是情绪倒退（从愤怒退到困惑再退到好奇）。演员需清晰记忆自己刚才的动作。</p><p><strong>训练的核心能力</strong>：身体记忆、时序感知、在同一场景发现多种可能。</p>`
-  },
-
-  'm3-31': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '场景与叙事', skills: ['限制创作','场景','反应力'],
-    usage: 'both', players: {min:2, max:2, label:'2 人'}, difficultyNum: 3,
-    title: 'ABC 场景（Alphabet Scene）—— 每句话的首字母必须是 ABC',
-    level: '★★★', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★★</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">3-5 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">限制下创作 · 语言灵活性</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>两人表演场景。每句话的首字母必须按字母顺序——A 的第一句话以 A 开头，B 以 B 开头，依次推进。</li><li>到了 Z 之后场景自然结束。目标是让场景在字母限制下仍然保持自然和有意义。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>反向 ABC</strong>：从 Z 倒退到 A</li><li><strong>随机字母</strong>：观众随时喊出任意字母，演员的下一句必须以此开头</li></ul>
-<h2>教学提示</h2><p>限制激发创造力。ABC 场景在有表演场合很受欢迎——观众能看到演员在可见的压力下创作。如果卡在某字母上，用一个简单的词开局（如 X 可以用"X 光显示……"、Q 用"请（Qǐng）……"）。中文环境下可灵活处理——用拼音首字母而非英文。</p><p><strong>训练的核心能力</strong>：在严格限制下保持场景自然流动、语言灵活性。</p>`
-  },
-
-  'm3-32': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '场景与叙事', skills: ['叙事跨度','角色','情感'],
-    usage: 'both', players: {min:2, max:3, label:'2-3 人'}, difficultyNum: 2,
-    title: '时间跳跃（Time Jump）—— 在时间中穿越角色的一生',
-    level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-3 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">叙事跨度 · 角色发展 · 情感</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>两人（同一对角色关系，如"母女"）表演三个不同时间的场景：10 年前、现在、10 年后。</li><li>带领者或观众喊"回到十年前！""快进到十年后！"</li><li>角色必须保持一致但又有符合时间跨度的变化——10 年后的妈妈声音更慢了、女儿更自信了。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>随机跳跃</strong>：不限于三个时间点——可以跳到角色第一次见面的那一天、退休的那一天</li><li><strong>情感锚点</strong>：每次跳跃都跳到角色关系中"最重要的那一天"</li></ul>
-<h2>教学提示</h2><p>时间跳跃训练角色在时间跨度中的一致性。同一个角色在 25 岁、45 岁、65 岁的身体质感不同——但核心性格（急脾气/温柔/自卑）应该保持一致。带领者提示："时间的流逝应该改变角色的一些东西，但不是一切。"</p><p><strong>训练的核心能力</strong>：角色一致性、时间跨度中的角色发展。</p>`
-  },
-
-  'm3-33': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '场景与叙事', skills: ['身体控制','叙事','专注'],
-    usage: 'both', players: {min:3, max:4, label:'3-4 人'}, difficultyNum: 2,
-    title: '慢动作解说（Slow Motion Commentary）—— 体育解说的即兴版',
-    level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">3-4 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">4-6 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">身体控制 · 叙事 · 专注力</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>两人表演一个场景，但全程用<strong>极慢的动作</strong>（如在水中）。</li><li>另外两人站在一旁做"体育解说员"——用激情澎湃的语气解说慢动作中的每一个细节。"他正在……抬起……他的……右手……这个动作……意义非凡……"</li></ol>
-<h2>进阶变体</h2><ul><li><strong>多语解说</strong>：不同解说员用不同语言或方言</li><li><strong>突然加速</strong>：某瞬间喊"正常速度！"——演员恢复正常速度，解说员要跟上</li></ul>
-<h2>教学提示</h2><p>慢动作对身体的挑战很大——保持极慢且连续的动作需要极强的身体控制力。解说的角色则训练"观察细节并赋予意义"的能力。这也是一个非常受观众欢迎的表演游戏。</p><p><strong>训练的核心能力</strong>：精准的身体控制、观察并赋予日常动作戏剧意义。</p>`
-  },
-
-  'm3-34': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '场景与叙事', skills: ['场景结构','聆听','连接'],
-    usage: 'both', players: {min:4, max:8, label:'4-8 人'}, difficultyNum: 3,
-    title: '抽屉/柱子（Pillars / Drawers）—— 串联看似无关的场景',
-    level: '★★★', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">4-8 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★★</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">10-15 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">场景结构 · 聆听 · 主题连接</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>观众给出 3-4 个关键词（如"雨伞""婚礼""辞职信"）。</li><li>演员表演一系列独立的短场景，每个场景必须<strong>有机地使用</strong>其中一个关键词作为核心元素。</li><li>随着演出推进，这些看似无关的场景开始<strong>自然地交织</strong>——角色从不同场景中相遇、物品在不同场景中出现、主题在不同故事中回响。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>单人抽屉</strong>：一个演员必须记住并维持所有场景中的所有角色</li></ul>
-<h2>教学提示</h2><p>这是从短即兴过渡到长即兴的绝佳训练——它给演员一个结构化的框架（关键词），同时又要求他们保持开放——让不同场景之间的连接不是强制发生，而是在表演中自然浮现。带领者提示："不要急着让你场景中的角色和上一个场景的角色相遇——让连接自然发生，或者完全不相遇也可以。"</p><p><strong>训练的核心能力</strong>：多场景结构意识、在限制框架内发现自由。</p>`
-  },
-
-  'm3-35': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '场景与叙事', skills: ['多角色','空间','叙事'],
-    usage: 'both', players: {min:1, max:2, label:'1-2 人'}, difficultyNum: 3,
-    title: '空椅子（Empty Chair）—— 一个人撑起整个世界',
-    level: '★★★', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">1-2 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★★</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">3-6 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">多角色 · 空间构建 · 独白叙事</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>舞台上放一把空椅子。一个演员独自上台，面对空椅子。</li><li>空椅子代表<strong>一个不在场但对角色至关重要的人</strong>。</li><li>演员对空椅子说话——通过独白，观众逐渐了解椅子代表谁、角色和那个人之间发生了什么。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>多把椅子</strong>：舞台上有多把椅子，每把代表不同的人</li><li><strong>角色切换</strong>：演员换坐到椅子上时，就变成椅子代表的那个人——两个角色交替对话</li></ul>
-<h2>教学提示</h2><p>空椅子是即兴中的"独奏曲"——它迫使演员在没有伙伴支持的情况下创造出完整的世界。这也是很好的角色深入练习。带领者提示："让你的角色真正<strong>看见</strong>那把椅子上坐着的人——你对他们说话的方式、你的身体反应、你的停顿，都会让观众也'看到'那个人。"</p><p><strong>训练的核心能力</strong>：独白能力、通过独白建立不在场的角色、构建情感深度。</p>`
-  },
-
-  'm3-36': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '场景与叙事', skills: ['高赌注','叙事','团体'],
-    usage: 'performance', players: {min:2, max:4, label:'2-4 人'}, difficultyNum: 2,
-    title: '世界末日（Armageddon）—— 地球上最后 N 分钟的对话',
-    level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-4 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">3-5 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">高赌注场景 · 情感真实</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>带领者宣布："距离世界末日还有 5 分钟。你们是最后两个（或几个）还活着的人。"</li><li>演员在倒计时中展开对话——可以是任何关系、任何地点。</li><li>带领者每隔一分钟报时——"还剩 3 分钟""还剩 60 秒""10, 9, 8……"。</li><li>场景在倒计时零时结束。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>具体末日</strong>：不是"世界末日"而是特定情境——"最后一家咖啡馆关门前的最后十分钟"</li></ul>
-<h2>教学提示</h2><p>世界末日训练的是<strong>在高赌注（Stakes）情境下保持情感真实</strong>。很多新手在"世界末日"的压力下要么过度夸张（哭天喊地），要么回避（假装什么都没发生）。好的表演在其中找到平衡——角色知道末日来了，但仍然在努力过好最后的几分钟。</p><p><strong>训练的核心能力</strong>：在高赌注下保持情感真实、在限制时间内完成情感弧线。</p>`
-  },
-
-  'm3-37': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '场景与叙事', skills: ['风格切换','类型','灵活性'],
-    usage: 'performance', players: {min:2, max:4, label:'2-4 人'}, difficultyNum: 3,
-    title: '类型重演（Genre Replay）—— 同一场景，换个风格再演',
-    level: '★★★', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-4 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★★</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">风格切换 · 类型认知 · 灵活性</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>两人先表演一个 60 秒的中性场景（如"两人在餐厅分手"）。</li><li>然后<strong>同一场景</strong>用不同风格重演：西部片版本、恐怖片版本、莎士比亚版本、韩国爱情剧版本……</li><li>每次重演，角色的核心关系和情境保持不变——但世界规则、身体质感、语言风格完全切换。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>观众选类型</strong>：每轮让观众喊出一个类型</li><li><strong>混合类型</strong>：同时用两种类型——"西部片+音乐剧"</li></ul>
-<h2>教学提示</h2><p>类型重演训练的是对<strong>不同类型的深层理解</strong>——不只是表面元素（恐怖片=尖叫），而是类型的节奏和情感核心。带领者提示："抓住类型的情感核心——黑色电影的宿命感、浪漫喜剧的渴望——而不是表面特征。"</p><p><strong>训练的核心能力</strong>：类型驾驭、快速切换表演风格、抓住类型的本质。</p>`
-  },
-
-  'm3-38': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '场景与叙事', skills: ['角色深入','采访','叙事'],
-    usage: 'performance', players: {min:2, max:2, label:'2 人+'}, difficultyNum: 2,
-    title: '采访者（The Interviewer）—— 一个角色揭示一段人生',
-    level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2 人+</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">角色深入 · 即兴采访</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>一人扮演主持人（身份中立）。另一人扮演一个特定角色（如"世界上最后一个记得怎么手写汉字的人"）。</li><li>主持人采访该角色，逐渐深入——从表面问题到私人问题。</li><li>通过采访，观众和演员一起发现这个角色的完整世界。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>突发新闻</strong>：采访中主持人突然宣布一条"新闻"，角色必须角色内回应</li></ul>
-<h2>教学提示</h2><p>采访者训练角色一致性和即兴回答的能力。主持人的提问质量决定游戏深度——好的主持人会"听"角色的回答、从回答中找出下一个问题，而不是机械地按清单提问。</p><p><strong>训练的核心能力</strong>：通过提问和回答共同构建角色、在角色中保持一致性。</p>`
-  },
-
-  // ---- E. 地位与情绪（10 个） ----
-
-  'm3-39': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '地位与情绪', skills: ['地位感知','身体','互动'],
-    usage: 'training', players: {min:2, max:2, label:'2 人'}, difficultyNum: 1,
-    title: '地位数字（Status Numbers）—— 1 到 10，你的地位是几？',
-    level: '★☆☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">地位感知 · 身体表达</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>两人各从 1-10 中选一个秘密地位数字（10=极高地位）。不让对方知道。</li><li>两人开始一个即兴场景，按各自的地位数字扮演。</li><li>场景结束后，观众/观察者猜测两人的数字——然后演员透露真实数字。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>地位翻转</strong>：场景中途带领者喊"翻转！"两人交换数字</li><li><strong>地位渐变</strong>：暗中缓慢改变自己的地位数字——观察对方如何回应</li></ul>
-<h2>教学提示</h2><p>地位数字是理解 Keith Johnstone 地位理论的最佳入门。核心洞察：地位不是社会身份，是行为的结果。一个 CEO（数字 3 的卑微身体语言）和一个清洁工（数字 8 的从容身体语言）之间的互动——这种反差会产生最有趣的戏剧。</p><p><strong>训练的核心能力</strong>：用身体表达不同程度的地位、感知和回应对方的地位信号。</p>`
-  },
-
-  'm3-40': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '地位与情绪', skills: ['地位互动','观察','适应'],
-    usage: 'training', players: {min:3, max:6, label:'3-6 人'}, difficultyNum: 2,
-    title: '地位扑克牌（Status Cards）—— 贴在额头上的身份',
-    level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">3-6 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">地位互动 · 观察 · 适应</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>准备扑克牌，数字越大地位越高。每人抽一张贴在额头上——<strong>自己看不见</strong>，别人能看见。</li><li>所有人开始一个场景，<strong>根据别人额头的数字来对待对方</strong>。</li><li>场景进行中，带领者随时给某人换牌——所有人调整互动方式。</li><li>结束后讨论感受。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>花牌</strong>：加入 J、Q、K、A——赋予特殊含义（J=小丑、K=国王的绝对权力）</li></ul>
-<h2>教学提示</h2><p>地位扑克牌让演员体验"别人如何对待你，决定了你如何对待自己"。当别人都对你低三下四时，你自然就会挺起胸膛——即使你不知道自己额头贴的是 K。这个练习证明了地位是互动的结果，而非内在属性。</p><p><strong>训练的核心能力</strong>：感知别人如何根据你的"地位"对待你、理解地位是互动的产物。</p>`
-  },
-
-  'm3-41': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '地位与情绪', skills: ['地位变化','戏剧张力','反应力'],
-    usage: 'training', players: {min:2, max:2, label:'2 人'}, difficultyNum: 2,
-    title: '地位翻转（Status Flip）—— 一瞬间的权力倒转',
-    level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">地位变化 · 戏剧张力</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>从一个明显的地位不对等场景开始（如老板-员工、老师-学生）。</li><li>带领者在任意时刻喊"翻转！"——此时低地位的演员必须找到一个<strong>自然的理由</strong>，让角色的地位瞬间高于对方。</li><li>翻转后场景继续——新的权力格局可能保持、可能再次翻转。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>多次翻转</strong>：一个场景中可能翻转 3-4 次</li><li><strong>隐形翻转</strong>：不喊"翻转"，而是演员自己感知到地位变化的时机并主动翻转</li></ul>
-<h2>教学提示</h2><p>地位翻转是制造精彩戏剧的核心工具——观众最爱看的就是权力关系的颠覆。好的翻转不是随意的，它应该源自场景中自然浮现的契机——一句话、一个发现、一个秘密被暴露。带领者提示："不要只是突然变得嚣张——找到翻转的<strong>理由</strong>。"</p><p><strong>训练的核心能力</strong>：识别地位翻转的契机、自然地从一个地位过渡到另一个地位。</p>`
-  },
-
-  'm3-42': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '地位与情绪', skills: ['情绪表达','反应力','能量'],
-    usage: 'training', players: {min:4, max:20, label:'4-20 人'}, difficultyNum: 1,
-    title: '情绪传送带（Emotion Conveyor Belt）—— 传递、放大、切换',
-    level: '★☆☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">4-20 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★☆☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">情绪表达 · 反应力 · 能量</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>所有人围成一圈。A 用一个情绪动作+声音面向 B。B 接收该情绪、<strong>放大</strong>、然后突然切换到一个<strong>全新的情绪</strong>，面向 C。</li><li>切换必须在 1 秒内完成。情绪的名字不需要说出来——用身体和声音来表达。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>情绪+台词</strong>：必须加上一句和情绪匹配的台词</li><li><strong>对立情绪</strong>：每次切换必须切换到上一个情绪的"反面"</li></ul>
-<h2>教学提示</h2><p>情绪传送带训练情绪表达的<strong>范围和灵活性</strong>。很多人只会做"大情绪"（愤怒、狂喜）——带领者要鼓励细微的情绪（不安、释然、嫉妒、怀念）。情绪在身体里——改变了你的身体，情绪就变了。</p><p><strong>训练的核心能力</strong>：情绪的快速进入和切换、用身体而非大脑驱动情绪。</p>`
-  },
-
-  'm3-43': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '地位与情绪', skills: ['情绪范围','场景','角色'],
-    usage: 'training', players: {min:2, max:2, label:'2 人'}, difficultyNum: 2,
-    title: '四种情绪方格（Emotional Quadrant）—— 在能量和正负面之间跳转',
-    level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">3-5 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">情绪范围 · 快速切换</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>画一个虚拟 2×2 方格。横轴：负面情绪 → 正面情绪。纵轴：高能量 → 低能量。</li><li>两人做场景。带领者随时指向某个象限——演员立刻切换到对应象限的情绪。</li><li>四个象限：高能正面（狂喜）、低能正面（满足）、高能负面（暴怒）、低能负面（沮丧）。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>渐进移动</strong>：不只跳象限，而是在象限内缓慢移动——从沮丧到暴怒</li></ul>
-<h2>教学提示</h2><p>这个游戏帮你理解情绪的<strong>两个核心维度</strong>：能量高低和正负面。很多新手的情绪表达只在一个维度上变化（只变能量、不变正负面）。带领者可以让大家讨论：哪些情绪是容易演的？哪些是不常演的？</p><p><strong>训练的核心能力</strong>：情绪的二维理解、在场景中灵活运用情绪范围。</p>`
-  },
-
-  'm3-44': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '地位与情绪', skills: ['非语言','场景','身体表达'],
-    usage: 'both', players: {min:2, max:3, label:'2-3 人'}, difficultyNum: 2,
-    title: '无声场景（Silent Scene）—— 一句话不说，故事照样讲',
-    level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-3 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">2-4 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">非语言表达 · 身体叙事</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>两人表演一个完整场景——全程不允许说话。只能用身体、表情、空间关系、环境互动。</li><li>场景结束后，观众描述他们看到的故事——角色关系、发生了什么、情绪变化。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>声效版</strong>：可以发出非语言的声音（叹息、笑声、敲击）但不能说词</li><li><strong>慢速版</strong>：所有动作都慢速进行——像一出默剧芭蕾</li></ul>
-<h2>教学提示</h2><p>无声场景是"展示而非讲述"的终极练习。你失去了台词这个拐杖——必须完全依赖身体和空间来建立 CROW。很多演员发现，无声场景中建立的关系反而比说话时更清晰，因为没有语言的噪音。</p><p><strong>训练的核心能力</strong>：非语言叙事、身体表达的精准度、"展示而非讲述"。</p>`
-  },
-
-  'm3-45': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '地位与情绪', skills: ['情绪控制','角色','场景'],
-    usage: 'both', players: {min:2, max:2, label:'2 人'}, difficultyNum: 2,
-    title: '情绪过山车（Emotional Rollercoaster）—— 每 15 秒换一个情绪',
-    level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">3-5 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">情绪控制 · 角色灵活性</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>两人做场景。带领者每 15-20 秒喊一个新情绪词——暴怒、狂喜、恐惧、嫉妒、释然……</li><li>两人必须立刻切换到新情绪，但<strong>保持场景情境和角色关系不变</strong>。</li><li>核心挑战：在情绪剧烈变化中仍保持角色和关系的连续性。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>自驱动过山车</strong>：没有带领者——演员自己在场景中感知何时需要切换情绪</li></ul>
-<h2>教学提示</h2><p>情绪过山车训练情绪的快速进入和合理化能力。关键原则：不只是换表情——<strong>整个身体</strong>都要进入新情绪。同一个人在恐惧中和在狂喜中的身体是完全不同的。带领者提示："每一次情绪切换后，让新情绪推动你的下一句台词和下一个决定。"</p><p><strong>训练的核心能力</strong>：快速情绪切换、在角色连续性中容纳情绪变化。</p>`
-  },
-
-  'm3-46': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '地位与情绪', skills: ['地位细腻','观察','微妙表达'],
-    usage: 'training', players: {min:3, max:6, label:'3-6 人'}, difficultyNum: 3,
-    title: '隐藏地位（Hidden Status）—— 小声说话的人才是真正的老大',
-    level: '★★★', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">3-6 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★★</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">地位细腻度 · 微妙表达</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>每人抽一个秘密地位数字（1-10）。但规则是：<strong>不允许用明显的高低地位身体语言</strong>。</li><li>所有人必须用中性的身体和声音互动——仅通过<strong>微妙的</strong>眼神、停顿、措辞差异来体现地位。</li><li>结束后观众猜各人的地位数字。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>对话限制</strong>：所有人只能说同一句台词（"请坐"），仅用不同的方式说出以体现地位</li></ul>
-<h2>教学提示</h2><p>隐藏地位训练的是地位的<strong>细腻维度</strong>。在现实中，高地位的人往往不是那个大喊大叫的人——他们是那个可以<strong>什么都不说</strong>但整个房间都在等他们反应的人。带领者引导："想想一个可以看到所有人心理活动的场景——谁在等谁的反应？"</p><p><strong>训练的核心能力</strong>：地位的微妙表达、用最小信号传递最大权力。</p>`
-  },
-
-  'm3-47': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '地位与情绪', skills: ['情绪控制','细腻度','耐心'],
-    usage: 'training', players: {min:2, max:2, label:'2 人'}, difficultyNum: 3,
-    title: '情绪渐变（Emotional Shift）—— 不知不觉中改变情绪',
-    level: '★★★', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★★</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">情绪控制 · 细腻度 · 耐心</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>两人从一种情绪开始场景。目标：让一个情绪<strong>在 90 秒内缓慢地、不可察觉地渐变</strong>到另一个完全相反的情绪。</li><li>观众不应感知到"切换点"——只应事后意识到变化发生了。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>双人同步渐变</strong>：两人的情绪同时但反向渐变——一个从爱到恨，一个从恨到爱</li></ul>
-<h2>教学提示</h2><p>情绪渐变是情绪控制的进阶练习——它训练的是<strong>情绪的温柔变化，而非剧烈切换</strong>。专注于身体的微调：呼吸逐渐变浅、肩膀慢慢下沉、声音渐渐变轻。不是一次性全部改变——是每个瞬间只改变一点点。</p><p><strong>训练的核心能力</strong>：情绪的细微控制、身体信号的精准调节。</p>`
-  },
-
-  'm3-48': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '地位与情绪', skills: ['限制创作','场景','自发性'],
-    usage: 'both', players: {min:2, max:2, label:'2 人'}, difficultyNum: 2,
-    title: '只有提问（Questions Only）—— 不能说陈述句',
-    level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">3-5 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">限制创作 · 语言灵活性</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>两人表演场景，但<strong>每一句话都必须是问句</strong>。不可以说陈述句。</li><li>如果有人说了一句陈述句——出局，换下一个人上场。</li><li>在全是问句的限制下，仍然要推进场景。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>只有命令</strong>：不能说问句——每句都是命令/祈使句</li><li><strong>交替模式</strong>：A 只能说问句，B 只能说陈述句</li></ul>
-<h2>教学提示</h2><p>只有提问是一个有趣的反向练习——它揭示了"提问"和"提供信息"之间的区别。在正常即兴中，过多提问是新手常见错误（把推进场景的负担推给伙伴）。这个游戏故意放大提问——让演员体会在限制下如何用问题来间接提供信息。</p><p><strong>训练的核心能力</strong>：限制下的语言创造、用问句间接推进场景。</p>`
-  },
-
-  // ---- F. 竞技与表演（12 个） ----
-
-  'm3-49': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '竞技与表演', skills: ['限制创作','简约','场景'],
-    usage: 'both', players: {min:2, max:2, label:'2 人'}, difficultyNum: 2,
-    title: '限词场景（Word Limit）—— 每句话只能说 N 个字',
-    level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">3-6 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">简约表达 · 限制创作</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>两人表演场景，但带领者设定每句话的字数限制——"每人只能说 3 个字""每句话限 5 字"。场景中途可以改规则——"现在只能说 1 个字！""现在不限制了！"</li></ol>
-<h2>进阶变体</h2><ul><li><strong>递减版</strong>：从 10 个字开始，每 30 秒减 1 个字——直到只能做无声场景</li></ul>
-<h2>教学提示</h2><p>限制创造简洁之美。当只能用一个字说话时，身体的表达会自动变强——这就是"限制激发创造力"。这个游戏在竞技演出中观赏性很强——观众喜欢看演员在极限下挣扎和创造。</p><p><strong>训练的核心能力</strong>：简洁表达、在严格限制下用身体和声音的其余部分补偿。</p>`
-  },
-
-  'm3-50': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '竞技与表演', skills: ['声音叙事','团体','想象力'],
-    usage: 'performance', players: {min:3, max:6, label:'3-6 人'}, difficultyNum: 2,
-    title: '广播剧（Radio Play）—— 只用声音讲故事',
-    level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">3-6 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">声音叙事 · 团体协作</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>所有演员背对观众（或蒙眼）。</li><li>仅用声音——台词、音效、环境声——讲述一个完整的故事。</li><li>一个 MC 在旁引导。观众闭眼"收听"。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>类型广播剧</strong>：限定类型——黑色侦探广播剧、科幻广播剧</li></ul>
-<h2>教学提示</h2><p>去掉视觉，声音的表达力被放大。演员会发现自己自然的语调和音色变化。这也是很好的团队练习——因为没有视觉，必须<strong>精准地听</strong>才知道何时加入。现场音效（脚步声、开门声）由演员就地制造。</p><p><strong>训练的核心能力</strong>：纯声音叙事、听觉聆听、团队声音配合。</p>`
-  },
-
-  'm3-51': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '竞技与表演', skills: ['音乐即兴','情感表达','勇气'],
-    usage: 'performance', players: {min:2, max:4, label:'2-4 人'}, difficultyNum: 3,
-    title: '即兴歌曲（Improvised Song）—— 把场景唱出来',
-    level: '★★★', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-4 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★★</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">3-5 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">音乐即兴 · 情感表达</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>两人先做一个普通的即兴场景。当场景到达情感峰值时，演员将台词转为歌唱。</li><li>不需要完美的旋律或押韵——核心是用旋律表达角色无法用台词承载的情感。</li><li>其他演员可以加入和声或节奏。可以提前有伴奏或清唱。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>风格限定</strong>：必须唱成特定风格——歌剧、说唱、民谣、摇滚</li><li><strong>对唱</strong>：两人对唱，像音乐剧中的二重唱</li></ul>
-<h2>教学提示</h2><p>很多演员最怕即兴歌曲——但这也是观众最爱看的。关键心态：你不是在参加歌唱比赛，你是在用旋律表达情感。跑调、破音都是角色的一部分。带领者提示："唱歌的时候，你的角色不需要是'一个好歌手'——你的角色只需要是一个有强烈感受的人。"</p><p><strong>训练的核心能力</strong>：用旋律拓展表达、在压力下保持创造性、将情感提升到"必须唱出来"的程度。</p>`
-  },
-
-  'm3-52': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '竞技与表演', skills: ['节奏控制','场景','压力管理'],
-    usage: 'both', players: {min:2, max:2, label:'2 人'}, difficultyNum: 3,
-    title: '倒计时场景（Countdown Scene）—— 与时间赛跑',
-    level: '★★★', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★★</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">3-5 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">节奏控制 · 压力管理</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>带领者设定倒计时——"这是一个 3 分钟的场景""还剩 2 分钟""60 秒""30 秒""10, 9, 8……"</li><li>演员必须在倒计时归零时让场景<strong>自然地达到一个情感高点</strong>——不是草草收场，而是刚好在那一刻故事讲完了。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>加速版</strong>：倒计时加速——第一遍 5 分钟，第二遍 2.5 分钟，第三遍 60 秒——同样场景越来越快</li></ul>
-<h2>教学提示</h2><p>倒计时制造了可见的压力——观众能看到演员在和时间赛跑。训练的是在压力下保持故事质量的能力。不是在倒计时前"胡乱结束"，而是<strong>在限制时间内讲一个完整、有意义的场景</strong>。</p><p><strong>训练的核心能力</strong>：在时间压力下保持叙事质量、对场景节奏的精准控制。</p>`
-  },
-
-  'm3-53': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '竞技与表演', skills: ['多角色','切换','记忆力'],
-    usage: 'both', players: {min:1, max:2, label:'1-2 人'}, difficultyNum: 3,
-    title: '角色圈（Circle of Characters）—— 一个人演 N 个角色',
-    level: '★★★', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">1-2 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★★</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">3-6 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">多角色 · 快速切换</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>演员站在一个固定的圆圈中心。圆圈的不同位置代表不同角色。</li><li>当演员移动到某个位置时——立刻变成该位置对应的角色。</li><li>演员在多个角色之间快速切换，不同角色之间可能有对话、冲突或合作。观众看到一个演员撑起一个密集的群戏。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>双人角色圈</strong>：两个演员各有自己的角色圈，两个圈中的角色可能相遇</li></ul>
-<h2>教学提示</h2><p>角色圈考验演员的多角色记忆和身体切换能力。每个角色必须有明确的身体/声音特征，让观众一眼就认出是哪个角色。这也是一个展示个人即兴能力的"独奏"游戏。</p><p><strong>训练的核心能力</strong>：多角色管理、精准的角色切换信号、角色记忆。</p>`
-  },
-
-  'm3-54': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '竞技与表演', skills: ['语言转换','抽象思维','协作'],
-    usage: 'both', players: {min:2, max:3, label:'2-3 人'}, difficultyNum: 2,
-    title: '诗人和翻译（Poet and Translator）—— 一个说胡话，一个翻人话',
-    level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-3 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">3-5 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">语言转换 · 抽象思维</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>A 是用一种<strong>自创的语言</strong>（Gibberish：无意义的音节，但有语调、节奏和情感）说话的外国诗人。</li><li>B 站在 A 旁边做"翻译"——将 A 的胡言乱语"翻译"成观众能理解的中文诗歌或演讲。</li><li>A 的 Gibberish 要有情感和意图——B 从语调中提取意义并翻译。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>多语诗人</strong>：诗人使用多种不同风格的 Gibberish——愤怒的抗议→温柔的告白</li></ul>
-<h2>教学提示</h2><p>诗人和翻译是一个经典的"接纳"练习——翻译者必须完全接纳诗人的每一个声音和表情，并赋予它意义。诗人则训练非语言的情感表达——即使说的话没有意义，但情感必须清晰。两个人的配合让这个游戏既有笑点又有诗意。</p><p><strong>训练的核心能力</strong>：从非语言信号中提取意义、用情感驱动无意义的语言。</p>`
-  },
-
-  'm3-55': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '竞技与表演', skills: ['物件即兴','联想','场景'],
-    usage: 'both', players: {min:2, max:4, label:'2-4 人'}, difficultyNum: 2,
-    title: '道具袋（Prop Bag）—— 给任何东西赋予故事',
-    level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-4 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">物件即兴 · 联想能力</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>观众（或带领者）提前准备了一些随机物品——一把雨伞、一只手套、一个空瓶子。</li><li>演员从中随机抽取一样，当场编出一个以该物品为核心的故事或场景。</li><li>物品可以是它本身，也可以被"重新定义"——手套不是手套，而是一条失去了尾巴的变色龙。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>连锁道具</strong>：场景中途加入第二个、第三个随机道具——都必须有机融入</li></ul>
-<h2>教学提示</h2><p>道具袋展示"任何东西都可以是一个 Offer"的即兴精神。关键原则：仔细观察道具——它的质感、重量、可能的历史——这些都会给出故事的线索。不要急着做决定，先和道具建立连接。</p><p><strong>训练的核心能力</strong>：从外部物件中提取故事灵感，给日常物品赋予戏剧性。</p>`
-  },
-
-  'm3-56': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '竞技与表演', skills: ['外部输入','灵活性','场景'],
-    usage: 'both', players: {min:2, max:4, label:'2-4 人'}, difficultyNum: 2,
-    title: '对白纸条（Lines from a Hat）—— 把观众写的话塞进场景',
-    level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-4 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">外部输入 · 灵活性</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>演出前让观众在小纸条上写任意一句话。所有纸条放入一个帽子。</li><li>两人做场景。在场景中的任意时刻，演员从帽子中抽一张纸条，<strong>读出纸条上的话</strong>作为下一句台词——不管那句话是什么。</li><li>演员必须立刻<strong>合理化</strong>这句话，让它自然地成为场景的一部分。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>强制融入</strong>：不仅读出来——必须把纸条上的话作为角色的"核心动机"</li></ul>
-<h2>教学提示</h2><p>对白纸条是最受观众欢迎的即兴游戏之一——因为观众感觉自己也参与了创作。演员训练的是接受完全不可预测的外部输入并将其有机融入。即使纸条上的话看起来完全不搭——你的工作就是让它搭。</p><p><strong>训练的核心能力</strong>：接纳完全不可预测的外部信息、即时合理化能力。</p>`
-  },
-
-  'm3-57': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '竞技与表演', skills: ['速度','精准','记忆'],
-    usage: 'both', players: {min:2, max:4, label:'2-4 人'}, difficultyNum: 2,
-    title: '半时重演（Half-Life）—— 同一场景，时间减半再减半',
-    level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-4 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">3-5 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">速度控制 · 精准记忆</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>演员先表演一个大约 60 秒的完整场景。</li><li>第二遍：同样的场景必须在 30 秒内完成。</li><li>第三遍：15 秒。</li><li>第四遍：7-8 秒——几乎是一场"即兴的超浓缩版"。每一遍都必须包含上一遍的核心内容。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>反向半时</strong>：从 10 秒开始，逐渐拉长——越来越慢、越来越细</li></ul>
-<h2>教学提示</h2><p>半时重演训练的是<strong>抓住场景的本质</strong>——当时间减半时，你必须舍弃不必要的细节，只保留最核心的动作和台词。这个游戏在竞技演出中效果极佳——观众看着同样的场景被不断压缩，笑果逐次升级。</p><p><strong>训练的核心能力</strong>：抓取场景核心、在极短时间内完成完整叙事。</p>`
-  },
-
-  'm3-58': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '竞技与表演', skills: ['场景接龙','观察','反应力'],
-    usage: 'both', players: {min:4, max:12, label:'4-12 人'}, difficultyNum: 2,
-    title: '自由定格（Freeze Tag）—— 随时定格，抢位接戏',
-    level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">4-12 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">场景接龙 · 快速反应</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>两人开始一个场景。其他演员站在一旁。</li><li>旁观者随时可以喊"定格！"——两个演员立刻冻结在当前位置。</li><li>喊定格的人拍其中一个人的肩膀，替代他的位置，模仿被替代者的身体姿势——然后以此为起点开始一个<strong>全新的、不相关的场景</strong>。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>关联版</strong>：新场景必须和旧场景有某种关联——同一个主题或情感</li></ul>
-<h2>教学提示</h2><p>自由定格训练的是通过身体姿势快速产生场景灵感。很多时候你被替换进一个奇怪的姿势——你的第一个联想就是你新场景的起点。带领者提示上台要快，不让你在想"最好的"。</p><p><strong>训练的核心能力</strong>：从身体姿势中获取场景灵感、快速启动新场景。</p>`
-  },
-
-  'm3-59': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '竞技与表演', skills: ['互动','接纳','灵活性'],
-    usage: 'both', players: {min:2, max:4, label:'2-4 人'}, difficultyNum: 2,
-    title: '观众导演（Audience Director）—— 观众说了算',
-    level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-4 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-8 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">观众互动 · 接纳</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>从观众中选 1-2 人做"导演"。他们在场景中随时可以喊停、给出调整指令——和"导演椅"的游戏类似，但导演来自观众席。</li><li>演员必须执行观众导演的每一个指令——不管多奇怪。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>全观众投票</strong>：主持人在几个选项中让全场观众喊出选择</li></ul>
-<h2>教学提示</h2><p>观众导演将互动提升到最高级——观众不只是给出建议，而是直接影响演出的每个瞬间。这训练了演员对任何外部输入的开放态度。主持人要保护好演员——如果一个观众导演太刁难，主持人可以笑着干预。</p><p><strong>训练的核心能力</strong>：接受任何外部指导、在观众面前保持开放和灵活。</p>`
-  },
-
-  'm3-60': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '竞技与表演', skills: ['团体叙事','悬疑','协作'],
-    usage: 'performance', players: {min:5, max:8, label:'5-8 人'}, difficultyNum: 3,
-    title: '谋杀悬疑（Murder Mystery）—— 即兴的侦探故事',
-    level: '★★★', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">5-8 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★★</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">10-15 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">团体叙事 · 悬疑构建</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>观众提供：受害者的名字、凶器、案发地点。</li><li>演员分别扮演侦探、嫌疑人、证人等——所有人轮流接受侦探的盘问。</li><li>没有人在事前知道"谁是真凶"——侦探通过盘问和推理，在演出结尾<strong>当场指认凶手</strong>。</li><li>被指认的人必须现场编出一个合理的"犯罪动机和过程"。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>反转版</strong>：事先秘密指定一个演员为"真凶"——只有他自己知道——其他人都是清白但可疑的</li></ul>
-<h2>教学提示</h2><p>谋杀悬疑是最复杂的即兴游戏之一——它融合了角色扮演、叙事构建、悬疑制造和团体协作。每个"嫌疑人"都要建立一些让自己可疑但又不至于太明显的特征。侦探要善于聆听，在众人的叙述中找到逻辑漏洞或有趣的方向。</p><p><strong>训练的核心能力</strong>：团体长叙事、悬疑构建、即兴推理、在不确定中保持角色一致性。</p>`
-  },
+  // 游戏条目已移至 games.js，通过 Object.assign(articles, games) 合并
 
   // ========== 模块五：资源与行动清单（原模块三） ==========
+
   'm4-1': {
     module: 'module4', moduleName: '资源与演出', subtopic: '专项练习（A类）',
     title: '专项练习导航 —— 按能力分类的游戏推荐与训练路线',
@@ -2550,23 +2044,89 @@ const articles = {
 <h2>进阶用法</h2>
 <ul><li><strong>限制挑战</strong>：生成后给场景加限制——"只能说 5 个词""不能说话""必须唱歌"</li><li><strong>类型混搭</strong>：同样元素用恐怖片/韩剧/纪录片/默片风格各演一遍</li><li><strong>角色互换</strong>：用同样元素但演员交换角色——看同样起点可以去到哪些不同地方</li></ul>
 <p style="margin-top:16px;color:var(--text-dim);">🎲 提示词生成器已放在首页，随时可以使用。</p>`
+  },
+
+  'm4-14': {
+    module: 'module4', moduleName: '资源与演出', subtopic: '复盘方法',
+    title: '排练与演出的复盘方法论 —— 如何用结构化复盘持续提升',
+    level: '方法', readTime: '约 7 分钟',
+    content: `<p>复盘（Retrospective / Debrief）是即兴训练中最容易被忽视但却最重要的环节之一。没有复盘的排练，就像没有反馈的练习——你在重复，但未必在进步。</p>
+<h2>为什么即兴排练需要复盘？</h2>
+<p>即兴排练的特殊性在于：<strong>你无法"重来一遍"来分析</strong>。一个场景结束后就永远消失了。因此，排练后的复盘是捕捉发现、固化学习、识别模式的唯一窗口。</p>
+<p>好的复盘不评判"好"与"坏"，而是关注：<strong>发生了什么？为什么？下次可以怎样不同？</strong></p>
+<h2>KISS 复盘模型</h2>
+<p>KISS 是即兴团队最常用的轻量复盘框架，简单、直接、覆盖全面：</p>
+<ul>
+<li><strong>Keep（保留）</strong>：哪些做得好，应该继续保持？——庆祝成功，固化好习惯</li>
+<li><strong>Improve（改进）</strong>：哪些可以做，但能做得更好？——不是否定，是"升级"</li>
+<li><strong>Start（开始）</strong>：哪些还没做，但值得开始尝试？——新的想法、实验方向</li>
+<li><strong>Stop（停止）</strong>：哪些不再有效，应该停掉？——放下不再服务团队的习惯</li>
+</ul>
+<p>KISS 的关键原则：<strong>每个象限至少想出一条，不要只写 Keep</strong>。真正的成长往往藏在 Improve 和 Start 里。</p>
+<h2>复盘的操作流程</h2>
+<ol>
+<li><strong>个人先写（3-5 分钟）</strong>：每个人独立填写 KISS 四个象限。先不给他人看——避免被第一个发言的人带偏。</li>
+<li><strong>轮流分享（10-15 分钟）</strong>：每人分享自己的 KISS。规则：一人分享时，其他人<strong>只聆听不评论</strong>。不要辩解、不要解释、不要"其实我当时是想……"——只是听。</li>
+<li><strong>找出模式（5 分钟）</strong>：有没有多个人提到相同的问题？那可能是今天的主题。</li>
+<li><strong>定下行动（2 分钟）</strong>：从复盘产出中选择 1-2 个具体的、下次排练就可以执行的小行动。不要选太多——聚焦。</li>
+</ol>
+<h2>复盘的角色分工</h2>
+<ul>
+<li><strong>带领者/教练</strong>：主持流程、计时、确保每人都有发言空间、避免复盘变成"互相安慰"或"互相批评"</li>
+<li><strong>记录员</strong>：记下关键发现，存档（下次排练前翻出来看看）</li>
+<li><strong>所有参与者</strong>：诚实但不残忍。复盘是基于"我们想一起变得更好"，不是"谁做错了"</li>
+</ul>
+<h2>常见的复盘误区</h2>
+<ol>
+<li><strong>只聊开心的事</strong>：避开真正需要讨论的问题。带领者要有勇气引导团队直面"房间里的大象"。</li>
+<li><strong>过度分析</strong>：对 30 秒的场景分析 15 分钟。对于小问题，简单提一下就够了。</li>
+<li><strong>变成对个人的批评</strong>：应该说"当 X 发生的时候，场景停滞了"，而不是"你刚才那段演得不好"。</li>
+<li><strong>没有行动产出</strong>：聊了一小时但没有"下次我们要试试……"。复盘必须有输出。</li>
+<li><strong>跳过复盘</strong>：排练结束后大家急着走。固定地把最后 15 分钟留给复盘，把它当作排练的一部分。</li>
+</ol>
+<h2>进阶：给资深团队的复盘变体</h2>
+<ul>
+<li><strong>三词复盘</strong>：每人只能说三个词描述今天的感受——强迫提炼核心问题</li>
+<li><strong>一句话复盘</strong>：每人只说一句："今天我发现……"</li>
+<li><strong>温度检测</strong>：每人用 1-10 打分今天的排练（能量、连接、学习），然后讨论差异</li>
+<li><strong>角色互换复盘</strong>：每个人以"如果我是另一个角色，我会注意到什么"的视角来复盘</li>
+</ul>
+<h2>三问复盘（What? So What? Now What?）—— 自然的反思框架</h2>
+<p>三问复盘源自体验式学习理论，<strong>没有术语、没有军事背景</strong>，就是人类最自然的反思方式：发生了什么？意味着什么？接下来做什么？</p>
+<p>三问复盘的三个步骤：</p>
+<ol>
+<li><strong>What?（发生了什么）</strong>—— 客观描述排练中发生了什么，不评判对错，只是观察。比如"今天做了三轮场景练习，第二轮特别顺，第三轮节奏拖了"。</li>
+<li><strong>So What?（意味着什么）</strong>—— 这对你有什么影响？学到了什么？什么让你意外？比如"热身充分的时候大家更容易进入状态，失误大多是因为太着急"。</li>
+<li><strong>Now What?（接下来做什么）</strong>—— 具体做一件不同的事，小到下次排练就能执行。比如"下次排练前 10 分钟开始做身体热身，每个场景后留 2 分钟快速回顾"。</li>
+</ol>
+<p>KISS 和三问复盘可以互补使用：<strong>KISS 适合日常排练</strong>（四象限覆盖全面），<strong>三问复盘适合想从体验中提炼学习的时刻</strong>（更关注反思和行动转化）。另外还提供了 <strong>三点快速复盘</strong>，每次排练后 30 秒就能完成，适合高频记录。</p>
+<h2>三点快速复盘 —— 最轻量的日常复盘</h2>
+<p>如果你觉得 KISS 的四个象限和三问复盘的反思步骤都需要太多时间，可以试试<strong>三点复盘</strong>——只记三件事，30 秒搞定：</p>
+<ol>
+<li><strong>🌟 亮点时刻</strong>：今天最棒的瞬间——自己的、队友的、观众的都可以。比如"队友在我忘词时无缝接了一句'天气真好'，全场爆笑"。</li>
+<li><strong>⚡ 待打磨</strong>：一个下次想做得更好的地方——不用多，一个就好。比如"S 形走位时总挡住队友，下次注意站位朝向"。</li>
+<li><strong>💡 下次试试</strong>：一个新想法、新角色、新形式——小而具体。比如"下回想用'拍手接力'的方式做场景转换"。</li>
+</ol>
+<p>三点复盘的设计理念是<strong>"完成比完美重要"</strong>。不是说 KISS 或三问复盘不好——而是当你排练结束后累得不想写字时，三点复盘让你至少能记下最有价值的收获，而不是什么也不记。等你需要做深度复盘时，再切换到 KISS 或三问复盘。</p>
+<p style="margin-top:16px;color:var(--text-dim);">💡 本网站提供了 📋 排练/演出复盘工具（导航栏 → 复盘），支持 KISS、三问复盘和三点快速复盘三种模型，数据保存在你的浏览器中。</p>`
   }
 };
+
+// 合并外部游戏数据（从 games.js 加载）
+if (typeof games !== 'undefined') {
+  Object.assign(articles, games);
+}
 
 // ===== 模块文章顺序 =====
 const moduleOrder = {
   module0: ['m0-1','m0-6','m0-7','m0-2','m0-3','m0-4','m0-5'],
   module1: ['m1-1','m1-2','m1-3','m1-4','m1-5','m1-6','m1-7','m1-8','m1-9','m1-10','m1-11','m1-12','m1-13','m1-14','m1-15','m1-16','m1-17','m1-18','m1-19'],
   module2: ['m2-1','m2-2','m2-3','m2-4','m2-5','m2-6','m2-7','m2-8','m2-9','m2-10','m2-11','m2-12'],
-  module3: ['m3-1','m3-2','m3-3','m3-4','m3-5','m3-6','m3-7','m3-8','m3-9','m3-10','m3-11','m3-12','m3-13','m3-14','m3-15','m3-16','m3-17','m3-18','m3-19','m3-20','m3-21','m3-22','m3-23','m3-24','m3-25','m3-26','m3-27','m3-28','m3-29','m3-30','m3-31','m3-32','m3-33','m3-34','m3-35','m3-36','m3-37','m3-38','m3-39','m3-40','m3-41','m3-42','m3-43','m3-44','m3-45','m3-46','m3-47','m3-48','m3-49','m3-50','m3-51','m3-52','m3-53','m3-54','m3-55','m3-56','m3-57','m3-58','m3-59','m3-60'],
-  module4: ['m4-1','m4-2','m4-3','m4-5','m4-6','m4-13','m4-7','m4-8','m4-9','m4-10','m4-11','m4-12']
+  module3: typeof gameOrder !== 'undefined' ? gameOrder : [],
+  module4: ['m4-1','m4-2','m4-3','m4-5','m4-6','m4-13','m4-7','m4-8','m4-9','m4-10','m4-14','m4-11','m4-12']
 };
 
-// ===== 游戏能力分类 =====
-const gameSkills = {
-  '热身': '热身破冰', '接纳': 'Yes And 与接纳', '角色': '角色塑造',
-  '场景': '场景与叙事', '地位情绪': '地位与情绪', '竞技': '竞技与表演'
-};
+// gameSkills 从 games.js 加载
 
 // ===== 当前状态 =====
 let currentArticle = null;
@@ -2782,7 +2342,7 @@ function renderGameList(filter) {
   let html = '';
   games.forEach(g => {
     const tags = (g.art.skills || []).map(s => '<span class="skill-tag">' + s + '</span>').join('');
-    const gameName = g.art.title.split(' ——')[0];
+    const gameName = g.art.title;
     const usageBadge = g.art.usage === 'performance' ? ' 🎪' : g.art.usage === 'warmup' ? ' 🔥' : g.art.usage === 'training' ? ' 🎯' : '';
     const players = g.art.players || {};
     const playerStr = players.label || '';
@@ -2861,27 +2421,134 @@ function randomPractice() {
 
 // ===== 提示词生成器 =====
 const promptData = {
-  places: ['深夜便利店', '废弃游乐场', '太空站厨房', '婚礼现场的后台', '凌晨三点的急诊室', '动物园的企鹅馆', '地下停车场', '楼顶天台', '第一次约会的高级餐厅', '偏远小镇的邮局', '海底观测站', '机场行李转盘旁', '空无一人的电影院', '雨中的公交站', '24小时洗衣房'],
-  relations: ['失散多年的兄妹', '互相暗恋的同事', '退休老教师和当年的学生', '面试官和过度准备的求职者', '离婚后第一次见面的夫妻', '外卖骑手和点了奇怪订单的顾客', '新搬来的邻居和社恐住户', '导演和第一次上场的替身演员', '有同一个前女友的两个人', '魔术师和他的托儿'],
-  emotions: ['压抑的狂喜', '假装不在乎的失落', '说不出口的感激', '愤怒之下的柔情', '尴尬到极致的礼貌', '绝望中的一抹乐观', '嫉妒但努力保持风度', '恐惧但强装镇定', '无聊到开始幻想', '害羞到说话结巴'],
-  objects: ['一把打不开的锁', '一盒过期的巧克力', '一张忘了是谁的照片', '一个永远响着但没人接的电话', '一封未寄出的信', '一支写不出字的笔', '一把透明的伞', '一个装着沙子的漂流瓶', '一只总是慢五分钟的手表', '一本被水浸过的日记'],
-  lines: ['"我知道你会这么说。"', '"你确定那玩意儿关了吗？"', '"我们再来一次。"', '"这不是我以为的样子。"', '"你闻到了吗？"', '"别告诉妈妈。"', '"这是我最后一次警告你。"', '"其实我一直想告诉你……"', '"你还留着那个？"', '"嘘——有人来了。"']
+  // 地点 — 简单场景词，留给演员联想空间
+  places: [
+    '深夜便利店', '废弃游乐场', '太空站厨房', '婚礼现场的后台', '凌晨三点的急诊室',
+    '动物园的企鹅馆', '地下停车场', '楼顶天台', '第一次约会的高级餐厅', '偏远小镇的邮局',
+    '海底观测站', '机场行李转盘旁', '空无一人的电影院', '雨中的公交站', '24小时洗衣房',
+    '密室', '金库', '天台', '地下室', '电梯里',
+    '图书馆角落', '菜市场鱼摊前', '深夜办公室', '空泳池底', '地铁末班车',
+    '灯塔顶端', '防空洞', '花店后巷', '桑拿房', '天文台',
+    '旧货市场', '码头栈桥', '录音棚', '手术室门外', '婚纱店试衣间',
+    '沙漠公路旁', '冰球场更衣室', '古董店', '消防通道', '温泉旅馆'
+  ],
+  // 关系 — 两人之间的张力
+  relations: [
+    '失散多年的兄妹', '互相暗恋的同事', '退休老教师和当年的学生', '面试官和过度准备的求职者',
+    '离婚后第一次见面的夫妻', '外卖骑手和点了奇怪订单的顾客', '新搬来的邻居和社恐住户',
+    '导演和第一次上场的替身演员', '有同一个前女友的两个人', '魔术师和他的托儿',
+    '刚吵完架的母子', '在逃犯和目击者', '暗恋朋友多年的人和朋友', '同父异母的陌生人',
+    '退役运动员和现任冠军', '网红和黑粉', '欠债的人和债主', '代驾司机和醉酒的乘客',
+    '两个等同一封邮件的同事', '互相以为对方是卧底的两个普通人', '被锁在门外的室友',
+    '宠物走失的主人和捡到宠物的人', '在寺庙偶遇的前任', '新来的实习生和快退休的老员工',
+    '彩票中奖者和急于认亲的远亲', '最后离开图书馆的两个人', '互相掩护的双面间谍',
+    '童年挚友二十年后再见', '奶茶店排在最后一杯的两个人'
+  ],
+  // 情绪 — 复杂微妙的内心状态
+  emotions: [
+    '压抑的狂喜', '假装不在乎的失落', '说不出口的感激', '愤怒之下的柔情',
+    '尴尬到极致的礼貌', '绝望中的一抹乐观', '嫉妒但努力保持风度', '恐惧但强装镇定',
+    '无聊到开始幻想', '害羞到说话结巴',
+    '释然前的最后一丝不甘', '明明赢了却觉得输了', '想笑不敢笑的严肃',
+    '被误解时的沉默', '过度热情下的心虚', '关心但装作冷漠',
+    '终于等到但不敢确认', '想要但说不出口', '被看穿后的松弛',
+    '越解释越乱的焦急', '明知不该但忍不住', '替别人尴尬的共情',
+    '什么都没说但什么都懂', '嘴上说不要心里想要', '输得很开心',
+    '等了很久终于来了又不知道怎么面对', '明明很熟悉却装作不认识',
+    '在告别前想说但最终没说的话'
+  ],
+  // 物件 — 日常物品中的故事线索
+  objects: [
+    '一把打不开的锁', '一盒过期的巧克力', '一张忘了是谁的照片', '一个永远响着但没人接的电话',
+    '一封未寄出的信', '一支写不出字的笔', '一把透明的伞', '一个装着沙子的漂流瓶',
+    '一只总是慢五分钟的手表', '一本被水浸过的日记',
+    '一串没标签的钥匙', '半张撕碎的电影票', '一个空的戒指盒',
+    '一杯凉透的咖啡', '一个从未拨出的号码', '一件不合身的西装',
+    '一个没电的录音笔', '一张画了一半的素描', '一盆快枯萎的植物',
+    '一个设置了但从未响过的闹钟', '一条织了一半的围巾', '一个错误地址的快递',
+    '一本被反复折页的书', '一盘老磁带', '一个没盖子的保温杯',
+    '一双左右不配的手套', '一封退回的信', '一把没电的手电筒'
+  ],
+  // 开场台词 — 一句话开启场景
+  lines: [
+    '"我知道你会这么说。"', '"你确定那玩意儿关了吗？"', '"我们再来一次。"',
+    '"这不是我以为的样子。"', '"你闻到了吗？"', '"别告诉妈妈。"',
+    '"这是我最后一次警告你。"', '"其实我一直想告诉你……"', '"你还留着那个？"',
+    '"嘘——有人来了。"',
+    '"你迟到了三年。"', '"这个秘密我帮你保管很久了。"', '"你不应该在这里。"',
+    '"那个不是给你的。"', '"你确定要听真话吗？"', '"我昨天梦到你了。"',
+    '"你走之后什么都没变。"', '"这是最后一次，像第一次那样。"', '"你相信我吗？"',
+    '"我看到你发的那个了。"', '"对不起，我认错人了。"', '"你比我想象中要矮。"',
+    '"这件事只有你能帮我。"', '"我不会说出去的。"', '"你变了很多。"',
+    '"那个声音又响了。"', '"我们不是说好了吗。"', '"你确定你准备好了？"'
+  ],
+  // 场景类型 — 即兴中常见的场景骨架
+  sceneTypes: [
+    '初次约会', '分手谈判', '工作面试', '久别重逢', '家庭聚餐',
+    '深夜急诊', '毕业典礼', '法庭审判', '相亲现场', '葬礼致辞',
+    '警局笔录', '秘密交易', '产品发布会', '毕业答辩', '邻里纠纷',
+    '心理咨询', '生日惊喜', '医院探病', '辞职谈话', '婚礼致辞'
+  ],
+  // 表演限制 — 给场景加规则的"游戏感"
+  constraints: [
+    '全程不能说话', '每人每次只能说三个字', '必须背对背表演',
+    '必须不停移动', '一人只能说问题一人只能说陈述句', '全程必须保持身体接触',
+    '必须用歌唱的方式说台词', '必须用慢动作', '每隔10秒换一种情绪',
+    '只能用身体语言', '必须包含一个秘密', '每句话必须押韵',
+    '每句话必须以"我"开头', '不能使用"你"字', '必须边演边做一件具体的事',
+    '每人有一个不能说的禁忌词', '每次开口前必须停顿3秒',
+    '必须模仿对方的最后一个动作', '只能用动物叫声交流', '必须用方言',
+    '一只手必须一直放在口袋里', '必须用第三人称说自己',
+    '每句台词必须包含一个数字', '不能眨眼睛', '必须随时交换角色'
+  ],
+  // 风格滤镜 — 同一场景换个世界
+  styles: [
+    '王家卫风格', '恐怖片', '默片', '莎士比亚悲剧', '韩剧',
+    '日式动漫', '纪录片', '音乐剧', '西部片', '科幻片',
+    '童话', '黑色电影', '肥皂剧', '功夫片', '儿童节目',
+    '新闻联播', '体育解说', '莎士比亚喜剧', '古装宫廷剧', 'MV风格'
+  ]
 };
 
+// 每维度记住上一次的值，避免连续重复
+const promptHistory = {};
+function pickWithHistory(arr, key) {
+  if (!arr || arr.length === 0) return '';
+  if (arr.length === 1) return arr[0];
+  let item;
+  let attempts = 0;
+  do {
+    item = arr[Math.floor(Math.random() * arr.length)];
+    attempts++;
+  } while (item === promptHistory[key] && attempts < 20);
+  promptHistory[key] = item;
+  return item;
+}
+
+// 8 个维度的定义（用于首页随机选取子集）
+const promptDimensions = [
+  { key: 'places', icon: '📍', label: '地点' },
+  { key: 'relations', icon: '👥', label: '关系' },
+  { key: 'emotions', icon: '💭', label: '情绪' },
+  { key: 'objects', icon: '📦', label: '物件' },
+  { key: 'lines', icon: '🗣️', label: '开场台词' },
+  { key: 'sceneTypes', icon: '🎬', label: '场景类型' },
+  { key: 'constraints', icon: '🎯', label: '表演限制' },
+  { key: 'styles', icon: '🎭', label: '风格滤镜' }
+];
+
+function buildPromptHTML(dims, compact) {
+  const mb = compact ? '3px' : '10px';
+  let html = '';
+  dims.forEach(d => {
+    const val = pickWithHistory(promptData[d.key], d.key);
+    html += '<div style="margin-bottom:' + mb + ';"><strong style="color:var(--accent);">' + d.icon + ' ' + d.label + '：</strong>' + val + '</div>';
+  });
+  return html;
+}
+
 function generatePrompt() {
-  const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
-  const place = pick(promptData.places);
-  const relation = pick(promptData.relations);
-  const emotion = pick(promptData.emotions);
-  const object = pick(promptData.objects);
-  const line = pick(promptData.lines);
-
-  const result = '<div style="margin-bottom:10px;"><strong style="color:var(--accent);">📍 地点：</strong>' + place + '</div>' +
-    '<div style="margin-bottom:10px;"><strong style="color:var(--accent);">👥 关系：</strong>' + relation + '</div>' +
-    '<div style="margin-bottom:10px;"><strong style="color:var(--accent);">💭 情绪：</strong>' + emotion + '</div>' +
-    '<div style="margin-bottom:10px;"><strong style="color:var(--accent);">📦 物件：</strong>' + object + '</div>' +
-    '<div style="margin-bottom:6px;"><strong style="color:var(--accent);">🗣️ 开场台词：</strong>' + line + '</div>';
-
+  const result = buildPromptHTML(promptDimensions, false);
   const el = document.getElementById('prompt-result');
   if (el) el.innerHTML = result;
   window._lastPrompt = result;
@@ -2889,7 +2556,7 @@ function generatePrompt() {
 
 function copyPrompt() {
   if (!window._lastPrompt) { generatePrompt(); }
-  const text = window._lastPrompt.replace(/<[^>]+>/g, '').replace(/📍 /g, '\n📍 ').replace(/👥 /g, '\n👥 ').replace(/💭 /g, '\n💭 ').replace(/📦 /g, '\n📦 ').replace(/🗣️ /g, '\n🗣️ ').trim();
+  const text = window._lastPrompt.replace(/<[^>]+>/g, '').replace(/([📍👥💭📦🗣️🎬🎯🎭])/g, '\n$1').trim();
   if (navigator.clipboard) {
     navigator.clipboard.writeText(text).then(() => {
       const btn = document.querySelector('#view-article .gen-btn-sm:last-child');
@@ -2898,14 +2565,10 @@ function copyPrompt() {
   }
 }
 
-// Homepage prompt generator
+// Homepage prompt generator — 随机选取 5 个维度展示（紧凑）
 function generateHomePrompt() {
-  const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
-  const result = '<div style="margin-bottom:3px;"><span style="color:var(--accent);">📍 地点：</span>' + pick(promptData.places) + '</div>' +
-    '<div style="margin-bottom:3px;"><span style="color:var(--accent);">👥 关系：</span>' + pick(promptData.relations) + '</div>' +
-    '<div style="margin-bottom:3px;"><span style="color:var(--accent);">💭 情绪：</span>' + pick(promptData.emotions) + '</div>' +
-    '<div style="margin-bottom:3px;"><span style="color:var(--accent);">📦 物件：</span>' + pick(promptData.objects) + '</div>' +
-    '<div><span style="color:var(--accent);">🗣️ 台词：</span>' + pick(promptData.lines) + '</div>';
+  const shuffled = [...promptDimensions].sort(() => Math.random() - 0.5).slice(0, 5);
+  const result = buildPromptHTML(shuffled, true);
   const el = document.getElementById('prompt-result-home');
   if (el) el.innerHTML = result;
   window._lastHomePrompt = result;
@@ -2913,7 +2576,7 @@ function generateHomePrompt() {
 
 function copyHomePrompt() {
   if (!window._lastHomePrompt) { generateHomePrompt(); }
-  const text = window._lastHomePrompt.replace(/<[^>]+>/g, '').replace(/📍/g, '\n📍').replace(/👥/g, '\n👥').replace(/💭/g, '\n💭').replace(/📦/g, '\n📦').replace(/🗣️/g, '\n🗣️').replace(/  \|  /g, '\n').trim();
+  const text = window._lastHomePrompt.replace(/<[^>]+>/g, '').replace(/([📍👥💭📦🗣️🎬🎯🎭])/g, '\n$1').trim();
   if (navigator.clipboard) {
     navigator.clipboard.writeText(text).then(() => {
       const btns = document.querySelectorAll('#view-home .gen-btn-sm');
@@ -3148,6 +2811,240 @@ function retakeAssessment() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+// ===== 复盘工具 =====
+function getReviews() {
+  try { return JSON.parse(localStorage.getItem('improv-reviews') || '[]'); }
+  catch(e) { return []; }
+}
+function saveReviews(reviews) {
+  localStorage.setItem('improv-reviews', JSON.stringify(reviews));
+}
+function switchReviewModel() {
+  var model = document.getElementById('review-model').value;
+  document.getElementById('review-kiss-panel').style.display = model === 'kiss' ? '' : 'none';
+  document.getElementById('review-www-panel').style.display = model === 'www' ? '' : 'none';
+  document.getElementById('review-quick-panel').style.display = model === 'quick' ? '' : 'none';
+}
+function saveReview() {
+  var date = document.getElementById('review-date').value;
+  var title = document.getElementById('review-title').value.trim();
+  if (!date || !title) { alert('请至少填写日期和标题'); return; }
+  var model = document.getElementById('review-model').value;
+  var review = {
+    id: 'r-' + Date.now(),
+    date: date,
+    title: title,
+    type: document.getElementById('review-type').value,
+    model: model,
+    participants: document.getElementById('review-participants').value.split(',').map(function(s){return s.trim();}).filter(Boolean),
+    notes: document.getElementById('review-notes').value.trim(),
+    createdAt: Date.now()
+  };
+  if (model === 'www') {
+    review.www_what = document.getElementById('review-www-what').value.trim();
+    review.www_sowhat = document.getElementById('review-www-sowhat').value.trim();
+    review.www_nowwhat = document.getElementById('review-www-nowwhat').value.trim();
+  } else if (model === 'quick') {
+    review.quick_highlight = document.getElementById('review-quick-highlight').value.trim();
+    review.quick_polish = document.getElementById('review-quick-polish').value.trim();
+    review.quick_trynext = document.getElementById('review-quick-trynext').value.trim();
+  } else {
+    review.keep = document.getElementById('review-keep').value.trim();
+    review.improve = document.getElementById('review-improve').value.trim();
+    review.start = document.getElementById('review-start').value.trim();
+    review.stop = document.getElementById('review-stop').value.trim();
+  }
+  var reviews = getReviews();
+  reviews.unshift(review);
+  saveReviews(reviews);
+  clearReviewForm();
+  renderReviewHistory();
+}
+function deleteReview(id) {
+  if (!confirm('确定删除这条复盘记录吗？')) return;
+  var reviews = getReviews().filter(function(r){return r.id !== id;});
+  saveReviews(reviews);
+  renderReviewHistory();
+}
+function clearReviewForm() {
+  ['review-date','review-title','review-participants','review-keep','review-improve','review-start','review-stop','review-notes','review-www-what','review-www-sowhat','review-www-nowwhat','review-quick-highlight','review-quick-polish','review-quick-trynext'].forEach(function(id){
+    var el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  document.getElementById('review-type').value = 'rehearsal';
+  document.getElementById('review-model').value = 'kiss';
+  switchReviewModel();
+}
+function exportReview(review) {
+  var typeLabel = {rehearsal:'排练', performance:'演出', workshop:'工作坊'};
+  var modelLabel = {kiss:'KISS', www:'三问复盘', quick:'三点复盘', aar:'AAR(旧)'};
+  var text;
+  if (review.model === 'www') {
+    text = [
+      '【' + review.date + '】' + review.title + ' (' + (typeLabel[review.type] || review.type) + ') [' + (modelLabel[review.model]||'KISS') + ']',
+      '参与人员: ' + (review.participants.join('、') || '无记录'),
+      '',
+      '① What?（发生了什么）',
+      review.www_what || '（无）',
+      '',
+      '② So What?（意味着什么）',
+      review.www_sowhat || '（无）',
+      '',
+      '③ Now What?（接下来做什么）',
+      review.www_nowwhat || '（无）',
+      '',
+      review.notes ? '📝 笔记:\n' + review.notes : ''
+    ].filter(Boolean).join('\n');
+  } else if (review.model === 'aar') {
+    text = [
+      '【' + review.date + '】' + review.title + ' (' + (typeLabel[review.type] || review.type) + ') [' + (modelLabel[review.model]||'KISS') + ']',
+      '参与人员: ' + (review.participants.join('、') || '无记录'),
+      '',
+      '① 预期发生什么？',
+      review.aar_expected || '（无）',
+      '',
+      '② 实际发生了什么？',
+      review.aar_actual || '（无）',
+      '',
+      '③ 为什么有差异？',
+      review.aar_difference || '（无）',
+      '',
+      '④ 下次怎么办？',
+      review.aar_next || '（无）',
+      '',
+      review.notes ? '📝 笔记:\n' + review.notes : ''
+    ].filter(Boolean).join('\n');
+  } else if (review.model === 'quick') {
+    text = [
+      '【' + review.date + '】' + review.title + ' (' + (typeLabel[review.type] || review.type) + ') [' + (modelLabel[review.model]||'KISS') + ']',
+      '参与人员: ' + (review.participants.join('、') || '无记录'),
+      '',
+      '🌟 亮点时刻:',
+      review.quick_highlight || '（无）',
+      '',
+      '⚡ 待打磨:',
+      review.quick_polish || '（无）',
+      '',
+      '💡 下次试试:',
+      review.quick_trynext || '（无）',
+      '',
+      review.notes ? '📝 笔记:\n' + review.notes : ''
+    ].filter(Boolean).join('\n');
+  } else {
+    text = [
+      '【' + review.date + '】' + review.title + ' (' + (typeLabel[review.type] || review.type) + ') [' + (modelLabel[review.model]||'KISS') + ']',
+      '参与人员: ' + (review.participants.join('、') || '无记录'),
+      '',
+      '✅ Keep（保留）:',
+      review.keep || '（无）',
+      '',
+      '🔧 Improve（改进）:',
+      review.improve || '（无）',
+      '',
+      '🚀 Start（开始）:',
+      review.start || '（无）',
+      '',
+      '🛑 Stop（停止）:',
+      review.stop || '（无）',
+      '',
+      review.notes ? '📝 笔记:\n' + review.notes : ''
+    ].filter(Boolean).join('\n');
+  }
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(function(){ alert('已复制到剪贴板'); }).catch(function(){});
+  }
+}
+function exportAllReviews() {
+  var reviews = getReviews();
+  if (reviews.length === 0) { alert('暂无复盘记录'); return; }
+  var typeLabel = {rehearsal:'排练', performance:'演出', workshop:'工作坊'};
+  var modelLabel = {kiss:'KISS', www:'三问复盘', quick:'三点复盘', aar:'AAR(旧)'};
+  var text = reviews.map(function(r, i){
+    var lines = [
+      '='.repeat(40),
+      '复盘 #' + (i+1) + ': 【' + r.date + '】' + r.title + ' (' + (typeLabel[r.type]||r.type) + ') [' + (modelLabel[r.model]||'KISS') + ']',
+      '参与: ' + (r.participants.join('、') || '无记录'),
+      '─────────────────────────────'
+    ];
+    if (r.model === 'www') {
+      lines.push('① What: ' + (r.www_what || '（无）'));
+      lines.push('② So What: ' + (r.www_sowhat || '（无）'));
+      lines.push('③ Now What: ' + (r.www_nowwhat || '（无）'));
+    } else if (r.model === 'aar') {
+      lines.push('① 预期: ' + (r.aar_expected || '（无）'));
+      lines.push('② 实际: ' + (r.aar_actual || '（无）'));
+      lines.push('③ 差异: ' + (r.aar_difference || '（无）'));
+      lines.push('④ 下次: ' + (r.aar_next || '（无）'));
+    } else if (r.model === 'quick') {
+      lines.push('🌟 亮点: ' + (r.quick_highlight || '（无）'));
+      lines.push('⚡ 待打磨: ' + (r.quick_polish || '（无）'));
+      lines.push('💡 下次试试: ' + (r.quick_trynext || '（无）'));
+    } else {
+      lines.push('✅ Keep: ' + (r.keep || '（无）'));
+      lines.push('🔧 Improve: ' + (r.improve || '（无）'));
+      lines.push('🚀 Start: ' + (r.start || '（无）'));
+      lines.push('🛑 Stop: ' + (r.stop || '（无）'));
+    }
+    if (r.notes) lines.push('📝 Notes: ' + r.notes);
+    lines.push('');
+    return lines.join('\n');
+  }).join('\n');
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(function(){ alert('已复制全部复盘到剪贴板'); }).catch(function(){});
+  }
+}
+function renderReviewHistory() {
+  var reviews = getReviews();
+  var container = document.getElementById('review-history-list');
+  if (!container) return;
+  if (reviews.length === 0) {
+    container.innerHTML = '<p style="color:var(--text-dim);text-align:center;padding:32px;">还没有复盘记录，填写上方表单开始第一次复盘吧 🎯</p>';
+    return;
+  }
+  var typeLabel = {rehearsal:'排练', performance:'演出', workshop:'工作坊'};
+  var modelLabel = {kiss:'KISS', www:'三问复盘', quick:'三点复盘', aar:'AAR(旧)'};
+  var html = '';
+  reviews.forEach(function(r){
+    var contentSummary = '';
+    if (r.model === 'www') {
+      contentSummary =
+        (r.www_what ? '<span style="color:#60c080;">① ' + (r.www_what.length > 30 ? r.www_what.substring(0,30)+'...' : r.www_what) + '</span> ' : '') +
+        (r.www_nowwhat ? '<span style="color:#60a0e0;">③ ' + (r.www_nowwhat.length > 30 ? r.www_nowwhat.substring(0,30)+'...' : r.www_nowwhat) + '</span>' : '');
+    } else if (r.model === 'aar') {
+      contentSummary =
+        (r.aar_expected ? '<span style="color:#60c080;">① ' + (r.aar_expected.length > 30 ? r.aar_expected.substring(0,30)+'...' : r.aar_expected) + '</span> ' : '') +
+        (r.aar_next ? '<span style="color:#e06060;">④ ' + (r.aar_next.length > 30 ? r.aar_next.substring(0,30)+'...' : r.aar_next) + '</span>' : '');
+    } else if (r.model === 'quick') {
+      contentSummary =
+        (r.quick_highlight ? '<span style="color:#60c080;">🌟 ' + (r.quick_highlight.length > 30 ? r.quick_highlight.substring(0,30)+'...' : r.quick_highlight) + '</span> ' : '') +
+        (r.quick_polish ? '<span style="color:var(--accent);">⚡ ' + (r.quick_polish.length > 30 ? r.quick_polish.substring(0,30)+'...' : r.quick_polish) + '</span> ' : '') +
+        (r.quick_trynext ? '<span style="color:#60a0e0;">💡 ' + (r.quick_trynext.length > 30 ? r.quick_trynext.substring(0,30)+'...' : r.quick_trynext) + '</span>' : '');
+    } else {
+      contentSummary =
+        (r.keep ? '<span style="color:#60c080;">✅ ' + (r.keep.length > 40 ? r.keep.substring(0,40)+'...' : r.keep) + '</span> ' : '') +
+        (r.improve ? '<span style="color:var(--accent);">🔧 ' + (r.improve.length > 40 ? r.improve.substring(0,40)+'...' : r.improve) + '</span> ' : '') +
+        (r.start ? '<span style="color:#60a0e0;">🚀 ' + (r.start.length > 40 ? r.start.substring(0,40)+'...' : r.start) + '</span>' : '');
+    }
+    html += '<div class="card" style="margin-bottom:10px;padding:14px 18px;cursor:default;">' +
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">' +
+        '<div style="flex:1;">' +
+          '<div style="font-weight:700;color:var(--text-bright);margin-bottom:3px;">' + r.title + '</div>' +
+          '<div style="font-size:0.76rem;color:var(--text-dim);margin-bottom:6px;">' +
+            r.date + ' · ' + (typeLabel[r.type] || r.type) + ' · <span style="color:var(--accent-dim);">' + (modelLabel[r.model]||'KISS') + '</span>' +
+            (r.participants.length ? ' · ' + r.participants.join('、') : '') +
+          '</div>' +
+          '<div style="font-size:0.8rem;color:var(--text);line-height:1.5;">' + contentSummary + '</div>' +
+        '</div>' +
+        '<div style="display:flex;gap:6px;flex-shrink:0;">' +
+          '<span class="gen-btn-sm" onclick="event.stopPropagation();exportReview(getReviews().find(function(x){return x.id===\'' + r.id + '\';}))" style="font-size:0.7rem;padding:4px 8px;">📋</span>' +
+          '<span class="gen-btn-sm" onclick="event.stopPropagation();deleteReview(\'' + r.id + '\')" style="font-size:0.7rem;padding:4px 8px;background:transparent;border:1px solid var(--card-border);color:var(--text-dim);">🗑️</span>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  });
+  container.innerHTML = html;
+}
+
 // Update navTo to support assess view
 const origNavTo = navTo;
 navTo = function(target) {
@@ -3292,10 +3189,22 @@ navTo = function(target) {
     }
     return;
   }
+  if (target === 'review') {
+    showView('review');
+    window.location.hash = 'review';
+    currentArticle = null;
+    updateNavHighlight('review');
+    renderReviewHistory();
+    var dateEl = document.getElementById('review-date');
+    if (dateEl && !dateEl.value) {
+      dateEl.value = new Date().toISOString().split('T')[0];
+    }
+    return;
+  }
   origNavTo2(target);
 };
 
-// Update updateNavHighlight to support faq
+// Update updateNavHighlight to support faq + review
 const origUpdateNavHighlight2 = updateNavHighlight;
 updateNavHighlight = function(target) {
   if (target === 'faq') {
@@ -3310,6 +3219,12 @@ updateNavHighlight = function(target) {
     if (link) link.classList.add('active');
     return;
   }
+  if (target === 'review') {
+    document.querySelectorAll('#nav-links a').forEach(a => a.classList.remove('active'));
+    const link = document.querySelector('#nav-links a[data-nav="review"]');
+    if (link) link.classList.add('active');
+    return;
+  }
   origUpdateNavHighlight2(target);
 };
 
@@ -3317,7 +3232,7 @@ function init() {
   loadChecks();
   const hash = window.location.hash.replace('#', '');
   if (hash) {
-    if (hash === 'module0' || hash === 'module1' || hash === 'module2' || hash === 'module3' || hash === 'module4' || hash === 'assess' || hash === 'faq') { navTo(hash); }
+    if (hash === 'module0' || hash === 'module1' || hash === 'module2' || hash === 'module3' || hash === 'module4' || hash === 'assess' || hash === 'faq' || hash === 'review') { navTo(hash); }
     else if (articles[hash]) { openArticle(hash); }
   } else {
     updateNavHighlight('home');
@@ -3325,7 +3240,7 @@ function init() {
   window.addEventListener('hashchange', () => {
     const h = window.location.hash.replace('#', '');
     if (!h) { navTo('home'); return; }
-    if (h === 'module0' || h === 'module1' || h === 'module2' || h === 'module3' || h === 'module4' || h === 'assess' || h === 'faq') { navTo(h); return; }
+    if (h === 'module0' || h === 'module1' || h === 'module2' || h === 'module3' || h === 'module4' || h === 'assess' || h === 'faq' || h === 'review') { navTo(h); return; }
     if (articles[h]) { openArticle(h); }
   });
 }
