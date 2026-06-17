@@ -1095,14 +1095,14 @@ const games = {
   },
 
   'm3-100': {
-    module: 'module3', moduleName: '即兴游戏库', subtopic: '竞技与表演', skills: ['语言限制', '角色', '喜剧'],
-    usage: 'both', players: {min:4, max:12, label:'4-12 人'}, difficultyNum: 2,
-    title: '棉花糖 —— 嘴里塞棉花糖的场景挑战',
+    module: 'module3', moduleName: '即兴游戏库', subtopic: '竞技与表演', skills: ['喜剧节奏', '身体', '观众互动'],
+    usage: 'performance', players: {min:3, max:20, label:'3 人以上'}, difficultyNum: 2,
+    title: '棉花糖 —— 谁逗笑观众谁就塞一颗',
     level: '★★☆', readTime: '约 3 分钟',
-    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">2-6 人</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-10 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">语言限制 · 角色 · 喜剧</div><div class="gi-label">训练能力</div></div></div>
-<h2>游戏规则</h2><ol><li>演员进行正常即兴场景。但有一个规则：<strong>每当演员犯了"错误"</strong>（说错台词、犹豫太久、用了"不"来拒绝伙伴、或任何带领者/观众判定为"失误"的行为），该演员必须<strong>往嘴里塞一颗棉花糖</strong>（或类似的食物），然后场景继续。</li><li>棉花糖在嘴里会严重影响发音——演员必须在口齿不清的状态下继续表演角色。</li><li>随着失误增多，嘴里棉花糖越来越多——发音越来越含糊——场景在语言障碍中反而变得更加荒诞有趣。</li></ol>
-<h2>进阶变体</h2><ul><li><strong>预先塞糖版</strong>：场景开始前每人嘴里已经塞了 2-3 颗棉花糖——从一开始就要克服语言障碍</li><li><strong>竞争对手版</strong>：两人竞技场景——谁的失误少谁赢</li></ul>
-<h2>教学提示</h2><p>棉花糖的核心是<strong>用物理手段制造喜剧限制</strong>。嘴里塞了棉花糖后，演员被迫用身体和表情来补偿语言的不足——这反而让表演更丰富了。同时它是即兴中最轻松愉快的"惩罚"——不是真的惩罚，而是创造了新的笑点。注意安全：确保棉花糖足够软，演员不得在嘴满时强行吞咽。</p><p><strong>训练的核心能力</strong>：在物理限制下保持表演、用身体补偿语言障碍、把失误变成笑点。</p>`
+    content: `<div class="game-info-box"><div class="gi-item"><div class="gi-val">3 人以上</div><div class="gi-label">人数</div></div><div class="gi-item"><div class="gi-val">★★☆</div><div class="gi-label">难度</div></div><div class="gi-item"><div class="gi-val">5-15 分钟</div><div class="gi-label">建议时长</div></div><div class="gi-item"><div class="gi-val">喜剧节奏 · 身体表达 · 观众互动</div><div class="gi-label">训练能力</div></div></div>
+<h2>游戏规则</h2><ol><li><strong>两名演员</strong>各拿一袋棉花糖（或软糖）放在手边，站上舞台。另外需要一位<strong>导演/裁判</strong>，负责观察观众反应。</li><li>演员正常起戏，进行即兴场景——无主题限制，自由发挥。</li><li>导演盯着观众席：<strong>只要有人笑了</strong>（不管是微笑还是大笑），导演立即喊"停！"。导演判断<strong>是哪位演员的表演逗笑了观众</strong>，该演员必须<strong>往嘴里塞一颗棉花糖</strong>，然后场景继续。</li><li>棉花糖含在嘴里会严重影响发音——演员必须在口齿越来越不清的状态下继续演角色。越演越含糊，越含糊越荒诞。</li><li>就这么一直重复下去：演 → 观众笑 → 导演喊停 → 逗笑者塞糖 → 继续演。<strong>直到某一刻，其中一位演员嘴里塞满了棉花糖，实在没法再说话了，场景结束。</strong></li><li>导演也可以<strong>临时拉观众上台</strong>参与——被拉上来的观众也拿一袋棉花糖，加入场景。</li></ol>
+<h2>进阶变体</h2><ul><li><strong>预先塞糖版</strong>：场景开始前每人嘴里先塞 2-3 颗——从一开始就在语言障碍中找喜剧</li><li><strong>双裁判版</strong>：两个导演分别盯不同的演员——一个导演盯左边那位，另一个盯右边那位</li></ul>
+<h2>教学提示</h2><p>棉花糖的核心是<strong>用观众的笑声作为"惩罚"触发器</strong>——这和"犯错才塞糖"完全不同。演员不是被"惩罚做错了"，而是被"奖励逗笑了观众"——这颗棉花糖本质上是<strong>一枚勋章</strong>。嘴里棉花糖越多，说明你越成功。同时，这个游戏训练演员<strong>在物理限制下用身体和表情弥补语言</strong>——当说话越来越含糊时，身体反而更自由。导演的角色至关重要：要有敏锐的观众感知力，快速判断是谁的表演触发了笑声。注意安全：确保棉花糖够软，嘴里塞满时不要强行吞咽，感觉不适就停下。</p><p><strong>训练的核心能力</strong>：喜剧节奏的把握、在身体限制中寻找表演、与观众的能量互动。</p>`
   },
 
   'm3-101': {
