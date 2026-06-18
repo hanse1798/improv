@@ -189,6 +189,32 @@ body::before {
 .generator .gen-result { margin-top: 20px; font-size: 1.1rem; color: var(--text-bright); min-height: 48px; display: flex; align-items: center; justify-content: center; padding: 16px; background: var(--card); border-radius: var(--radius-sm); }
 
 .footer { text-align: center; padding: 40px 0 20px; color: var(--text-dim); font-size: 0.8rem; }
+.footer a { color: var(--accent-dim); cursor: pointer; text-decoration: none; }
+.footer a:hover { color: var(--accent); }
+
+/* About page */
+.about-container { max-width: 680px; margin: 0 auto; }
+.about-card { background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 28px; margin-bottom: 20px; }
+.about-card.personal { border-left: 3px solid var(--accent); }
+.about-card.brand { border-left: 3px solid #d4546a; }
+.about-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+.about-avatar { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #d4943a); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; color: #1a1a24; flex-shrink: 0; }
+.about-header-info h3 { font-size: 1.2rem; color: var(--text-bright); margin: 0; }
+.about-header-info .about-role { font-size: 0.8rem; color: var(--text-dim); margin-top: 2px; }
+.about-card p { font-size: 0.88rem; color: var(--text); line-height: 1.7; margin: 0 0 10px; }
+.about-card p:last-child { margin-bottom: 0; }
+.about-motto { display: inline-block; font-size: 0.82rem; color: var(--accent-dim); font-style: italic; margin-top: 4px; }
+.ruby-header { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+.ruby-logo { display: flex; gap: 3px; }
+.ruby-logo span { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.78rem; color: #fff; }
+.ruby-r { background: #d4546a; } .ruby-u { background: #e08840; } .ruby-b { background: #5da8b8; } .ruby-y { background: #c0a048; }
+.about-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+.about-tag { font-size: 0.73rem; padding: 3px 10px; border-radius: 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--card-border); color: var(--text-dim); }
+.about-contact { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--card-border); }
+.about-contact span { font-size: 0.82rem; color: var(--text-dim); }
+.about-contact strong { color: var(--text-bright); }
+.about-attribution { text-align: center; padding: 8px 0 24px; font-size: 0.82rem; color: var(--text-dim); }
+.about-attribution span { color: var(--accent-dim); }
 
 .game-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; align-items: center; }
 .game-filters .filter-label { font-size: 0.78rem; color: var(--text-dim); margin-right: 4px; }
@@ -384,6 +410,7 @@ body::before {
         <a data-nav="assess" onclick="navTo('assess');document.getElementById('nav-menu-check').checked=false">能力测评</a>
         <a data-nav="faq" onclick="navTo('faq');document.getElementById('nav-menu-check').checked=false" title="AI智能问答">💬 问答</a>
         <a data-nav="review" onclick="navTo('review');document.getElementById('nav-menu-check').checked=false">📋 复盘</a>
+        <a data-nav="about" onclick="navTo('about');document.getElementById('nav-menu-check').checked=false">👤 关于</a>
       </div>
     </div>
   </nav>
@@ -491,7 +518,7 @@ body::before {
       </div>
     </div>
 
-    <div class="footer">共 5 个模块 + 4 个工具 · 110+ 篇文章 · 113 个游戏 · 能力测评 · 智能问答 · 快速开始 · 复盘 · 学习进度本地存储</div>
+    <div class="footer">共 5 个模块 + 4 个工具 · 110+ 篇文章 · 113 个游戏 · 能力测评 · 智能问答 · 快速开始 · 复盘 · 学习进度本地存储 · <a onclick="navTo('about')">关于本站</a></div>
   </section>
 
   <!-- ==================== 模块零：认识即兴（新增） ==================== -->
@@ -923,6 +950,74 @@ body::before {
         <span class="gen-btn-sm" onclick="exportAllReviews()" style="font-size:0.76rem;padding:6px 14px;background:transparent;border:1px solid var(--accent);color:var(--accent);">📋 导出全部</span>
       </div>
       <div id="review-history-list"></div>
+    </div>
+  </section>
+
+  <!-- ==================== 关于本站 ==================== -->
+  <section class="view" id="view-about">
+    <div class="back-link" onclick="navTo('home')">← 返回首页</div>
+    <div class="list-header">
+      <h2>👤 关于本站</h2>
+      <p class="list-subtitle">由即兴爱好者与 AI 共同搭建的即兴学习参考</p>
+    </div>
+
+    <div class="about-container">
+
+      <!-- 焓暖 -->
+      <div class="about-card personal">
+        <div class="about-header">
+          <div class="about-avatar">焓</div>
+          <div class="about-header-info">
+            <h3>焓暖</h3>
+            <div class="about-role">即兴学习者 · vibe coding 小学生</div>
+          </div>
+        </div>
+        <p>2022 年学习即兴至今，大大小小参与过<strong>百+场即兴演出</strong>。有一份不太理想的工作，非全职做即兴，是个上台爱好者。</p>
+        <p>做这个网站的初衷很简单：<strong>给各位学习即兴的朋友一个参考</strong>。从零基础入门到高阶技巧，从单个游戏的规则说明到系统的学习路径——如果能帮到你，那就太好了。</p>
+        <p class="about-motto">即兴水平忽高忽低 (,,ԾㅂԾ,,)</p>
+        <div class="about-contact">
+          <span>📱 微信：<strong>hanse1798</strong></span>
+          <span style="margin-left:16px;">💡 有想实现的想法？欢迎联系我</span>
+        </div>
+      </div>
+
+      <!-- 红宝石计划 -->
+      <div class="about-card brand">
+        <div class="ruby-header">
+          <div class="ruby-logo">
+            <span class="ruby-r">R</span>
+            <span class="ruby-u">U</span>
+            <span class="ruby-b">B</span>
+            <span class="ruby-y">Y</span>
+          </div>
+          <div>
+            <h3 style="margin:0;color:var(--text-bright);font-size:1.15rem;">红宝石计划 <span style="font-weight:400;color:var(--text-dim);font-size:0.85rem;">RUBY</span></h3>
+            <div style="font-size:0.78rem;color:var(--text-dim);margin-top:2px;">探索"即兴+生活"的即兴艺术厂牌</div>
+          </div>
+        </div>
+        <p style="margin-bottom:6px;font-size:0.82rem;color:var(--text-dim);letter-spacing:0.06em;">
+          <strong style="color:#d4546a;">R</strong>espect 尊重 · <strong style="color:#e08840;">U</strong>nite 团结 · <strong style="color:#5da8b8;">B</strong>alance 平衡 · <strong style="color:#c0a048;">Y</strong>es, And 接纳给予
+        </p>
+        <p>成员以多样的即兴表演形式传递 RUBY 精神，<strong>即兴喜剧演出百余场</strong>。曾作为演出团队参与<strong>闹即兴戏剧节、青岛里院喜剧节、算个即兴节吧</strong>；主办 <strong>RUBY Land mini 戏剧节</strong>，参与举办<strong>隆福寺酒神节 · 夏至市集</strong>。</p>
+        <div class="about-tags">
+          <span class="about-tag">🎭 百+场演出</span>
+          <span class="about-tag">🎪 闹即兴戏剧节</span>
+          <span class="about-tag">🏛 青岛里院喜剧节</span>
+          <span class="about-tag">🌟 算个即兴节吧</span>
+          <span class="about-tag">🎉 RUBY Land 戏剧节</span>
+          <span class="about-tag">🍷 隆福寺酒神节</span>
+        </div>
+        <p style="margin-top:8px;">现有<strong>红九喜剧盒子</strong>在北京二环内定期举办喜剧开放麦活动，欢迎来玩。</p>
+        <div class="about-contact">
+          <span>📱 微信 / 📕 小红书 / 📺 B站：<strong>红宝石计划</strong></span>
+        </div>
+      </div>
+
+      <!-- 致谢 -->
+      <div class="about-attribution">
+        本站由 <span>焓暖</span> 与 <span>Claude</span> (Anthropic AI) 共同制作 · 对网站有想法或建议？欢迎联系！
+      </div>
+
     </div>
   </section>
 
@@ -3201,6 +3296,13 @@ navTo = function(target) {
     }
     return;
   }
+  if (target === 'about') {
+    showView('about');
+    window.location.hash = 'about';
+    currentArticle = null;
+    updateNavHighlight('about');
+    return;
+  }
   origNavTo2(target);
 };
 
@@ -3225,6 +3327,12 @@ updateNavHighlight = function(target) {
     if (link) link.classList.add('active');
     return;
   }
+  if (target === 'about') {
+    document.querySelectorAll('#nav-links a').forEach(a => a.classList.remove('active'));
+    const link = document.querySelector('#nav-links a[data-nav="about"]');
+    if (link) link.classList.add('active');
+    return;
+  }
   origUpdateNavHighlight2(target);
 };
 
@@ -3232,7 +3340,7 @@ function init() {
   loadChecks();
   const hash = window.location.hash.replace('#', '');
   if (hash) {
-    if (hash === 'module0' || hash === 'module1' || hash === 'module2' || hash === 'module3' || hash === 'module4' || hash === 'assess' || hash === 'faq' || hash === 'review') { navTo(hash); }
+    if (hash === 'module0' || hash === 'module1' || hash === 'module2' || hash === 'module3' || hash === 'module4' || hash === 'assess' || hash === 'faq' || hash === 'review' || hash === 'about') { navTo(hash); }
     else if (articles[hash]) { openArticle(hash); }
   } else {
     updateNavHighlight('home');
@@ -3240,7 +3348,7 @@ function init() {
   window.addEventListener('hashchange', () => {
     const h = window.location.hash.replace('#', '');
     if (!h) { navTo('home'); return; }
-    if (h === 'module0' || h === 'module1' || h === 'module2' || h === 'module3' || h === 'module4' || h === 'assess' || h === 'faq' || h === 'review') { navTo(h); return; }
+    if (h === 'module0' || h === 'module1' || h === 'module2' || h === 'module3' || h === 'module4' || h === 'assess' || h === 'faq' || h === 'review' || h === 'about') { navTo(h); return; }
     if (articles[h]) { openArticle(h); }
   });
 }
