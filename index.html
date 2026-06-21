@@ -2,1042 +2,1442 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>即兴戏剧 · 从入门到高阶</title>
+<!-- Grayscale 模板 CSS（含 Bootstrap 5） -->
+<link href="grayscale.css" rel="stylesheet">
+<!-- Font Awesome -->
+<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+<!-- Google Fonts: Grayscale 原版 + 中文 -->
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ===== CSS Variables ===== */
+/* ═══════════════════════════════════════════════════════
+   IMPROV v5 — 暗色金版覆盖 Grayscale 模板
+   基于 StartBootstrap Grayscale v7.0.6 CSS
+   所有 Bootstrap/Grayscale 样式由 grayscale.css 提供
+   此块仅做暗色覆盖 + 金色调色 + SPA 适配
+   ═══════════════════════════════════════════════════════ */
+
+/* ===== CSS 变量覆盖：暗色 + 金色 ===== */
 :root {
-  --bg: #1a1a24;
-  --bg-alt: #1f1f2c;
-  --card: #252538;
-  --card-hover: #2a2a42;
-  --card-border: #2e2e48;
-  --text: #d0d0d8;
-  --text-dim: #8888a0;
-  --text-bright: #ececf0;
-  --accent: #e8b860;
-  --accent-dim: #a08040;
-  --accent-glow: rgba(232,184,96,0.12);
-  --shadow-dark: rgba(0,0,0,0.45);
-  --shadow-light: rgba(255,255,255,0.03);
-  --radius: 18px;
-  --radius-sm: 10px;
-  --gap: 24px;
-  --max-w: 900px;
-  --nav-h: 56px;
-  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --bs-primary: #D4A843;
+  --bs-primary-rgb: 212,168,67;
+  --bs-secondary: #8A7030;
+  --bs-body-bg: #080812;
+  --bs-body-color: #C8C8D8;
+  --bs-body-color-rgb: 200,200,216;
+  --bs-dark: #080812;
+  --bs-dark-rgb: 0,0,0;
+  --bs-light: #0D0D22;
+  --bs-light-rgb: 13,13,34;
+  --bs-black: #080812;
+  --bs-white: #F0F0F8;
+  --bs-border-color: #1A1A3A;
+  --bs-link-color: #D4A843;
+  --bs-link-hover-color: #E8C866;
+  --bs-heading-color: #F0F0F8;
+  --bs-font-sans-serif: "Nunito", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --bs-body-font-family: var(--bs-font-sans-serif);
 }
 
-/* ===== Reset ===== */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-html { font-size: 17px; scroll-behavior: smooth; }
-
+/* ===== 全局暗色覆盖 ===== */
 body {
-  font-family: var(--font);
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.7;
-  min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
+  background-color: #080812 !important;
+  color: #C8C8D8 !important;
+  letter-spacing: 0.01em;
 }
 
+/* 微点纹理背景 */
 body::before {
   content: "";
   position: fixed; inset: 0;
-  background: radial-gradient(ellipse at 50% 0%, rgba(232,184,96,0.04) 0%, transparent 70%);
+  background:
+    radial-gradient(ellipse at 50% -15%, rgba(212,168,67,0.05) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 35%, rgba(212,168,67,0.02) 0%, transparent 50%),
+    radial-gradient(circle at 1px 1px, rgba(255,255,255,0.01) 1px, transparent 0);
+  background-size: 100% 100%, 100% 100%, 32px 32px;
   pointer-events: none; z-index: 0;
 }
 
-/* ===== Navbar ===== */
-.navbar { position: sticky; top: 0; z-index: 100; background: rgba(26,26,36,0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--card-border); padding: 0; }
-.navbar-inner { max-width: var(--max-w); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: var(--nav-h); padding: 0 20px; }
-.navbar .nav-brand { font-size: 0.95rem; font-weight: 700; color: var(--text-bright); cursor: pointer; white-space: nowrap; letter-spacing: 0.02em; }
-.navbar .nav-brand span { color: var(--accent); }
-.navbar .nav-links { display: flex; gap: 4px; align-items: center; }
-.navbar .nav-links a { font-size: 0.82rem; color: var(--text-dim); text-decoration: none; padding: 6px 12px; border-radius: 6px; transition: color 0.2s, background 0.2s; cursor: pointer; white-space: nowrap; }
-.navbar .nav-links a:hover { color: var(--text-bright); background: rgba(255,255,255,0.05); }
-.navbar .nav-links a.active { color: var(--accent); background: var(--accent-glow); }
-.navbar .nav-toggle { display: none; background: none; border: none; color: var(--text); font-size: 1.4rem; cursor: pointer; padding: 4px; line-height: 1; }
-#nav-menu-check { display: none; }
-@media (max-width: 740px) {
-  .navbar .nav-toggle { display: block; }
-  .navbar .nav-links { display: none; position: absolute; top: var(--nav-h); left: 0; right: 0; flex-direction: column; background: rgba(26,26,36,0.98); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--card-border); padding: 8px 0; gap: 0; }
-  #nav-menu-check:checked ~ .nav-links { display: flex; }
-  .navbar .nav-links a { padding: 10px 20px; width: 100%; border-radius: 0; }
+/* 文字色 */
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+  color: #F0F0F8 !important;
+}
+h1, .h1 { font-family: "Varela Round", "Noto Serif SC", "PingFang SC", sans-serif; }
+h2, .h2, h3, .h3 { font-family: "Noto Serif SC", "PingFang SC", serif; }
+p { color: #C8C8D8; }
+.text-white { color: #F0F0F8 !important; }
+.text-white-50 { color: #8080A0 !important; }
+.text-black-50 { color: #8080A0 !important; }
+.text-primary { color: #D4A843 !important; }
+a { color: #D4A843; }
+a:hover { color: #E8C866; }
+
+/* 背景色覆盖 */
+.bg-black { background-color: #080812 !important; }
+.bg-light { background-color: #0A0A16 !important; }
+.bg-white { background-color: #0D0D22 !important; }
+
+/* ===== 导航栏 — Grayscale 原版 #mainNav 暗色适配 ===== */
+#mainNav {
+  background-color: rgba(0,0,0,0.85) !important;
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  border-bottom: 1px solid rgba(212,168,67,0.08);
+  min-height: 3.5rem;
+}
+#mainNav .navbar-brand {
+  font-family: "Noto Serif SC", "PingFang SC", serif;
+  font-weight: 700;
+  color: #F0F0F8 !important;
+  letter-spacing: 0.04em;
+}
+#mainNav .navbar-brand span { color: #D4A843; }
+#mainNav .nav-link {
+  color: #8080A0 !important;
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 1rem 1rem !important;
+  transition: color 0.2s;
+  cursor: pointer;
+}
+#mainNav .nav-link:hover { color: #F0F0F8 !important; }
+#mainNav .nav-link.active { color: #D4A843 !important; }
+#mainNav .navbar-toggler {
+  color: #D4A843;
+  border-color: rgba(212,168,67,0.4);
+  font-size: 0.8rem;
+  padding: 0.5rem;
 }
 
-/* ===== Layout ===== */
-.app { position: relative; z-index: 1; max-width: var(--max-w); margin: 0 auto; padding: 20px 20px 80px; }
+@media (min-width: 992px) {
+  #mainNav {
+    background-color: transparent !important;
+    border-bottom: none;
+    transition: background-color 0.3s ease-in-out;
+  }
+  #mainNav .navbar-brand { color: rgba(240,240,248,0.6) !important; }
+  #mainNav .nav-link { color: rgba(240,240,248,0.55) !important; padding: 1.5rem 0.7rem !important; }
+  #mainNav .nav-link:hover { color: rgba(240,240,248,0.85) !important; }
+  #mainNav.navbar-shrink {
+    background-color: rgba(0,0,0,0.92) !important;
+    backdrop-filter: blur(20px) saturate(1.5);
+    -webkit-backdrop-filter: blur(20px) saturate(1.5);
+    border-bottom: 1px solid rgba(212,168,67,0.08);
+  }
+  #mainNav.navbar-shrink .navbar-brand { color: #F0F0F8 !important; }
+  #mainNav.navbar-shrink .nav-link { color: #8080A0 !important; padding: 0.9rem 0.7rem !important; }
+  #mainNav.navbar-shrink .nav-link:hover { color: #D4A843 !important; }
+  #mainNav.navbar-shrink .nav-link.active { color: #D4A843 !important; border-bottom: 0.25rem solid #D4A843; }
+}
 
+/* ===== Masthead — Grayscale 全屏 Hero（无图版） ===== */
+.masthead {
+  position: relative;
+  width: 100%;
+  min-height: 35rem;
+  padding: 12rem 0 8rem;
+  background: linear-gradient(to bottom,
+    rgba(0,0,0,0.3) 0%,
+    rgba(0,0,0,0.6) 60%,
+    #080812 100%),
+    radial-gradient(ellipse at 50% 30%, rgba(212,168,67,0.08) 0%, transparent 60%);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.masthead h1 {
+  font-family: "Varela Round", "Noto Serif SC", sans-serif;
+  font-size: 1.8rem;
+  line-height: 1.25;
+  letter-spacing: 0.12rem;
+  /* Grayscale 标志性渐变文字 */
+  background: linear-gradient(180deg,
+    rgba(240,240,248,0.95) 0%,
+    rgba(200,200,216,0.6) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.masthead h2 {
+  max-width: 30rem;
+  font-size: 0.95rem;
+  color: #8080A0 !important;
+}
+.masthead .accent-dot {
+  -webkit-text-fill-color: #D4A843;
+  color: #D4A843;
+}
+@media (min-width: 768px) {
+  .masthead h1 { font-size: 2.4rem; line-height: 1.2; letter-spacing: 0.2rem; }
+}
+@media (min-width: 992px) {
+  .masthead { min-height: 100vh; padding: 0; display: flex; align-items: center; }
+  .masthead h1 { font-size: 3rem; line-height: 1.2; letter-spacing: 0.25rem; }
+  .masthead h2 { max-width: 35rem; font-size: 1.05rem; }
+}
+
+/* ===== Sections — Grayscale 区间距 ===== */
+.projects-section { padding: 5rem 0; background-color: #080812 !important; }
+.about-section { padding: 5rem 0; background-color: #0A0A16 !important; }
+.contact-section { padding: 5rem 0; background-color: #080812 !important; }
+.signup-section { padding: 5rem 0; background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.9)), radial-gradient(ellipse at 50% 50%, rgba(212,168,67,0.06) 0%, transparent 60%); background-color: #080812; }
+
+/* ===== SPA 视图系统 ===== */
 .view { display: none; }
-.view.active { display: block; animation: fadeIn 0.35s ease; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.view.active { display: block; animation: fadeUp 0.4s ease; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
+/* ===== Card 暗色覆盖 ===== */
 .card {
-  background: var(--card);
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius);
-  padding: 28px 30px;
-  box-shadow: 0 2px 4px var(--shadow-dark), 0 8px 24px var(--shadow-dark), inset 0 1px 0 var(--shadow-light);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  --bs-card-bg: #0D0D22;
+  --bs-card-border-color: #1A1A3A;
+  background-color: #0D0D22 !important;
+  border-color: #1A1A3A !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
 }
-.card:hover {
-  transform: translateY(-2px);
-  background: var(--card-hover);
-  box-shadow: 0 4px 8px var(--shadow-dark), 0 12px 32px rgba(0,0,0,0.55), inset 0 1px 0 var(--shadow-light);
+.card:hover { border-color: rgba(212,168,67,0.1) !important; }
+.card .text-black-50, .card .small { color: #8080A0 !important; }
+.card h4 { color: #F0F0F8 !important; }
+.card hr { border-color: #1A1A3A !important; opacity: 0.6; }
+
+/* ===== 模块卡片 — Grayscale featured-text 风格 ===== */
+.module-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
 }
+.module-card {
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  padding: 2rem 2rem 2rem 1.5rem;
+  background: #0D0D22;
+  border: 1px solid #1A1A3A;
+  border-left: 0.4rem solid #D4A843;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.module-card::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(212,168,67,0.05) 0%, transparent 70%);
+  opacity: 0; transition: opacity 0.4s; pointer-events: none;
+}
+.module-card:hover {
+  transform: translateY(-4px);
+  background: #121230;
+  border-color: rgba(212,168,67,0.2);
+  border-left-color: #E8C866;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 0 60px rgba(212,168,67,0.05);
+}
+.module-card:hover::before { opacity: 1; }
+.module-card .module-icon { font-size: 2rem; line-height: 1; position: relative; z-index: 1; }
+.module-card .module-num { font-size: 0.7rem; font-weight: 700; color: #D4A843; text-transform: uppercase; letter-spacing: 0.15em; position: relative; z-index: 1; }
+.module-card .module-title { font-size: 1.2rem; font-weight: 700; color: #F0F0F8; line-height: 1.3; position: relative; z-index: 1; }
+.module-card .module-desc { font-size: 0.88rem; color: #8080A0; line-height: 1.65; flex: 1; position: relative; z-index: 1; }
+.module-card .module-meta { font-size: 0.75rem; color: #8A7030; display: flex; gap: 12px; flex-wrap: wrap; position: relative; z-index: 1; }
 
-.hero { text-align: center; padding: 32px 0 36px; }
-.hero h1 { font-size: 2rem; font-weight: 700; color: var(--text-bright); letter-spacing: 0.04em; margin-bottom: 10px; }
-.hero .subtitle { font-size: 0.95rem; color: var(--text-dim); max-width: 520px; margin: 0 auto; line-height: 1.65; }
-.hero .accent-dot { color: var(--accent); }
+@media (min-width: 576px) { .module-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 992px) { .module-grid { grid-template-columns: repeat(3, 1fr); } }
 
-.home-section-label { font-size: 0.78rem; font-weight: 600; color: var(--accent-dim); letter-spacing: 0.08em; margin: 28px 0 12px; padding-left: 2px; }
-.module-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 8px; }
-.tool-grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 8px; margin-bottom: 8px; }
-.tool-card { cursor: pointer; padding: 20px 22px; border-radius: var(--radius-sm); background: var(--card); border: 1px solid var(--card-border); transition: all 0.25s; display: flex; flex-direction: column; gap: 6px; border-left: 3px solid var(--accent-dim); }
-.tool-card:hover { transform: translateY(-2px); background: var(--card-hover); border-left-color: var(--accent); box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
+/* ===== Tool Cards ===== */
+.tool-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+.tool-card {
+  cursor: pointer;
+  padding: 1.5rem;
+  background: #0D0D22;
+  border: 1px solid #1A1A3A;
+  border-left: 3px solid #8A7030;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.tool-card:hover {
+  transform: translateY(-3px);
+  background: #121230;
+  border-left-color: #D4A843;
+  border-color: rgba(212,168,67,0.15);
+  box-shadow: 0 8px 36px rgba(0,0,0,0.4), 0 0 40px rgba(212,168,67,0.04);
+}
 .tool-card .tool-icon { font-size: 1.5rem; line-height: 1; }
-.tool-card .tool-title { font-size: 1rem; font-weight: 700; color: var(--text-bright); }
-.tool-card .tool-desc { font-size: 0.82rem; color: var(--text-dim); line-height: 1.45; flex: 1; }
-.tool-card .tool-action { font-size: 0.78rem; color: var(--accent); font-weight: 600; }
-.prompt-tool { border-left-color: var(--accent); }
+.tool-card .tool-title { font-size: 1.05rem; font-weight: 700; color: #F0F0F8; }
+.tool-card .tool-desc { font-size: 0.84rem; color: #8080A0; line-height: 1.55; flex: 1; }
+.tool-card .tool-action { font-size: 0.78rem; color: #D4A843; font-weight: 700; }
+.prompt-tool { border-left-color: #D4A843; }
 
-.module-card { cursor: pointer; position: relative; overflow: hidden; padding: 24px; display: flex; flex-direction: column; gap: 8px; border-radius: var(--radius); background: var(--card); border: 1px solid var(--card-border); transition: all 0.25s ease; }
-.module-card:hover { transform: translateY(-3px); background: var(--card-hover); border-color: var(--accent-dim); box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
-.module-card .module-icon { font-size: 1.6rem; line-height: 1; }
-.module-card .module-num { font-size: 0.7rem; font-weight: 600; color: var(--accent-dim); text-transform: uppercase; letter-spacing: 0.1em; }
-.module-card .module-title { font-size: 1.15rem; font-weight: 700; color: var(--text-bright); line-height: 1.3; }
-.module-card .module-desc { font-size: 0.84rem; color: var(--text-dim); line-height: 1.55; flex: 1; }
-.module-card .module-meta { font-size: 0.75rem; color: var(--accent-dim); display: flex; gap: 12px; flex-wrap: wrap; }
-.module-card .module-arrow { display: none; }
+@media (min-width: 576px) { .tool-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 992px) {
+  .tool-grid { grid-template-columns: repeat(3, 1fr); }
+  .prompt-tool { grid-column: 1 / -1; }
+}
 
-.quickstart { margin-bottom: 24px; padding: 14px 20px; }
-.quickstart summary { cursor: pointer; font-size: 0.84rem; color: var(--accent); font-weight: 600; padding: 0; list-style: none; display: flex; align-items: center; gap: 6px; }
+/* ===== 按钮 — Grayscale btn 金色覆盖 ===== */
+.btn {
+  font-family: "Nunito", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 0.375rem;
+}
+.btn-primary {
+  background-color: #E0B840 !important;
+  border-color: #E0B840 !important;
+  color: #000000 !important;
+  box-shadow: 0 0 20px rgba(224,184,64,0.3), 0 4px 16px rgba(224,184,64,0.15);
+}
+.btn-primary:hover {
+  background-color: #EDD070 !important;
+  border-color: #EDD070 !important;
+  box-shadow: 0 0 32px rgba(224,184,64,0.45), 0 6px 24px rgba(224,184,64,0.25);
+  transform: translateY(-1px);
+}
+.btn:disabled {
+  opacity: 0.5;
+}
+
+/* ===== Section Label ===== */
+.home-section-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #D4A843;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin: 3rem 0 0.75rem;
+  padding-left: 2px;
+}
+.home-section-label::before { content: "— "; opacity: 0.5; }
+
+/* ===== SPA 容器 ===== */
+.app { position: relative; z-index: 1; }
+
+/* ===== Quickstart ===== */
+.quickstart {
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.5rem;
+  background: #0D0D22;
+  border: 1px solid #1A1A3A;
+  border-radius: 0.5rem;
+}
+.quickstart summary {
+  cursor: pointer;
+  font-size: 0.88rem;
+  color: #D4A843;
+  font-weight: 700;
+  padding: 0.25rem 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
 .quickstart summary::marker { display: none; }
 .quickstart summary::-webkit-details-marker { display: none; }
-.quickstart summary::before { content: "💡"; font-size: 0.9rem; }
-.quickstart summary::after { content: "展开"; font-size: 0.72rem; color: var(--text-dim); margin-left: auto; }
+.quickstart summary::before { content: "💡"; }
+.quickstart summary::after { content: "展开"; font-size: 0.7rem; color: #8080A0; margin-left: auto; }
 .quickstart[open] summary::after { content: "收起"; }
-.quickstart .qs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 12px; }
-.quickstart .qs-step { text-align: center; padding: 10px 8px; background: var(--bg-alt); border-radius: var(--radius-sm); border: 1px solid transparent; }
-.quickstart .qs-step .qs-num { font-size: 0.95rem; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
-.quickstart .qs-step .qs-label { font-size: 0.78rem; color: var(--text-dim); line-height: 1.45; }
-@media (max-width: 540px) {
-  .quickstart .qs-grid { grid-template-columns: 1fr; gap: 8px; }
+.quickstart .qs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+.quickstart .qs-step {
+  text-align: center;
+  padding: 0.9rem 0.6rem;
+  background: #070712;
+  border-radius: 0.5rem;
+  border: 1px solid #1A1A3A;
+  transition: border-color 0.2s;
+}
+.quickstart .qs-step:hover { border-color: rgba(212,168,67,0.2); }
+.quickstart .qs-step .qs-num { font-size: 1.1rem; font-weight: 700; color: #D4A843; margin-bottom: 0.35rem; }
+.quickstart .qs-step .qs-label { font-size: 0.78rem; color: #8080A0; line-height: 1.5; }
+@media (max-width: 576px) { .quickstart .qs-grid { grid-template-columns: 1fr; } }
+
+/* ===== Back Link ===== */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #D4A843;
+  text-decoration: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+.back-link:hover { opacity: 0.7; }
+
+/* ===== List Header ===== */
+.list-header { margin-bottom: 2rem; }
+.list-header h2 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+.list-header .list-subtitle { color: #8080A0; font-size: 0.92rem; }
+.list-header .list-hint { color: #8A7030; font-size: 0.78rem; margin-top: 0.4rem; }
+
+/* ===== Article List ===== */
+.subtopic-group { margin-bottom: 2rem; }
+.subtopic-title {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #D4A843;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+  padding-left: 0.5rem;
+}
+.article-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin-bottom: 2px;
+  border-left: 2px solid transparent;
+}
+.article-row:hover {
+  background: #0D0D22;
+  transform: translateX(6px);
+  border-left-color: rgba(212,168,67,0.5);
+}
+.article-row .art-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #8A7030;
+  flex-shrink: 0;
+  margin-top: 0.6em;
+  transition: background 0.2s;
+}
+.article-row:hover .art-dot { background: #D4A843; }
+.article-row .art-title {
+  flex: 1;
+  font-size: 0.98rem;
+  color: #C8C8D8;
+  line-height: 1.6;
+}
+.article-row .art-badge {
+  font-size: 0.68rem;
+  color: #8080A0;
+  background: #070712;
+  padding: 0.2rem 0.65rem;
+  border-radius: 20px;
+  white-space: nowrap;
+  border: 1px solid #1A1A3A;
+  margin-top: 0.15em;
+}
+.article-row .art-check {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: 2px solid #1A1A3A;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: transparent;
+  margin-top: 0.1em;
+}
+.article-row .art-check:hover { border-color: #8A7030; }
+.article-row .art-check.done {
+  background: #D4A843;
+  border-color: #D4A843;
+}
+.article-row .art-check.done::after {
+  content: "✓";
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; color: #000000; font-weight: 700;
+  height: 100%;
 }
 
-.back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); text-decoration: none; font-size: 0.9rem; cursor: pointer; margin-bottom: 20px; transition: opacity 0.2s; font-weight: 500; }
-.back-link:hover { opacity: 0.75; }
-
-.list-header { margin-bottom: 32px; }
-.list-header h2 { font-size: 1.7rem; color: var(--text-bright); margin-bottom: 6px; }
-.list-header .list-subtitle { color: var(--text-dim); font-size: 0.92rem; }
-.list-header .list-hint { color: var(--accent-dim); font-size: 0.78rem; margin-top: 6px; }
-
-.subtopic-group { margin-bottom: 28px; }
-.subtopic-title { font-size: 0.8rem; font-weight: 600; color: var(--accent-dim); letter-spacing: 0.06em; margin-bottom: 10px; padding-left: 4px; }
-
-.article-row { display: flex; align-items: flex-start; gap: 10px; padding: 12px 16px; border-radius: var(--radius-sm); cursor: pointer; transition: background 0.2s, transform 0.2s; margin-bottom: 2px; }
-.article-row:hover { background: var(--card); transform: translateX(4px); }
-.article-row .art-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-dim); flex-shrink: 0; margin-top: 0.55em; }
-.article-row .art-title { flex: 1; font-size: 0.98rem; color: var(--text); line-height: 1.55; padding-right: 4px; }
-.article-row .art-badge { font-size: 0.7rem; color: var(--text-dim); background: var(--bg-alt); padding: 2px 8px; border-radius: 20px; white-space: nowrap; line-height: 1.4; margin-top: 0.15em; }
-.article-row .art-check { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--card-border); flex-shrink: 0; cursor: pointer; transition: all 0.2s; position: relative; background: transparent; margin-top: 0.1em; }
-.article-row .art-check.done { background: var(--accent); border-color: var(--accent); }
-.article-row .art-check.done::after { content: "✓"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--bg); font-weight: 700; }
-
-.article-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; flex-wrap: wrap; gap: 12px; }
-.article-nav .nav-btn { font-size: 0.85rem; color: var(--accent); cursor: pointer; background: none; border: none; padding: 6px 0; font-family: var(--font); transition: opacity 0.2s; }
+/* ===== Article Navigation ===== */
+.article-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.article-nav .nav-btn {
+  font-size: 0.85rem;
+  color: #D4A843;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0.5rem 0;
+  font-family: "Nunito", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
 .article-nav .nav-btn:hover { opacity: 0.7; }
-.article-nav .nav-btn:disabled { color: var(--text-dim); cursor: default; opacity: 0.4; }
+.article-nav .nav-btn:disabled { color: #4A4A60; cursor: default; opacity: 0.4; }
 
-.article-header { margin-bottom: 32px; }
-.article-header .art-module-tag { font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
-.article-header h1 { font-size: 1.7rem; color: var(--text-bright); margin-bottom: 8px; line-height: 1.35; }
-.article-header .art-meta { font-size: 0.85rem; color: var(--text-dim); }
+/* ===== Article Detail ===== */
+.article-header { margin-bottom: 2rem; }
+.article-header .art-module-tag {
+  font-size: 0.72rem; color: #D4A843;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  margin-bottom: 0.5rem; font-weight: 700;
+}
+.article-header h1 { font-size: 1.8rem; line-height: 1.35; }
+.article-header .art-meta { font-size: 0.85rem; color: #8080A0; }
 
-.article-body { font-size: 1rem; line-height: 1.85; color: var(--text); }
-.article-body h2 { font-size: 1.25rem; color: var(--text-bright); margin: 32px 0 12px; }
-.article-body h3 { font-size: 1.05rem; color: var(--text-bright); margin: 24px 0 8px; }
-.article-body p { margin-bottom: 14px; }
-.article-body ul, .article-body ol { margin: 0 0 14px 20px; }
-.article-body li { margin-bottom: 6px; }
-.article-body strong { color: var(--text-bright); }
-.article-body blockquote { border-left: 3px solid var(--accent); padding: 12px 18px; margin: 16px 0; background: var(--card); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; color: var(--text-dim); }
+.article-body {
+  font-size: 1.05rem; line-height: 1.95;
+  color: #C8C8D8;
+  padding: 2rem 2.25rem !important;
+}
+.article-body h2 { font-size: 1.35rem; margin: 2.25rem 0 0.85rem; }
+.article-body h3 { font-size: 1.1rem; margin: 1.75rem 0 0.6rem; font-weight: 600; }
+.article-body p { margin-bottom: 1rem; }
+.article-body ul, .article-body ol { margin: 0 0 1rem 1.5rem; }
+.article-body li { margin-bottom: 0.5rem; }
+.article-body strong { color: #F0F0F8; }
+.article-body blockquote {
+  border-left: 0.3rem solid #D4A843;
+  padding: 0.85rem 1.25rem;
+  margin: 1.1rem 0;
+  background: rgba(212,168,67,0.04);
+  border-radius: 0 0.5rem 0.5rem 0;
+  color: #8080A0;
+  font-style: italic;
+}
+.article-body table { width: 100%; border-collapse: collapse; margin: 0.85rem 0; font-size: 0.88rem; }
+.article-body table th { color: #D4A843; text-align: left; padding: 0.6rem 0.85rem; font-weight: 700; font-size: 0.78rem; border-bottom: 2px solid #1A1A3A; }
+.article-body table td { padding: 0.6rem 0.85rem; border-bottom: 1px solid #1A1A3A; }
+.article-body table tr:hover td { background: rgba(212,168,67,0.03); }
+.article-body .practice-box {
+  background: rgba(212,168,67,0.04);
+  border: 1px solid #1A1A3A;
+  border-radius: 0.5rem;
+  padding: 1.25rem 1.5rem;
+  margin: 1.1rem 0;
+}
+.article-body .practice-box h4 { color: #D4A843; margin-bottom: 0.5rem; }
+.article-body .game-info-box {
+  background: #070712;
+  border: 1px solid #1A1A3A;
+  border-radius: 0.5rem;
+  padding: 1.1rem 1.5rem;
+  margin: 1.1rem 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+.article-body .game-info-box .gi-item { text-align: center; }
+.article-body .game-info-box .gi-val { font-size: 1.15rem; font-weight: 700; color: #D4A843; }
+.article-body .game-info-box .gi-label { font-size: 0.73rem; color: #8080A0; }
 
-.article-body table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.9rem; }
-.article-body table th { color: var(--accent); text-align: left; padding: 8px 12px; font-weight: 600; }
-.article-body table td { padding: 8px 12px; border-top: 1px solid var(--card-border); color: var(--text); }
-.article-body table tr:hover td { background: rgba(232,184,96,0.04); }
+.plan-table { width: 100%; border-collapse: collapse; margin: 0.85rem 0; font-size: 0.88rem; }
+.plan-table th { color: #D4A843; text-align: left; padding: 0.6rem 0.85rem; font-weight: 700; font-size: 0.78rem; border-bottom: 2px solid #1A1A3A; }
+.plan-table td { padding: 0.6rem 0.85rem; border-bottom: 1px solid #1A1A3A; color: #C8C8D8; }
+.plan-table tr:hover td { background: rgba(212,168,67,0.03); }
 
-.plan-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.9rem; }
-.plan-table th { color: var(--accent); text-align: left; padding: 8px 12px; font-weight: 600; }
-.plan-table th:first-child { width: 15%; }
-.plan-table th:last-child { width: 18%; }
-.plan-table td { padding: 8px 12px; border-top: 1px solid var(--card-border); color: var(--text); }
-.plan-table tr:first-child td { border-top-color: var(--accent-dim); }
-.plan-table tr:hover td { background: rgba(232,184,96,0.04); }
-.article-body .practice-box { background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius-sm); padding: 20px 22px; margin: 16px 0; }
-.article-body .practice-box h4 { color: var(--accent); margin-bottom: 8px; font-size: 0.9rem; }
+@media (max-width: 576px) {
+  .article-body .game-info-box { grid-template-columns: repeat(2, 1fr); }
+  .article-body { padding: 1.25rem !important; }
+  .article-header h1 { font-size: 1.4rem; }
+}
 
-.generator { text-align: center; padding: 32px 24px; margin: 24px 0; }
-.generator .gen-btn { display: inline-block; padding: 12px 32px; background: var(--accent); color: var(--bg); border: none; border-radius: 30px; font-size: 1rem; font-weight: 600; cursor: pointer; font-family: var(--font); transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 16px var(--accent-glow); }
-.generator .gen-btn:hover { transform: scale(1.04); }
-.generator .gen-btn:active { transform: scale(0.97); }
-.generator .gen-result { margin-top: 20px; font-size: 1.1rem; color: var(--text-bright); min-height: 48px; display: flex; align-items: center; justify-content: center; padding: 16px; background: var(--card); border-radius: var(--radius-sm); }
+/* ===== Generator ===== */
+.generator {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  margin: 1.75rem 0;
+  background: #0A0A16;
+  border-radius: 0.5rem;
+  border: 1px solid #1A1A3A;
+}
+.generator .gen-btn {
+  display: inline-block;
+  padding: 0.85rem 2.25rem;
+  background-color: #D4A843;
+  color: #000000;
+  border: none;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  font-family: "Nunito", "PingFang SC", "Microsoft YaHei", sans-serif;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(212,168,67,0.2);
+}
+.generator .gen-btn:hover { background-color: #E8C866; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(212,168,67,0.35); }
+.generator .gen-result {
+  margin-top: 1.5rem;
+  font-size: 1.15rem;
+  color: #F0F0F8;
+  min-height: 3rem;
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.25rem;
+  background: #0D0D22;
+  border-radius: 0.5rem;
+  border: 1px dashed #1A1A3A;
+}
 
-.footer { text-align: center; padding: 40px 0 20px; color: var(--text-dim); font-size: 0.8rem; }
-.footer a { color: var(--accent-dim); cursor: pointer; text-decoration: none; }
-.footer a:hover { color: var(--accent); }
+/* 小按钮 */
+.gen-btn-sm {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 1.2rem;
+  background-color: #D4A843;
+  color: #000000;
+  border: none;
+  border-radius: 50px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: "Nunito", "PingFang SC", "Microsoft YaHei", sans-serif;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.gen-btn-sm:hover { background-color: #E8C866; transform: translateY(-1px); }
 
-/* About page */
-.about-container { max-width: 680px; margin: 0 auto; }
-.about-card { background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 28px; margin-bottom: 20px; }
-.about-card.personal { border-left: 3px solid var(--accent); }
-.about-card.brand { border-left: 3px solid #d4546a; }
-.about-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
-.about-avatar { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #d4943a); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; color: #1a1a24; flex-shrink: 0; }
-.about-header-info h3 { font-size: 1.2rem; color: var(--text-bright); margin: 0; }
-.about-header-info .about-role { font-size: 0.8rem; color: var(--text-dim); margin-top: 2px; }
-.about-card p { font-size: 0.88rem; color: var(--text); line-height: 1.7; margin: 0 0 10px; }
-.about-card p:last-child { margin-bottom: 0; }
-.about-motto { display: inline-block; font-size: 0.82rem; color: var(--accent-dim); font-style: italic; margin-top: 4px; }
-.ruby-header { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
-.ruby-logo { display: flex; gap: 3px; }
-.ruby-logo span { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.78rem; color: #fff; }
-.ruby-r { background: #d4546a; } .ruby-u { background: #e08840; } .ruby-b { background: #5da8b8; } .ruby-y { background: #c0a048; }
-.about-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
-.about-tag { font-size: 0.73rem; padding: 3px 10px; border-radius: 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--card-border); color: var(--text-dim); }
-.about-contact { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--card-border); }
-.about-contact span { font-size: 0.82rem; color: var(--text-dim); }
-.about-contact strong { color: var(--text-bright); }
-.about-attribution { text-align: center; padding: 8px 0 24px; font-size: 0.82rem; color: var(--text-dim); }
-.about-attribution span { color: var(--accent-dim); }
+/* ===== Footer ===== */
+.footer {
+  text-align: center;
+  padding: 3rem 0 1.5rem;
+  color: #8080A0;
+  font-size: 0.78rem;
+  border-top: 1px solid #1A1A3A;
+  margin-top: 2.5rem;
+}
+.footer a { color: #8A7030; cursor: pointer; }
+.footer a:hover { color: #D4A843; }
 
-.game-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; align-items: center; }
-.game-filters .filter-label { font-size: 0.78rem; color: var(--text-dim); margin-right: 4px; }
-.game-filters .filter-btn { font-size: 0.76rem; padding: 5px 14px; border-radius: 20px; border: 1px solid var(--card-border); background: transparent; color: var(--text-dim); cursor: pointer; font-family: var(--font); transition: all 0.2s; white-space: nowrap; }
-.game-filters .filter-btn:hover { border-color: var(--accent-dim); color: var(--text); }
-.game-filters .filter-btn.active { background: var(--accent); color: var(--bg); border-color: var(--accent); font-weight: 600; }
-.game-filters .filter-divider { width: 1px; height: 20px; background: var(--card-border); margin: 0 4px; }
-.filter-select { font-size: 0.76rem; padding: 5px 28px 5px 10px; border-radius: 20px; border: 1px solid var(--card-border); background: var(--card); color: var(--text); cursor: pointer; font-family: var(--font); appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238888a0'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 8px center; transition: border-color 0.2s; }
-.filter-select:hover, .filter-select:focus { border-color: var(--accent-dim); outline: none; }
-.active-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; min-height: 0; }
-.active-tag { font-size: 0.74rem; padding: 3px 10px; border-radius: 14px; background: rgba(232,184,96,0.15); color: var(--accent); display: inline-flex; align-items: center; gap: 4px; cursor: default; }
+/* ===== Game Library ===== */
+.game-filters { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.75rem; align-items: center; }
+.game-filters .filter-label { font-size: 0.76rem; color: #8080A0; font-weight: 600; }
+.game-filters .filter-btn {
+  font-size: 0.74rem; padding: 0.35rem 0.9rem;
+  border-radius: 20px; border: 1px solid #1A1A3A;
+  background: transparent; color: #8080A0;
+  cursor: pointer; font-family: "Nunito", "PingFang SC", "Microsoft YaHei", sans-serif;
+  transition: all 0.2s; white-space: nowrap;
+}
+.game-filters .filter-btn:hover { border-color: #8A7030; color: #C8C8D8; }
+.game-filters .filter-btn.active { background-color: #D4A843; color: #000000; border-color: #D4A843; font-weight: 700; }
+.game-filters .filter-divider { width: 1px; height: 20px; background: #1A1A3A; margin: 0 0.25rem; }
+.filter-select {
+  font-size: 0.74rem; padding: 0.35rem 1.6rem 0.35rem 0.7rem;
+  border-radius: 20px; border: 1px solid #1A1A3A;
+  background: #0D0D22; color: #C8C8D8;
+  cursor: pointer; font-family: "Nunito", "PingFang SC", "Microsoft YaHei", sans-serif;
+  appearance: none; -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238080A0'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 8px center;
+}
+.active-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1rem; }
+.active-tag { font-size: 0.72rem; padding: 0.2rem 0.7rem; border-radius: 14px; background: rgba(212,168,67,0.12); color: #D4A843; display: inline-flex; align-items: center; gap: 4px; }
 .active-tag .tag-x { cursor: pointer; font-weight: bold; opacity: 0.7; }
 .active-tag .tag-x:hover { opacity: 1; }
+.toolbar-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.toolbar-row .gen-result-inline { font-size: 0.82rem; color: #C8C8D8; font-weight: 500; flex: 1; }
 
-.toolbar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
-.toolbar-row .gen-result-inline { font-size: 0.84rem; color: var(--text); font-weight: 500; min-width: 0; flex: 1; }
-
-/* 通用小按钮 */
-.gen-btn-sm { display: inline-flex; align-items: center; gap: 4px; padding: 8px 18px; background: var(--accent); color: var(--bg); border: none; border-radius: 20px; font-size: 0.8rem; font-weight: 600; cursor: pointer; font-family: var(--font); transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 2px 8px var(--accent-glow); white-space: nowrap; }
-.gen-btn-sm:hover { transform: scale(1.04); }
-
-.game-card { cursor: pointer; padding: 16px 20px; border-radius: var(--radius-sm); border: 1px solid var(--card-border); background: var(--card); transition: all 0.2s; margin-bottom: 8px; }
-.game-card:hover { background: var(--card-hover); transform: translateX(3px); }
-.game-card .game-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
-.game-card .game-name { font-size: 1.02rem; font-weight: 700; color: var(--text-bright); }
-.game-card .game-ename { font-size: 0.78rem; color: var(--text-dim); font-style: italic; margin-left: 8px; }
-.game-card .game-meta { display: flex; flex-wrap: wrap; gap: 8px; font-size: 0.78rem; color: var(--text-dim); margin-bottom: 6px; }
-.game-card .game-meta span { background: var(--bg-alt); padding: 2px 10px; border-radius: 12px; }
+.game-card {
+  cursor: pointer; padding: 1.1rem 1.25rem;
+  border-radius: 0.5rem; border: 1px solid #1A1A3A;
+  background: #0D0D22; transition: all 0.25s; margin-bottom: 0.6rem;
+  border-left: 3px solid transparent;
+}
+.game-card:hover {
+  background: #121230; transform: translateX(4px);
+  border-left-color: rgba(212,168,67,0.5);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.game-card .game-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; margin-bottom: 0.5rem; }
+.game-card .game-name { font-size: 1.02rem; font-weight: 700; color: #F0F0F8; }
+.game-card .game-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; font-size: 0.76rem; color: #8080A0; margin-bottom: 0.35rem; }
+.game-card .game-meta span { background: #070712; padding: 0.2rem 0.75rem; border-radius: 12px; border: 1px solid #1A1A3A; }
 .game-card .game-skills { display: flex; flex-wrap: wrap; gap: 6px; }
-.game-card .skill-tag { font-size: 0.72rem; padding: 2px 10px; border-radius: 12px; background: rgba(232,184,96,0.12); color: var(--accent); }
-.game-card .game-desc { font-size: 0.88rem; color: var(--text-dim); line-height: 1.5; margin-top: 6px; }
-
-.article-body .game-info-box { background: var(--bg-alt); border: 1px solid var(--card-border); border-radius: var(--radius-sm); padding: 16px 20px; margin: 16px 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-.article-body .game-info-box .gi-item { text-align: center; }
-.article-body .game-info-box .gi-val { font-size: 1.1rem; font-weight: 700; color: var(--accent); }
-.article-body .game-info-box .gi-label { font-size: 0.75rem; color: var(--text-dim); margin-top: 2px; }
-@media (max-width: 540px) {
-  .article-body .game-info-box { grid-template-columns: repeat(2, 1fr); }
-}
-
-/* ===== Improved table styles ===== */
-.article-body table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 0.88rem; table-layout: auto; }
-.article-body table th { color: var(--accent); text-align: left; padding: 10px 14px; font-weight: 600; font-size: 0.82rem; white-space: nowrap; border-bottom: 2px solid var(--card-border); }
-.article-body table td { padding: 10px 14px; border-bottom: 1px solid var(--card-border); color: var(--text); vertical-align: top; }
-.article-body table tr:hover td { background: rgba(232,184,96,0.03); }
-.article-body table td:first-child, .article-body table th:first-child { padding-left: 0; }
-.article-body table td:last-child, .article-body table th:last-child { padding-right: 0; }
-
-.plan-table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 0.88rem; }
-.plan-table th { color: var(--accent); text-align: left; padding: 10px 14px; font-weight: 600; font-size: 0.8rem; border-bottom: 2px solid var(--card-border); }
-.plan-table th:first-child { width: auto; }
-.plan-table td { padding: 10px 14px; border-bottom: 1px solid var(--card-border); color: var(--text); vertical-align: top; }
-.plan-table tr:first-child td { border-top-color: var(--accent-dim); }
-.plan-table tr:hover td { background: rgba(232,184,96,0.03); }
-.plan-table td:first-child, .plan-table th:first-child { padding-left: 0; }
-.plan-table td:last-child, .plan-table th:last-child { padding-right: 0; }
-
-@media (min-width: 540px) {
-  .module-grid { grid-template-columns: repeat(2, 1fr); }
-  .tool-grid { grid-template-columns: repeat(2, 1fr); }
-  .hero h1 { font-size: 2.3rem; }
-}
-
-@media (min-width: 740px) {
-  .module-grid { grid-template-columns: repeat(3, 1fr); }
-  .tool-grid { grid-template-columns: repeat(3, 1fr); }
-  .tool-grid > :nth-child(1) { grid-column: 1; grid-row: 1; }
-  .tool-grid > :nth-child(2) { grid-column: 2; grid-row: 1; }
-  .tool-grid > :nth-child(4) { grid-column: 3; grid-row: 1; }
-  .prompt-tool { grid-column: 1 / -1; grid-row: 2; }
-  .hero h1 { font-size: 2.4rem; }
-}
-
-@media (min-width: 1000px) {
-  .module-grid { grid-template-columns: repeat(3, 1fr); max-width: 780px; margin-left: auto; margin-right: auto; }
-  .tool-grid { grid-template-columns: repeat(3, 1fr); max-width: 780px; margin-left: auto; margin-right: auto; }
-  .tool-grid > :nth-child(1) { grid-column: 1; grid-row: 1; }
-  .tool-grid > :nth-child(2) { grid-column: 2; grid-row: 1; }
-  .tool-grid > :nth-child(4) { grid-column: 3; grid-row: 1; }
-  .prompt-tool { grid-column: 1 / -1; grid-row: 2; }
-  .module-card { padding: 28px; }
-  .module-card .module-title { font-size: 1.2rem; }
-  .module-card .module-desc { font-size: 0.86rem; }
-  .module-card .module-icon { font-size: 1.8rem; }
-}
-
-@media (max-width: 540px) {
-  .article-row .art-badge { display: none; }
-}
-
-@media (max-width: 480px) {
-  .app { padding: 24px 14px 60px; }
-  .hero { padding: 24px 0 32px; }
-  .hero h1 { font-size: 1.6rem; }
-  .card { padding: 20px 18px; }
-  .module-card .module-arrow { right: 18px; font-size: 1.1rem; }
-  .article-header h1 { font-size: 1.35rem; }
-  .article-row { padding: 10px 10px; gap: 8px; }
-  .article-row .art-title { font-size: 0.92rem; }
-  .article-row .art-dot { margin-top: 0.45em; }
-  .article-row .art-check { margin-top: 0.05em; }
-  html { font-size: 15px; }
-}
+.skill-tag { font-size: 0.7rem; padding: 0.2rem 0.7rem; border-radius: 12px; background: rgba(212,168,67,0.1); color: #D4A843; }
 
 /* ===== 能力测评 ===== */
-.assess-intro { text-align: center; padding: 20px 0 32px; }
-.assess-intro h2 { font-size: 1.6rem; color: var(--text-bright); margin-bottom: 8px; }
-.assess-intro p { color: var(--text-dim); font-size: 0.9rem; }
-
-.quiz-block { margin-bottom: 28px; padding: 20px 24px; background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius-sm); }
-.quiz-block h3 { color: var(--accent); font-size: 1rem; margin-bottom: 4px; }
-.quiz-block .quiz-desc { color: var(--text-dim); font-size: 0.82rem; margin-bottom: 14px; }
-.quiz-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.04); gap: 12px; }
-.quiz-item .q-text { flex: 1; font-size: 0.9rem; color: var(--text); }
-.quiz-item .q-opts { display: flex; gap: 6px; flex-shrink: 0; }
-.quiz-item .q-opt { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--card-border); background: transparent; color: var(--text-dim); cursor: pointer; font-size: 0.78rem; font-family: var(--font); transition: all 0.2s; display: flex; align-items: center; justify-content: center; padding: 0; }
-.quiz-item .q-opt:hover { border-color: var(--accent-dim); color: var(--text); }
-.quiz-item .q-opt.sel { background: var(--accent); color: var(--bg); border-color: var(--accent); font-weight: 700; }
-.q-labels { display: flex; gap: 6px; justify-content: flex-end; font-size: 0.68rem; color: var(--text-dim); margin-bottom: 6px; }
-.q-labels span { width: 36px; text-align: center; }
-
-.quiz-submit-wrap { text-align: center; margin: 30px 0; }
-.quiz-submit-wrap button { padding: 12px 40px; background: var(--accent); color: var(--bg); border: none; border-radius: 24px; font-size: 1rem; font-weight: 700; cursor: pointer; font-family: var(--font); transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 2px 12px var(--accent-glow); }
-.quiz-submit-wrap button:hover { transform: scale(1.05); }
-.quiz-submit-wrap button:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
-
-.result-panel { text-align: center; padding: 10px 0; }
-.result-panel h2 { font-size: 1.4rem; color: var(--text-bright); margin-bottom: 20px; }
-.radar-container { max-width: 460px; margin: 0 auto 24px; }
-.radar-container svg { width: 100%; height: auto; }
-.dim-scores { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin: 20px 0; }
-.dim-score-card { background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius-sm); padding: 14px 16px; }
-.dim-score-card .ds-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-.dim-score-card .ds-name { font-weight: 700; color: var(--text-bright); font-size: 0.9rem; }
-.dim-score-card .ds-val { font-weight: 700; font-size: 1.1rem; }
-.dim-score-card .ds-bar { height: 6px; background: var(--bg-alt); border-radius: 3px; margin-bottom: 6px; overflow: hidden; }
-.dim-score-card .ds-fill { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
-.dim-score-card .ds-tip { font-size: 0.78rem; color: var(--text-dim); line-height: 1.4; }
-.result-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 24px; }
-.result-actions button { padding: 10px 22px; border-radius: 20px; border: 1px solid var(--card-border); background: var(--card); color: var(--text); cursor: pointer; font-family: var(--font); font-size: 0.86rem; transition: all 0.2s; }
-.result-actions button:hover { border-color: var(--accent-dim); color: var(--accent); }
-
-@media (max-width: 540px) {
-  .quiz-item { flex-direction: column; align-items: flex-start; }
-  .dim-scores { grid-template-columns: 1fr; }
+.assess-intro { text-align: center; padding: 1.5rem 0 2.25rem; }
+.assess-intro h2 { font-size: 1.6rem; }
+.quiz-block { margin-bottom: 1.75rem; padding: 1.5rem 1.75rem; background: #0D0D22; border: 1px solid #1A1A3A; border-radius: 0.5rem; }
+.quiz-block h3 { color: #D4A843; font-size: 1rem; }
+.quiz-block .quiz-desc { color: #8080A0; font-size: 0.8rem; margin-bottom: 1rem; }
+.quiz-item { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 0; border-bottom: 1px solid rgba(255,255,255,0.03); gap: 0.75rem; }
+.quiz-item .q-text { flex: 1; font-size: 0.88rem; }
+.quiz-item .q-opts { display: flex; gap: 6px; }
+.quiz-item .q-opt {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid #1A1A3A; background: transparent;
+  color: #8080A0; cursor: pointer; font-size: 0.76rem;
+  font-family: "Nunito", "PingFang SC", "Microsoft YaHei", sans-serif;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
 }
-.review-quad-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.review-quad { border-radius: var(--radius-sm); padding: 20px 22px; }
-.review-quad h4 { font-size: 0.95rem; margin-bottom: 6px; }
-.review-quad .quad-hint { font-size: 0.74rem; color: var(--text-dim); margin-bottom: 8px; }
-.review-quad textarea { width: 100%; background: var(--bg); border: 1px solid var(--card-border); border-radius: var(--radius-sm); color: var(--text); font-family: var(--font); font-size: 0.82rem; padding: 10px; resize: vertical; outline: none; transition: border-color 0.2s; line-height: 1.6; }
-.review-quad textarea:focus { border-color: var(--accent-dim); }
-.review-quad.keep { background: rgba(96,192,128,0.06); border: 1px solid rgba(96,192,128,0.25); }
-.review-quad.keep h4 { color: #60c080; }
-.review-quad.improve { background: rgba(232,184,96,0.06); border: 1px solid rgba(232,184,96,0.25); }
-.review-quad.improve h4 { color: var(--accent); }
-.review-quad.start { background: rgba(96,160,224,0.06); border: 1px solid rgba(96,160,224,0.25); }
-.review-quad.start h4 { color: #60a0e0; }
-.review-quad.stop { background: rgba(224,96,96,0.06); border: 1px solid rgba(224,96,96,0.25); }
-.review-quad.stop h4 { color: #e06060; }
-.review-quick { border-radius: var(--radius-sm); padding: 20px 22px; border-left: 3px solid var(--accent-dim); background: var(--card); transition: background 0.2s; }
-.review-quick.highlight { background: rgba(96,192,128,0.06); border: 1px solid rgba(96,192,128,0.25); border-left: 3px solid #60c080; }
-.review-quick.highlight h4 { color: #60c080; }
-.review-quick.polish { background: rgba(232,184,96,0.06); border: 1px solid rgba(232,184,96,0.25); border-left: 3px solid var(--accent); }
-.review-quick.polish h4 { color: var(--accent); }
-.review-quick.trynext { background: rgba(96,160,224,0.06); border: 1px solid rgba(96,160,224,0.25); border-left: 3px solid #60a0e0; }
-.review-quick.trynext h4 { color: #60a0e0; }
-.review-meta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
-.review-meta-row input, .review-meta-row select { background: var(--bg); border: 1px solid var(--card-border); border-radius: var(--radius-sm); color: var(--text); font-family: var(--font); font-size: 0.84rem; padding: 10px 14px; outline: none; transition: border-color 0.2s; }
-.review-meta-row input:focus, .review-meta-row select:focus { border-color: var(--accent-dim); }
-@media (max-width: 540px) {
+.quiz-item .q-opt:hover { border-color: #8A7030; color: #C8C8D8; }
+.quiz-item .q-opt.sel { background: #D4A843; color: #000000; border-color: #D4A843; font-weight: 700; }
+.q-labels { display: flex; gap: 6px; justify-content: flex-end; font-size: 0.66rem; color: #8080A0; margin-bottom: 0.35rem; }
+.q-labels span { width: 36px; text-align: center; }
+.quiz-submit-wrap { text-align: center; margin: 2rem 0; }
+.quiz-submit-wrap button {
+  padding: 0.85rem 2.5rem; background-color: #D4A843;
+  color: #000000; border: none; border-radius: 50px;
+  font-size: 0.9rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.06em; cursor: pointer;
+  font-family: "Nunito", "PingFang SC", "Microsoft YaHei", sans-serif;
+  box-shadow: 0 4px 16px rgba(212,168,67,0.18);
+}
+.result-panel { text-align: center; padding: 0.6rem 0; }
+.result-panel h2 { font-size: 1.4rem; margin-bottom: 1.5rem; }
+.radar-container { max-width: 460px; margin: 0 auto 1.75rem; }
+.radar-container svg { width: 100%; height: auto; }
+.dim-scores { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.85rem; margin: 1.5rem 0; }
+.dim-score-card { background: #0D0D22; border: 1px solid #1A1A3A; border-radius: 0.5rem; padding: 1rem 1.1rem; }
+.dim-score-card .ds-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+.dim-score-card .ds-name { font-weight: 700; color: #F0F0F8; font-size: 0.88rem; }
+.dim-score-card .ds-val { font-weight: 700; font-size: 1.15rem; }
+.dim-score-card .ds-bar { height: 6px; background: #070712; border-radius: 3px; margin-bottom: 0.5rem; overflow: hidden; }
+.dim-score-card .ds-fill { height: 100%; border-radius: 3px; }
+.dim-score-card .ds-tip { font-size: 0.76rem; color: #8080A0; line-height: 1.4; }
+.result-actions { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-top: 1.75rem; }
+.result-actions button {
+  padding: 0.6rem 1.5rem; border-radius: 50px;
+  border: 1px solid #1A1A3A; background: #0D0D22;
+  color: #C8C8D8; cursor: pointer;
+  font-family: "Nunito", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 0.84rem; transition: all 0.2s;
+}
+.result-actions button:hover { border-color: #8A7030; color: #D4A843; }
+
+/* ===== 复盘 ===== */
+.review-quad-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.review-quad { border-radius: 0.5rem; padding: 1.25rem 1.5rem; }
+.review-quad h4 { font-size: 0.92rem; margin-bottom: 0.5rem; font-weight: 700; }
+.review-quad .quad-hint { font-size: 0.72rem; color: #8080A0; margin-bottom: 0.6rem; }
+.review-quad textarea {
+  width: 100%; background: #080812; border: 1px solid #1A1A3A;
+  border-radius: 0.5rem; color: #C8C8D8;
+  font-family: "Nunito", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 0.82rem; padding: 0.75rem; resize: vertical; outline: none;
+  line-height: 1.6; min-height: 60px;
+}
+.review-quad.keep { background: rgba(96,192,128,0.05); border: 1px solid rgba(96,192,128,0.2); }
+.review-quad.keep h4 { color: #60c080 !important; }
+.review-quad.improve { background: rgba(212,168,67,0.05); border: 1px solid rgba(212,168,67,0.2); }
+.review-quad.improve h4 { color: #D4A843 !important; }
+.review-quad.start { background: rgba(96,160,224,0.05); border: 1px solid rgba(96,160,224,0.2); }
+.review-quad.start h4 { color: #60a0e0 !important; }
+.review-quad.stop { background: rgba(224,96,96,0.05); border: 1px solid rgba(224,96,96,0.2); }
+.review-quad.stop h4 { color: #e06060 !important; }
+.review-quick { border-radius: 0.5rem; padding: 1.25rem 1.5rem; border-left: 3px solid #8A7030; background: #0D0D22; }
+.review-quick h4 { font-size: 0.92rem; margin-bottom: 0.5rem; font-weight: 700; }
+.review-quick .quad-hint { font-size: 0.72rem; color: #8080A0; margin-bottom: 0.6rem; }
+.review-quick textarea {
+  width: 100%; background: #080812; border: 1px solid #1A1A3A;
+  border-radius: 0.5rem; color: #C8C8D8;
+  font-family: "Nunito", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 0.82rem; padding: 0.75rem; resize: vertical; outline: none;
+  line-height: 1.6; min-height: 60px;
+}
+.review-quick.highlight { background: rgba(96,192,128,0.05); border: 1px solid rgba(96,192,128,0.2); border-left: 3px solid #60c080; }
+.review-quick.highlight h4 { color: #60c080 !important; }
+.review-quick.polish { background: rgba(212,168,67,0.05); border: 1px solid rgba(212,168,67,0.2); border-left: 3px solid #D4A843; }
+.review-quick.polish h4 { color: #D4A843 !important; }
+.review-quick.trynext { background: rgba(96,160,224,0.05); border: 1px solid rgba(96,160,224,0.2); border-left: 3px solid #60a0e0; }
+.review-quick.trynext h4 { color: #60a0e0 !important; }
+.review-meta-row { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.review-meta-row input, .review-meta-row select {
+  background: #080812; border: 1px solid #1A1A3A;
+  border-radius: 0.5rem; color: #C8C8D8;
+  font-family: "Nunito", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 0.82rem; padding: 0.6rem 0.85rem; outline: none;
+}
+
+@media (max-width: 576px) {
   .review-quad-grid { grid-template-columns: 1fr; }
   .review-meta-row { flex-direction: column; }
+  .dim-scores { grid-template-columns: 1fr; }
+  .quiz-item { flex-direction: column; align-items: flex-start; }
+}
+
+/* ===== About ===== */
+.about-container { max-width: 680px; margin: 0 auto; }
+.about-card { background: #0D0D22; border: 1px solid #1A1A3A; border-radius: 0.5rem; padding: 1.75rem; margin-bottom: 1.5rem; }
+.about-card.personal { border-left: 3px solid #D4A843; }
+.about-card.brand { border-left: 3px solid #d4546a; }
+.about-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.1rem; }
+.about-avatar {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: linear-gradient(135deg, #D4A843, #B8912E);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; font-weight: 700; color: #000000; flex-shrink: 0;
+}
+.about-header-info h3 { font-size: 1.2rem; margin: 0; }
+.about-header-info .about-role { font-size: 0.78rem; color: #8080A0; }
+.about-card p { font-size: 0.88rem; line-height: 1.75; margin: 0 0 0.75rem; }
+.about-motto { font-size: 0.8rem; color: #8A7030; font-style: italic; }
+.ruby-header { display: flex; align-items: center; gap: 0.85rem; margin-bottom: 1.1rem; }
+.ruby-logo { display: flex; gap: 3px; }
+.ruby-logo span { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.76rem; color: #fff; }
+.ruby-r { background: #d4546a; } .ruby-u { background: #e08840; }
+.ruby-b { background: #5da8b8; } .ruby-y { background: #c0a048; }
+.about-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0.6rem 0; }
+.about-tag { font-size: 0.71rem; padding: 0.25rem 0.75rem; border-radius: 14px; background: rgba(255,255,255,0.03); border: 1px solid #1A1A3A; color: #8080A0; }
+.about-contact { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #1A1A3A; }
+.about-contact span { font-size: 0.8rem; color: #8080A0; }
+.about-contact strong { color: #F0F0F8; }
+.about-attribution { text-align: center; padding: 0.5rem 0 1.5rem; font-size: 0.8rem; color: #8080A0; }
+.about-attribution span { color: #8A7030; }
+
+/* ===== FAQ 输入框 ===== */
+#faq-input:focus { border-color: #D4A843 !important; box-shadow: 0 0 0 3px rgba(212,168,67,0.1) !important; }
+
+/* ===== 滚动条 ===== */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #080812; }
+::-webkit-scrollbar-thumb { background: #1A1A3A; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #8A7030; }
+
+/* ===== 选中文字 ===== */
+::selection { background: rgba(212,168,67,0.25); color: #F0F0F8; }
+
+/* ===== 移动端 ===== */
+@media (max-width: 480px) {
+  html { font-size: 15px; }
+  .masthead { min-height: 20rem; padding: 6rem 0 4rem; }
+  .masthead h1 { font-size: 1.8rem !important; letter-spacing: 0.2rem !important; }
+  .projects-section, .about-section, .contact-section { padding: 3rem 0; }
+  .article-row .art-badge { display: none; }
+  .article-row { padding: 0.7rem 0.7rem; gap: 0.5rem; }
+  .article-row .art-title { font-size: 0.9rem; }
+  .card { padding: 1.25rem; }
 }
 </style>
 </head>
-<body>
+<body id="page-top">
 
 <div class="app" id="app">
 
-  <!-- ==================== 导航栏 ==================== -->
-  <nav class="navbar">
-    <div class="navbar-inner">
-      <div class="nav-brand" onclick="navTo('home')">即兴戏剧<span> · </span>入门到高阶</div>
-      <label class="nav-toggle" for="nav-menu-check" aria-label="菜单">☰</label>
-      <input type="checkbox" id="nav-menu-check" onclick="void(0)">
-      <div class="nav-links" id="nav-links">
-        <a data-nav="module0" onclick="navTo('module0');document.getElementById('nav-menu-check').checked=false">认识即兴</a>
-        <a data-nav="module1" onclick="navTo('module1');document.getElementById('nav-menu-check').checked=false">学什么</a>
-        <a data-nav="module2" onclick="navTo('module2');document.getElementById('nav-menu-check').checked=false">怎么学</a>
-        <a data-nav="module3" onclick="navTo('module3');document.getElementById('nav-menu-check').checked=false">游戏库</a>
-        <a data-nav="module4" onclick="navTo('module4');document.getElementById('nav-menu-check').checked=false">演出资源</a>
-        <a data-nav="assess" onclick="navTo('assess');document.getElementById('nav-menu-check').checked=false">能力测评</a>
-        <a data-nav="faq" onclick="navTo('faq');document.getElementById('nav-menu-check').checked=false" title="AI智能问答">💬 问答</a>
-        <a data-nav="review" onclick="navTo('review');document.getElementById('nav-menu-check').checked=false">📋 复盘</a>
-        <a data-nav="about" onclick="navTo('about');document.getElementById('nav-menu-check').checked=false">👤 关于</a>
+  <!-- ==================== 导航栏 — Grayscale #mainNav ==================== -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container px-4 px-lg-5">
+      <a class="navbar-brand" onclick="navTo('home')" style="cursor:pointer;">即兴戏剧<span> · </span>入门到高阶</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ms-auto" id="nav-links">
+          <li class="nav-item"><a class="nav-link" data-nav="module0" onclick="navTo('module0');closeNav()">认识即兴</a></li>
+          <li class="nav-item"><a class="nav-link" data-nav="module1" onclick="navTo('module1');closeNav()">学什么</a></li>
+          <li class="nav-item"><a class="nav-link" data-nav="module2" onclick="navTo('module2');closeNav()">怎么学</a></li>
+          <li class="nav-item"><a class="nav-link" data-nav="module3" onclick="navTo('module3');closeNav()">游戏库</a></li>
+          <li class="nav-item"><a class="nav-link" data-nav="module4" onclick="navTo('module4');closeNav()">演出资源</a></li>
+          <li class="nav-item"><a class="nav-link" data-nav="assess" onclick="navTo('assess');closeNav()">能力测评</a></li>
+          <li class="nav-item"><a class="nav-link" data-nav="faq" onclick="navTo('faq');closeNav()" title="AI智能问答">💬 问答</a></li>
+          <li class="nav-item"><a class="nav-link" data-nav="review" onclick="navTo('review');closeNav()">📋 复盘</a></li>
+          <li class="nav-item"><a class="nav-link" data-nav="about" onclick="navTo('about');closeNav()">👤 关于</a></li>
+        </ul>
       </div>
     </div>
   </nav>
 
   <!-- ==================== 首页 ==================== -->
   <section class="view active" id="view-home">
-    <div class="hero">
-      <h1>即兴戏剧<span class="accent-dot"> · </span>从入门到高阶</h1>
-      <p class="subtitle">从即兴的历史起源到核心技巧，从系统学习路径到 113 个实战游戏 —— 适合零基础新手，也适合有经验的演员精进。</p>
-    </div>
 
-    <details class="quickstart card">
-      <summary>新手上路指南</summary>
-      <div class="qs-grid">
-        <div class="qs-step"><div class="qs-num">①</div><div class="qs-label">从<strong>认识即兴</strong>开始<br>了解即兴是什么、从哪里来</div></div>
-        <div class="qs-step"><div class="qs-num">②</div><div class="qs-label">进入<strong>学什么</strong>与<strong>怎么学</strong><br>系统掌握核心技能</div></div>
-        <div class="qs-step"><div class="qs-num">③</div><div class="qs-label">浏览<strong>游戏库</strong>找练习<br>动手实践，标记进度</div></div>
-      </div>
-      <p style="margin-top:12px;font-size:0.78rem;color:var(--text-dim);line-height:1.6;"><strong>推荐学习顺序：</strong>核心原则 5 篇（自发性 → Yes And → Offer → 聆听 → 拥抱失败）→ 入门阶段 3 篇 → 边学边练 → 进阶阶段 → 高阶内容。读完点右侧 ○ 标记进度，数据存于本地浏览器。</p>
-    </details>
-
-    <div class="home-section-label">📚 学习模块</div>
-    <div class="module-grid home-grid">
-      <div class="card module-card" onclick="navTo('module0')">
-        <div class="module-icon">📖</div>
-        <div class="module-num">模块一</div>
-        <div class="module-title">认识即兴</div>
-        <div class="module-desc">什么是即兴？从意大利到芝加哥再到中国，了解即兴的起源、流派与发展脉络。</div>
-        <div class="module-meta">7 篇文章 · 入门必读</div>
-      </div>
-
-      <div class="card module-card" onclick="navTo('module1')">
-        <div class="module-icon">🎯</div>
-        <div class="module-num">模块二</div>
-        <div class="module-title">即兴戏剧要学什么</div>
-        <div class="module-desc">从自发性到群像戏——掌握即兴戏剧全部核心概念与技巧。</div>
-        <div class="module-meta">7 个主题 · 19 篇文章</div>
-      </div>
-
-      <div class="card module-card" onclick="navTo('module2')">
-        <div class="module-icon">🧭</div>
-        <div class="module-num">模块三</div>
-        <div class="module-title">如何系统学习</div>
-        <div class="module-desc">入门 → 进阶 → 高阶，一条经过验证的即兴戏剧学习路径。</div>
-        <div class="module-meta">3 个阶段 · 12 篇文章</div>
-      </div>
-
-      <div class="card module-card" onclick="navTo('module3')">
-        <div class="module-icon">🎪</div>
-        <div class="module-num">模块四</div>
-        <div class="module-title">即兴游戏库</div>
-        <div class="module-desc">113 个即兴游戏，按能力分类，每个游戏附训练目标与教学提示。</div>
-        <div class="module-meta">8 个分类 · 113 个游戏</div>
-      </div>
-
-      <div class="card module-card" onclick="navTo('module4')">
-        <div class="module-icon">📋</div>
-        <div class="module-num">模块五</div>
-        <div class="module-title">资源与演出</div>
-        <div class="module-desc">练习导航、演出准备、提示词指南与推荐资源——从学习到上台一条龙。</div>
-        <div class="module-meta">6 个板块 · 13 篇文章</div>
-      </div>
-    </div>
-
-    <div class="home-section-label">🛠️ 实用工具</div>
-    <div class="tool-grid">
-      <div class="card tool-card" onclick="navTo('assess')">
-        <div class="tool-icon">🧠</div>
-        <div class="tool-title">即兴能力评估</div>
-        <div class="tool-desc">8 维度 × 30 题，5 分钟测出你的长短板，获取个性化学习建议。</div>
-        <div class="tool-action">开始测评 →</div>
-      </div>
-
-      <div class="card tool-card" onclick="navTo('faq')">
-        <div class="tool-icon">💬</div>
-        <div class="tool-title">即兴教练 FAQ</div>
-        <div class="tool-desc">有关于即兴的问题？搜索全站 110 篇文章，秒出答案。</div>
-        <div class="tool-action">提问 →</div>
-      </div>
-
-      <div class="card tool-card prompt-tool" id="home-prompt-card">
-        <div class="tool-icon">🎯</div>
-        <div class="tool-title">快速开始</div>
-        <div class="tool-desc">场景灵感 & 今日练习，点一下就开始</div>
-        <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:4px;">
-          <div style="flex:1;min-width:180px;">
-            <div style="font-size:0.7rem;color:var(--text-dim);margin-bottom:4px;">🎲 场景灵感</div>
-            <div id="prompt-result-home" style="font-size:0.8rem;color:var(--accent);line-height:1.5;min-height:24px;margin-bottom:6px;"></div>
-            <span class="gen-btn-sm" onclick="event.stopPropagation();generateHomePrompt()" style="font-size:0.76rem;padding:6px 14px;">提示词生成</span>
-            <span class="gen-btn-sm" onclick="event.stopPropagation();copyHomePrompt()" style="font-size:0.76rem;padding:6px 14px;background:transparent;border:1px solid var(--accent);color:var(--accent);margin-left:4px;">📋 复制</span>
-          </div>
-          <div style="flex:1;min-width:180px;border-left:1px solid var(--card-border);padding-left:16px;">
-            <div style="font-size:0.7rem;color:var(--text-dim);margin-bottom:4px;">🔄 今天练什么</div>
-            <div id="practice-result-home" style="font-size:0.8rem;color:var(--text);line-height:1.4;min-height:24px;margin-bottom:6px;"></div>
-            <span class="gen-btn-sm" onclick="event.stopPropagation();randomPracticeHome()" style="font-size:0.76rem;padding:6px 14px;">🔄 换个练习</span>
+    <!-- Masthead — Grayscale 全屏 Hero -->
+    <header class="masthead">
+      <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
+        <div class="d-flex justify-content-center">
+          <div class="text-center">
+            <h1 class="mx-auto my-0">即兴戏剧<span class="accent-dot"> · </span>入门到高阶</h1>
+            <h2 class="text-white-50 mx-auto mt-3 mb-5">从即兴的历史起源到核心技巧，从系统学习路径到 113 个实战游戏<br>适合零基础新手，也适合有经验的演员精进。</h2>
+            <a class="btn btn-primary" href="javascript:void(0)" onclick="document.querySelector('.module-grid').scrollIntoView({behavior:'smooth'})">开始学习</a>
           </div>
         </div>
       </div>
+    </header>
 
-      <div class="card tool-card" onclick="navTo('review')" style="border-left-color:#60c080;">
-        <div class="tool-icon">📋</div>
-        <div class="tool-title">排练/演出复盘</div>
-        <div class="tool-desc">KISS · 三问复盘 · 三点复盘 —— 三种模型，快速记录每次排练演出的收获</div>
-        <div class="tool-action">开始复盘 →</div>
+    <!-- 新手指南 -->
+    <div class="container px-4 px-lg-5" style="margin-top:-3rem;position:relative;z-index:2;">
+      <details class="quickstart">
+        <summary>新手上路指南</summary>
+        <div class="qs-grid">
+          <div class="qs-step"><div class="qs-num">①</div><div class="qs-label">从<strong>认识即兴</strong>开始<br>了解即兴是什么、从哪里来</div></div>
+          <div class="qs-step"><div class="qs-num">②</div><div class="qs-label">进入<strong>学什么</strong>与<strong>怎么学</strong><br>系统掌握核心技能</div></div>
+          <div class="qs-step"><div class="qs-num">③</div><div class="qs-label">浏览<strong>游戏库</strong>找练习<br>动手实践，标记进度</div></div>
+        </div>
+        <p style="margin-top:0.75rem;font-size:0.76rem;color:#8080A0;line-height:1.6;"><strong>推荐学习顺序：</strong>核心原则 5 篇（自发性 → Yes And → Offer → 聆听 → 拥抱失败）→ 入门阶段 3 篇 → 边学边练 → 进阶阶段 → 高阶内容。读完点右侧 ○ 标记进度，数据存于本地浏览器。</p>
+      </details>
+    </div>
+
+    <!-- 模块卡片 — Grayscale Projects Section 风格 -->
+    <section class="projects-section" id="modules">
+      <div class="container px-4 px-lg-5">
+        <div class="home-section-label">学习模块</div>
+        <div class="module-grid home-grid">
+          <div class="module-card" onclick="navTo('module0')">
+            <div class="module-icon">📖</div>
+            <div class="module-num">模块一</div>
+            <div class="module-title">认识即兴</div>
+            <div class="module-desc">什么是即兴？从意大利到芝加哥再到中国，了解即兴的起源、流派与发展脉络。</div>
+            <div class="module-meta">7 篇文章 · 入门必读</div>
+          </div>
+          <div class="module-card" onclick="navTo('module1')">
+            <div class="module-icon">🎯</div>
+            <div class="module-num">模块二</div>
+            <div class="module-title">即兴戏剧要学什么</div>
+            <div class="module-desc">从自发性到群像戏——掌握即兴戏剧全部核心概念与技巧。</div>
+            <div class="module-meta">7 个主题 · 19 篇文章</div>
+          </div>
+          <div class="module-card" onclick="navTo('module2')">
+            <div class="module-icon">🧭</div>
+            <div class="module-num">模块三</div>
+            <div class="module-title">如何系统学习</div>
+            <div class="module-desc">入门 → 进阶 → 高阶，一条经过验证的即兴戏剧学习路径。</div>
+            <div class="module-meta">3 个阶段 · 12 篇文章</div>
+          </div>
+          <div class="module-card" onclick="navTo('module3')">
+            <div class="module-icon">🎪</div>
+            <div class="module-num">模块四</div>
+            <div class="module-title">即兴游戏库</div>
+            <div class="module-desc">113 个即兴游戏，按能力分类，每个游戏附训练目标与教学提示。</div>
+            <div class="module-meta">8 个分类 · 113 个游戏</div>
+          </div>
+          <div class="module-card" onclick="navTo('module4')">
+            <div class="module-icon">📋</div>
+            <div class="module-num">模块五</div>
+            <div class="module-title">资源与演出</div>
+            <div class="module-desc">练习导航、演出准备、提示词指南与推荐资源——从学习到上台一条龙。</div>
+            <div class="module-meta">6 个板块 · 13 篇文章</div>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
 
-    <div class="footer">共 5 个模块 + 4 个工具 · 110+ 篇文章 · 113 个游戏 · 能力测评 · 智能问答 · 快速开始 · 复盘 · 学习进度本地存储 · <a onclick="navTo('about')">关于本站</a></div>
+    <!-- 实用工具 -->
+    <section class="about-section" id="tools">
+      <div class="container px-4 px-lg-5">
+        <div class="home-section-label">实用工具</div>
+        <div class="tool-grid">
+          <div class="tool-card" onclick="navTo('assess')">
+            <div class="tool-icon">🧠</div>
+            <div class="tool-title">即兴能力评估</div>
+            <div class="tool-desc">8 维度 × 30 题，5 分钟测出你的长短板，获取个性化学习建议。</div>
+            <div class="tool-action">开始测评 →</div>
+          </div>
+          <div class="tool-card" onclick="navTo('faq')">
+            <div class="tool-icon">💬</div>
+            <div class="tool-title">即兴教练 FAQ</div>
+            <div class="tool-desc">有关于即兴的问题？搜索全站 109 篇文章，秒出答案。</div>
+            <div class="tool-action">提问 →</div>
+          </div>
+          <div class="tool-card" onclick="navTo('review')" style="border-left-color:#60c080;">
+            <div class="tool-icon">📋</div>
+            <div class="tool-title">排练/演出复盘</div>
+            <div class="tool-desc">KISS · 三问复盘 · 三点复盘 —— 三种模型，快速记录每次排练演出的收获</div>
+            <div class="tool-action">开始复盘 →</div>
+          </div>
+          <div class="tool-card prompt-tool" id="home-prompt-card">
+            <div class="tool-icon">🎯</div>
+            <div class="tool-title">快速开始</div>
+            <div class="tool-desc">场景灵感 & 今日练习，点一下就开始</div>
+            <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:0.25rem;">
+              <div style="flex:1;min-width:180px;">
+                <div style="font-size:0.68rem;color:#8080A0;margin-bottom:0.25rem;">🎲 场景灵感</div>
+                <div id="prompt-result-home" style="font-size:0.78rem;color:#D4A843;line-height:1.5;min-height:24px;margin-bottom:0.35rem;"></div>
+                <span class="gen-btn-sm" onclick="event.stopPropagation();generateHomePrompt()" style="font-size:0.74rem;padding:0.35rem 0.85rem;">提示词生成</span>
+                <span class="gen-btn-sm" onclick="event.stopPropagation();copyHomePrompt()" style="font-size:0.74rem;padding:0.35rem 0.85rem;background:transparent;border:1px solid #D4A843;color:#D4A843;">📋 复制</span>
+              </div>
+              <div style="flex:1;min-width:180px;border-left:1px solid #1A1A3A;padding-left:1rem;">
+                <div style="font-size:0.68rem;color:#8080A0;margin-bottom:0.25rem;">🔄 今天练什么</div>
+                <div id="practice-result-home" style="font-size:0.78rem;color:#C8C8D8;line-height:1.4;min-height:24px;margin-bottom:0.35rem;"></div>
+                <span class="gen-btn-sm" onclick="event.stopPropagation();randomPracticeHome()" style="font-size:0.74rem;padding:0.35rem 0.85rem;">🔄 换个练习</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer bg-black small text-center text-white-50"><div class="container px-4 px-lg-5">共 5 个模块 + 4 个工具 · 110+ 篇文章 · 113 个游戏 · 能力测评 · 智能问答 · 快速开始 · 复盘 · 学习进度本地存储 · <a onclick="navTo('about')">关于本站</a></div></footer>
   </section>
 
-  <!-- ==================== 模块零：认识即兴（新增） ==================== -->
+  <!-- ==================== 模块零：认识即兴 ==================== -->
   <section class="view" id="view-module0">
-    <div class="back-link" onclick="navTo('home')">← 返回首页</div>
-    <div class="list-header">
-      <h2>认识即兴</h2>
-      <p class="list-subtitle">从即兴的起源到在中国的发展，建立对即兴戏剧的完整认知</p>
-      <p class="list-hint">点击右侧 ○ 标记已读</p>
-    </div>
-
-    <div class="subtopic-group">
-      <div class="subtopic-title">即兴基础认知</div>
-      <div class="article-row" onclick="openArticle('m0-1')"><div class="art-dot"></div><div class="art-title">什么是即兴戏剧 —— 无剧本、即时创作、团队协作的表演艺术</div><span class="art-badge">入门</span><div class="art-check" id="check-m0-1" onclick="event.stopPropagation();toggleCheck('m0-1')"></div></div>
-      <div class="article-row" onclick="openArticle('m0-6')"><div class="art-dot"></div><div class="art-title">即兴的种类：短即兴、长即兴与应用即兴 —— 一张图看懂即兴的全貌</div><span class="art-badge">入门</span><div class="art-check" id="check-m0-6" onclick="event.stopPropagation();toggleCheck('m0-6')"></div></div>
-      <div class="article-row" onclick="openArticle('m0-7')"><div class="art-dot"></div><div class="art-title">应用即兴：即兴不止在舞台上 —— 当 Yes And 走进企业和课堂</div><span class="art-badge">入门</span><div class="art-check" id="check-m0-7" onclick="event.stopPropagation();toggleCheck('m0-7')"></div></div>
-    </div>
-
-    <div class="subtopic-group">
-      <div class="subtopic-title">国外即兴发展史</div>
-      <div class="article-row" onclick="openArticle('m0-2')"><div class="art-dot"></div><div class="art-title">即兴的起源：从意大利到芝加哥 —— Commedia dell'arte → Spolin → Second City</div><span class="art-badge">历史</span><div class="art-check" id="check-m0-2" onclick="event.stopPropagation();toggleCheck('m0-2')"></div></div>
-      <div class="article-row" onclick="openArticle('m0-3')"><div class="art-dot"></div><div class="art-title">Keith Johnstone 与 Theatresports —— 英加流派、地位理论、即兴竞技的诞生</div><span class="art-badge">历史</span><div class="art-check" id="check-m0-3" onclick="event.stopPropagation();toggleCheck('m0-3')"></div></div>
-      <div class="article-row" onclick="openArticle('m0-4')"><div class="art-dot"></div><div class="art-title">Del Close 与长即兴的诞生 —— 芝加哥流派、Harold 格式、iO 与 UCB</div><span class="art-badge">历史</span><div class="art-check" id="check-m0-4" onclick="event.stopPropagation();toggleCheck('m0-4')"></div></div>
-    </div>
-
-    <div class="subtopic-group">
-      <div class="subtopic-title">国内即兴发展</div>
-      <div class="article-row" onclick="openArticle('m0-5')"><div class="art-dot"></div><div class="art-title">即兴在中国的发展 —— 从传入到繁荣，中国即兴的二十年</div><span class="art-badge">历史</span><div class="art-check" id="check-m0-5" onclick="event.stopPropagation();toggleCheck('m0-5')"></div></div>
-    </div>
+    <section class="projects-section">
+      <div class="container px-4 px-lg-5">
+        <div class="back-link" onclick="navTo('home')">← 返回首页</div>
+        <div class="list-header">
+          <h2>认识即兴</h2>
+          <p class="list-subtitle">从即兴的起源到在中国的发展，建立对即兴戏剧的完整认知</p>
+          <p class="list-hint">点击右侧 ○ 标记已读</p>
+        </div>
+        <div class="subtopic-group">
+          <div class="subtopic-title">即兴基础认知</div>
+          <div class="article-row" onclick="openArticle('m0-1')"><div class="art-dot"></div><div class="art-title">什么是即兴戏剧 —— 无剧本、即时创作、团队协作的表演艺术</div><span class="art-badge">入门</span><div class="art-check" id="check-m0-1" onclick="event.stopPropagation();toggleCheck('m0-1')"></div></div>
+          <div class="article-row" onclick="openArticle('m0-6')"><div class="art-dot"></div><div class="art-title">即兴的种类：短即兴、长即兴与应用即兴 —— 一张图看懂即兴的全貌</div><span class="art-badge">入门</span><div class="art-check" id="check-m0-6" onclick="event.stopPropagation();toggleCheck('m0-6')"></div></div>
+          <div class="article-row" onclick="openArticle('m0-7')"><div class="art-dot"></div><div class="art-title">应用即兴：即兴不止在舞台上 —— 当 Yes And 走进企业和课堂</div><span class="art-badge">入门</span><div class="art-check" id="check-m0-7" onclick="event.stopPropagation();toggleCheck('m0-7')"></div></div>
+        </div>
+        <div class="subtopic-group">
+          <div class="subtopic-title">国外即兴发展史</div>
+          <div class="article-row" onclick="openArticle('m0-2')"><div class="art-dot"></div><div class="art-title">即兴的起源：从意大利到芝加哥 —— Commedia dell'arte → Spolin → Second City</div><span class="art-badge">历史</span><div class="art-check" id="check-m0-2" onclick="event.stopPropagation();toggleCheck('m0-2')"></div></div>
+          <div class="article-row" onclick="openArticle('m0-3')"><div class="art-dot"></div><div class="art-title">Keith Johnstone 与 Theatresports —— 英加流派、地位理论、即兴竞技的诞生</div><span class="art-badge">历史</span><div class="art-check" id="check-m0-3" onclick="event.stopPropagation();toggleCheck('m0-3')"></div></div>
+          <div class="article-row" onclick="openArticle('m0-4')"><div class="art-dot"></div><div class="art-title">Del Close 与长即兴的诞生 —— 芝加哥流派、Harold 格式、iO 与 UCB</div><span class="art-badge">历史</span><div class="art-check" id="check-m0-4" onclick="event.stopPropagation();toggleCheck('m0-4')"></div></div>
+        </div>
+        <div class="subtopic-group">
+          <div class="subtopic-title">国内即兴发展</div>
+          <div class="article-row" onclick="openArticle('m0-5')"><div class="art-dot"></div><div class="art-title">即兴在中国的发展 —— 从传入到繁荣，中国即兴的二十年</div><span class="art-badge">历史</span><div class="art-check" id="check-m0-5" onclick="event.stopPropagation();toggleCheck('m0-5')"></div></div>
+        </div>
+      </div>
+    </section>
   </section>
 
-  <!-- ==================== 模块一（原模块一）：即兴戏剧要学什么 ==================== -->
+  <!-- ==================== 模块一：即兴戏剧要学什么 ==================== -->
   <section class="view" id="view-module1">
-    <div class="back-link" onclick="navTo('home')">← 返回首页</div>
-    <div class="list-header">
-      <h2>即兴戏剧要学什么</h2>
-      <p class="list-subtitle">从核心原则到高阶技巧，构建完整的即兴戏剧知识体系</p>
-      <p class="list-hint">点击右侧 ○ 标记已读</p>
-    </div>
-
-    <div class="subtopic-group">
-      <div class="subtopic-title">核心原则</div>
-      <div class="article-row" onclick="openArticle('m1-1')"><div class="art-dot"></div><div class="art-title">自发性：即兴的源泉 —— 重新激活你与生俱来的创造本能</div><span class="art-badge">基础</span><div class="art-check" id="check-m1-1" onclick="event.stopPropagation();toggleCheck('m1-1')"></div></div>
-      <div class="article-row" onclick="openArticle('m1-2')"><div class="art-dot"></div><div class="art-title">Yes, And：接纳与添加 —— 即兴的第一行为准则</div><span class="art-badge">基础</span><div class="art-check" id="check-m1-2" onclick="event.stopPropagation();toggleCheck('m1-2')"></div></div>
-      <div class="article-row" onclick="openArticle('m1-3')"><div class="art-dot"></div><div class="art-title">Offer 与 Endowment：即兴的最小单位 —— 如何发出与接收舞台上的每一个信号</div><span class="art-badge">基础</span><div class="art-check" id="check-m1-3" onclick="event.stopPropagation();toggleCheck('m1-3')"></div></div>
-      <div class="article-row" onclick="openArticle('m1-4')"><div class="art-dot"></div><div class="art-title">积极聆听：听见而非等待 —— 场景中最重要的能力</div><span class="art-badge">基础</span><div class="art-check" id="check-m1-4" onclick="event.stopPropagation();toggleCheck('m1-4')"></div></div>
-      <div class="article-row" onclick="openArticle('m1-5')"><div class="art-dot"></div><div class="art-title">拥抱失败：活在当下 —— 把"错误"变成礼物</div><span class="art-badge">基础</span><div class="art-check" id="check-m1-5" onclick="event.stopPropagation();toggleCheck('m1-5')"></div></div>
-    </div>
-
-    <div class="subtopic-group">
-      <div class="subtopic-title">角色塑造</div>
-      <div class="article-row" onclick="openArticle('m1-6')"><div class="art-dot"></div><div class="art-title">30 秒建立角色 —— 用身体和声音快速进入人物</div><span class="art-badge">基础</span><div class="art-check" id="check-m1-6" onclick="event.stopPropagation();toggleCheck('m1-6')"></div></div>
-      <div class="article-row" onclick="openArticle('m1-7')"><div class="art-dot"></div><div class="art-title">身体语言、声音与展示而非讲述 —— 让你的行动替角色说话</div><span class="art-badge">进阶</span><div class="art-check" id="check-m1-7" onclick="event.stopPropagation();toggleCheck('m1-7')"></div></div>
-    </div>
-
-    <div class="subtopic-group">
-      <div class="subtopic-title">地位</div>
-      <div class="article-row" onclick="openArticle('m1-8')"><div class="art-dot"></div><div class="art-title">地位的高低：即兴中的权力游戏 —— 理解并运用地位变化推动场景</div><span class="art-badge">进阶</span><div class="art-check" id="check-m1-8" onclick="event.stopPropagation();toggleCheck('m1-8')"></div></div>
-    </div>
-
-    <div class="subtopic-group">
-      <div class="subtopic-title">空间与物件</div>
-      <div class="article-row" onclick="openArticle('m1-9')"><div class="art-dot"></div><div class="art-title">无实物表演与空间构建 —— 让观众"看到"不存在的世界</div><span class="art-badge">基础</span><div class="art-check" id="check-m1-9" onclick="event.stopPropagation();toggleCheck('m1-9')"></div></div>
-    </div>
-
-    <div class="subtopic-group">
-      <div class="subtopic-title">情绪与能量</div>
-      <div class="article-row" onclick="openArticle('m1-10')"><div class="art-dot"></div><div class="art-title">情绪表达与快速转换 —— 用情绪而不是台词驱动场景</div><span class="art-badge">进阶</span><div class="art-check" id="check-m1-10" onclick="event.stopPropagation();toggleCheck('m1-10')"></div></div>
-      <div class="article-row" onclick="openArticle('m1-11')"><div class="art-dot"></div><div class="art-title">能量的高低与节奏 —— 控制场景张力的秘密</div><span class="art-badge">进阶</span><div class="art-check" id="check-m1-11" onclick="event.stopPropagation();toggleCheck('m1-11')"></div></div>
-    </div>
-
-    <div class="subtopic-group">
-      <div class="subtopic-title">场景与叙事</div>
-      <div class="article-row" onclick="openArticle('m1-12')"><div class="art-dot"></div><div class="art-title">CROW：场景的骨架 —— 角色·关系·目标·地点四要素</div><span class="art-badge">基础</span><div class="art-check" id="check-m1-12" onclick="event.stopPropagation();toggleCheck('m1-12')"></div></div>
-      <div class="article-row" onclick="openArticle('m1-13')"><div class="art-dot"></div><div class="art-title">找到"游戏"并升番 —— 即兴喜剧中制造笑声的核心技巧</div><span class="art-badge">进阶</span><div class="art-check" id="check-m1-13" onclick="event.stopPropagation();toggleCheck('m1-13')"></div></div>
-    </div>
-
-    <div class="subtopic-group">
-      <div class="subtopic-title">高阶概念</div>
-      <div class="article-row" onclick="openArticle('m1-14')"><div class="art-dot"></div><div class="art-title">长即兴格式简介 —— 从短游戏到完整即兴演出的跨越</div><span class="art-badge">高阶</span><div class="art-check" id="check-m1-14" onclick="event.stopPropagation();toggleCheck('m1-14')"></div></div>
-      <div class="article-row" onclick="openArticle('m1-15')"><div class="art-dot"></div><div class="art-title">团体意识与群像戏 —— 不只做最好的自己，做最好的团队</div><span class="art-badge">高阶</span><div class="art-check" id="check-m1-15" onclick="event.stopPropagation();toggleCheck('m1-15')"></div></div>
-      <div class="article-row" onclick="openArticle('m1-16')"><div class="art-dot"></div><div class="art-title">音乐即兴：当场景变成歌曲 —— 用旋律拓展即兴表达的边界</div><span class="art-badge">高阶</span><div class="art-check" id="check-m1-16" onclick="event.stopPropagation();toggleCheck('m1-16')"></div></div>
-      <div class="article-row" onclick="openArticle('m1-17')"><div class="art-dot"></div><div class="art-title">类型即兴：驾驭不同风格的场景 —— 从恐怖片到莎士比亚</div><span class="art-badge">高阶</span><div class="art-check" id="check-m1-17" onclick="event.stopPropagation();toggleCheck('m1-17')"></div></div>
-      <div class="article-row" onclick="openArticle('m1-18')"><div class="art-dot"></div><div class="art-title">竞技即兴与 Theatresports —— 当即兴变成比赛</div><span class="art-badge">高阶</span><div class="art-check" id="check-m1-18" onclick="event.stopPropagation();toggleCheck('m1-18')"></div></div>
-      <div class="article-row" onclick="openArticle('m1-19')"><div class="art-dot"></div><div class="art-title">双人长即兴：两个人的无限可能 —— 当舞台上只有你和唯一的伙伴</div><span class="art-badge">高阶</span><div class="art-check" id="check-m1-19" onclick="event.stopPropagation();toggleCheck('m1-19')"></div></div>
-    </div>
+    <section class="projects-section">
+      <div class="container px-4 px-lg-5">
+        <div class="back-link" onclick="navTo('home')">← 返回首页</div>
+        <div class="list-header">
+          <h2>即兴戏剧要学什么</h2>
+          <p class="list-subtitle">从核心原则到高阶技巧，构建完整的即兴戏剧知识体系</p>
+          <p class="list-hint">点击右侧 ○ 标记已读</p>
+        </div>
+        <div class="subtopic-group">
+          <div class="subtopic-title">核心原则</div>
+          <div class="article-row" onclick="openArticle('m1-1')"><div class="art-dot"></div><div class="art-title">自发性：即兴的源泉 —— 重新激活你与生俱来的创造本能</div><span class="art-badge">基础</span><div class="art-check" id="check-m1-1" onclick="event.stopPropagation();toggleCheck('m1-1')"></div></div>
+          <div class="article-row" onclick="openArticle('m1-2')"><div class="art-dot"></div><div class="art-title">Yes, And：接纳与添加 —— 即兴的第一行为准则</div><span class="art-badge">基础</span><div class="art-check" id="check-m1-2" onclick="event.stopPropagation();toggleCheck('m1-2')"></div></div>
+          <div class="article-row" onclick="openArticle('m1-3')"><div class="art-dot"></div><div class="art-title">Offer 与 Endowment：即兴的最小单位 —— 如何发出与接收舞台上的每一个信号</div><span class="art-badge">基础</span><div class="art-check" id="check-m1-3" onclick="event.stopPropagation();toggleCheck('m1-3')"></div></div>
+          <div class="article-row" onclick="openArticle('m1-4')"><div class="art-dot"></div><div class="art-title">积极聆听：听见而非等待 —— 场景中最重要的能力</div><span class="art-badge">基础</span><div class="art-check" id="check-m1-4" onclick="event.stopPropagation();toggleCheck('m1-4')"></div></div>
+          <div class="article-row" onclick="openArticle('m1-5')"><div class="art-dot"></div><div class="art-title">拥抱失败：活在当下 —— 把"错误"变成礼物</div><span class="art-badge">基础</span><div class="art-check" id="check-m1-5" onclick="event.stopPropagation();toggleCheck('m1-5')"></div></div>
+        </div>
+        <div class="subtopic-group">
+          <div class="subtopic-title">角色塑造</div>
+          <div class="article-row" onclick="openArticle('m1-6')"><div class="art-dot"></div><div class="art-title">30 秒建立角色 —— 用身体和声音快速进入人物</div><span class="art-badge">基础</span><div class="art-check" id="check-m1-6" onclick="event.stopPropagation();toggleCheck('m1-6')"></div></div>
+          <div class="article-row" onclick="openArticle('m1-7')"><div class="art-dot"></div><div class="art-title">身体语言、声音与展示而非讲述 —— 让你的行动替角色说话</div><span class="art-badge">进阶</span><div class="art-check" id="check-m1-7" onclick="event.stopPropagation();toggleCheck('m1-7')"></div></div>
+        </div>
+        <div class="subtopic-group">
+          <div class="subtopic-title">地位</div>
+          <div class="article-row" onclick="openArticle('m1-8')"><div class="art-dot"></div><div class="art-title">地位的高低：即兴中的权力游戏 —— 理解并运用地位变化推动场景</div><span class="art-badge">进阶</span><div class="art-check" id="check-m1-8" onclick="event.stopPropagation();toggleCheck('m1-8')"></div></div>
+        </div>
+        <div class="subtopic-group">
+          <div class="subtopic-title">空间与物件</div>
+          <div class="article-row" onclick="openArticle('m1-9')"><div class="art-dot"></div><div class="art-title">无实物表演与空间构建 —— 让观众"看到"不存在的世界</div><span class="art-badge">基础</span><div class="art-check" id="check-m1-9" onclick="event.stopPropagation();toggleCheck('m1-9')"></div></div>
+        </div>
+        <div class="subtopic-group">
+          <div class="subtopic-title">情绪与能量</div>
+          <div class="article-row" onclick="openArticle('m1-10')"><div class="art-dot"></div><div class="art-title">情绪表达与快速转换 —— 用情绪而不是台词驱动场景</div><span class="art-badge">进阶</span><div class="art-check" id="check-m1-10" onclick="event.stopPropagation();toggleCheck('m1-10')"></div></div>
+          <div class="article-row" onclick="openArticle('m1-11')"><div class="art-dot"></div><div class="art-title">能量的高低与节奏 —— 控制场景张力的秘密</div><span class="art-badge">进阶</span><div class="art-check" id="check-m1-11" onclick="event.stopPropagation();toggleCheck('m1-11')"></div></div>
+        </div>
+        <div class="subtopic-group">
+          <div class="subtopic-title">场景与叙事</div>
+          <div class="article-row" onclick="openArticle('m1-12')"><div class="art-dot"></div><div class="art-title">CROW：场景的骨架 —— 角色·关系·目标·地点四要素</div><span class="art-badge">基础</span><div class="art-check" id="check-m1-12" onclick="event.stopPropagation();toggleCheck('m1-12')"></div></div>
+          <div class="article-row" onclick="openArticle('m1-13')"><div class="art-dot"></div><div class="art-title">找到"游戏"并升番 —— 即兴喜剧中制造笑声的核心技巧</div><span class="art-badge">进阶</span><div class="art-check" id="check-m1-13" onclick="event.stopPropagation();toggleCheck('m1-13')"></div></div>
+        </div>
+        <div class="subtopic-group">
+          <div class="subtopic-title">高阶概念</div>
+          <div class="article-row" onclick="openArticle('m1-14')"><div class="art-dot"></div><div class="art-title">长即兴格式简介 —— 从短游戏到完整即兴演出的跨越</div><span class="art-badge">高阶</span><div class="art-check" id="check-m1-14" onclick="event.stopPropagation();toggleCheck('m1-14')"></div></div>
+          <div class="article-row" onclick="openArticle('m1-15')"><div class="art-dot"></div><div class="art-title">团体意识与群像戏 —— 不只做最好的自己，做最好的团队</div><span class="art-badge">高阶</span><div class="art-check" id="check-m1-15" onclick="event.stopPropagation();toggleCheck('m1-15')"></div></div>
+          <div class="article-row" onclick="openArticle('m1-16')"><div class="art-dot"></div><div class="art-title">音乐即兴：当场景变成歌曲 —— 用旋律拓展即兴表达的边界</div><span class="art-badge">高阶</span><div class="art-check" id="check-m1-16" onclick="event.stopPropagation();toggleCheck('m1-16')"></div></div>
+          <div class="article-row" onclick="openArticle('m1-17')"><div class="art-dot"></div><div class="art-title">类型即兴：驾驭不同风格的场景 —— 从恐怖片到莎士比亚</div><span class="art-badge">高阶</span><div class="art-check" id="check-m1-17" onclick="event.stopPropagation();toggleCheck('m1-17')"></div></div>
+          <div class="article-row" onclick="openArticle('m1-18')"><div class="art-dot"></div><div class="art-title">竞技即兴与 Theatresports —— 当即兴变成比赛</div><span class="art-badge">高阶</span><div class="art-check" id="check-m1-18" onclick="event.stopPropagation();toggleCheck('m1-18')"></div></div>
+          <div class="article-row" onclick="openArticle('m1-19')"><div class="art-dot"></div><div class="art-title">双人长即兴：两个人的无限可能 —— 当舞台上只有你和唯一的伙伴</div><span class="art-badge">高阶</span><div class="art-check" id="check-m1-19" onclick="event.stopPropagation();toggleCheck('m1-19')"></div></div>
+        </div>
+      </div>
+    </section>
   </section>
 
-  <!-- ==================== 模块二（原模块二）：如何系统学习 ==================== -->
+  <!-- ==================== 模块二：如何系统学习 ==================== -->
   <section class="view" id="view-module2">
-    <div class="back-link" onclick="navTo('home')">← 返回首页</div>
-    <div class="list-header">
-      <h2>如何系统学习</h2>
-      <p class="list-subtitle">入门 → 进阶 → 高阶，一条循序渐进的即兴学习路径</p>
-      <p class="list-hint">点击右侧 ○ 标记已读</p>
-    </div>
-
-    <div class="subtopic-group">
-      <div class="subtopic-title">入门阶段</div>
-      <div class="article-row" onclick="openArticle('m2-1')"><div class="art-dot"></div><div class="art-title">破冰与信任建立 —— 即兴表演团体的第一步</div><span class="art-badge">入门</span><div class="art-check" id="check-m2-1" onclick="event.stopPropagation();toggleCheck('m2-1')"></div></div>
-      <div class="article-row" onclick="openArticle('m2-2')"><div class="art-dot"></div><div class="art-title">初学者的第一个即兴游戏 —— 从哪里开始玩</div><span class="art-badge">入门</span><div class="art-check" id="check-m2-2" onclick="event.stopPropagation();toggleCheck('m2-2')"></div></div>
-      <div class="article-row" onclick="openArticle('m2-3')"><div class="art-dot"></div><div class="art-title">常见误区与心态 —— 初学者最容易踩的五个坑</div><span class="art-badge">入门</span><div class="art-check" id="check-m2-3" onclick="event.stopPropagation();toggleCheck('m2-3')"></div></div>
-    </div>
-
-    <div class="subtopic-group">
-      <div class="subtopic-title">进阶阶段</div>
-      <div class="article-row" onclick="openArticle('m2-4')"><div class="art-dot"></div><div class="art-title">让场景变深的技巧 —— 从表面冲突到真正的戏剧张力</div><span class="art-badge">进阶</span><div class="art-check" id="check-m2-4" onclick="event.stopPropagation();toggleCheck('m2-4')"></div></div>
-      <div class="article-row" onclick="openArticle('m2-5')"><div class="art-dot"></div><div class="art-title">拓展角色宽度 —— 跳出舒适区，尝试更多角色类型</div><span class="art-badge">进阶</span><div class="art-check" id="check-m2-5" onclick="event.stopPropagation();toggleCheck('m2-5')"></div></div>
-      <div class="article-row" onclick="openArticle('m2-6')"><div class="art-dot"></div><div class="art-title">进阶即兴游戏精选 —— 推荐给有基础玩家的游戏清单</div><span class="art-badge">进阶</span><div class="art-check" id="check-m2-6" onclick="event.stopPropagation();toggleCheck('m2-6')"></div></div>
-      <div class="article-row" onclick="openArticle('m2-7')"><div class="art-dot"></div><div class="art-title">场景编辑技巧：何时切入与切出 —— 即兴演出的"导演思维"</div><span class="art-badge">进阶</span><div class="art-check" id="check-m2-7" onclick="event.stopPropagation();toggleCheck('m2-7')"></div></div>
-      <div class="article-row" onclick="openArticle('m2-8')"><div class="art-dot"></div><div class="art-title">地位与关系在场景中的运用 —— 用地位变化让场景活起来</div><span class="art-badge">进阶</span><div class="art-check" id="check-m2-8" onclick="event.stopPropagation();toggleCheck('m2-8')"></div></div>
-    </div>
-
-    <div class="subtopic-group">
-      <div class="subtopic-title">高阶阶段</div>
-      <div class="article-row" onclick="openArticle('m2-9')"><div class="art-dot"></div><div class="art-title">长即兴格式实操 —— 如何驾驭 30 分钟以上的即兴演出</div><span class="art-badge">高阶</span><div class="art-check" id="check-m2-9" onclick="event.stopPropagation();toggleCheck('m2-9')"></div></div>
-      <div class="article-row" onclick="openArticle('m2-10')"><div class="art-dot"></div><div class="art-title">建立个人表演风格 —— 找到属于你自己的即兴声音</div><span class="art-badge">高阶</span><div class="art-check" id="check-m2-10" onclick="event.stopPropagation();toggleCheck('m2-10')"></div></div>
-      <div class="article-row" onclick="openArticle('m2-11')"><div class="art-dot"></div><div class="art-title">带领即兴团队的方法 —— 从演员到带领者的角色转变</div><span class="art-badge">高阶</span><div class="art-check" id="check-m2-11" onclick="event.stopPropagation();toggleCheck('m2-11')"></div></div>
-      <div class="article-row" onclick="openArticle('m2-12')"><div class="art-dot"></div><div class="art-title">即兴与剧本创作的交叉 —— 用即兴方法开发剧本与角色</div><span class="art-badge">高阶</span><div class="art-check" id="check-m2-12" onclick="event.stopPropagation();toggleCheck('m2-12')"></div></div>
-    </div>
+    <section class="projects-section">
+      <div class="container px-4 px-lg-5">
+        <div class="back-link" onclick="navTo('home')">← 返回首页</div>
+        <div class="list-header">
+          <h2>如何系统学习</h2>
+          <p class="list-subtitle">入门 → 进阶 → 高阶，一条循序渐进的即兴学习路径</p>
+          <p class="list-hint">点击右侧 ○ 标记已读</p>
+        </div>
+        <div class="subtopic-group">
+          <div class="subtopic-title">入门阶段</div>
+          <div class="article-row" onclick="openArticle('m2-1')"><div class="art-dot"></div><div class="art-title">破冰与信任建立 —— 即兴表演团体的第一步</div><span class="art-badge">入门</span><div class="art-check" id="check-m2-1" onclick="event.stopPropagation();toggleCheck('m2-1')"></div></div>
+          <div class="article-row" onclick="openArticle('m2-2')"><div class="art-dot"></div><div class="art-title">初学者的第一个即兴游戏 —— 从哪里开始玩</div><span class="art-badge">入门</span><div class="art-check" id="check-m2-2" onclick="event.stopPropagation();toggleCheck('m2-2')"></div></div>
+          <div class="article-row" onclick="openArticle('m2-3')"><div class="art-dot"></div><div class="art-title">常见误区与心态 —— 初学者最容易踩的五个坑</div><span class="art-badge">入门</span><div class="art-check" id="check-m2-3" onclick="event.stopPropagation();toggleCheck('m2-3')"></div></div>
+        </div>
+        <div class="subtopic-group">
+          <div class="subtopic-title">进阶阶段</div>
+          <div class="article-row" onclick="openArticle('m2-4')"><div class="art-dot"></div><div class="art-title">让场景变深的技巧 —— 从表面冲突到真正的戏剧张力</div><span class="art-badge">进阶</span><div class="art-check" id="check-m2-4" onclick="event.stopPropagation();toggleCheck('m2-4')"></div></div>
+          <div class="article-row" onclick="openArticle('m2-5')"><div class="art-dot"></div><div class="art-title">拓展角色宽度 —— 跳出舒适区，尝试更多角色类型</div><span class="art-badge">进阶</span><div class="art-check" id="check-m2-5" onclick="event.stopPropagation();toggleCheck('m2-5')"></div></div>
+          <div class="article-row" onclick="openArticle('m2-6')"><div class="art-dot"></div><div class="art-title">进阶即兴游戏精选 —— 推荐给有基础玩家的游戏清单</div><span class="art-badge">进阶</span><div class="art-check" id="check-m2-6" onclick="event.stopPropagation();toggleCheck('m2-6')"></div></div>
+          <div class="article-row" onclick="openArticle('m2-7')"><div class="art-dot"></div><div class="art-title">场景编辑技巧：何时切入与切出 —— 即兴演出的"导演思维"</div><span class="art-badge">进阶</span><div class="art-check" id="check-m2-7" onclick="event.stopPropagation();toggleCheck('m2-7')"></div></div>
+          <div class="article-row" onclick="openArticle('m2-8')"><div class="art-dot"></div><div class="art-title">地位与关系在场景中的运用 —— 用地位变化让场景活起来</div><span class="art-badge">进阶</span><div class="art-check" id="check-m2-8" onclick="event.stopPropagation();toggleCheck('m2-8')"></div></div>
+        </div>
+        <div class="subtopic-group">
+          <div class="subtopic-title">高阶阶段</div>
+          <div class="article-row" onclick="openArticle('m2-9')"><div class="art-dot"></div><div class="art-title">长即兴格式实操 —— 如何驾驭 30 分钟以上的即兴演出</div><span class="art-badge">高阶</span><div class="art-check" id="check-m2-9" onclick="event.stopPropagation();toggleCheck('m2-9')"></div></div>
+          <div class="article-row" onclick="openArticle('m2-10')"><div class="art-dot"></div><div class="art-title">建立个人表演风格 —— 找到属于你自己的即兴声音</div><span class="art-badge">高阶</span><div class="art-check" id="check-m2-10" onclick="event.stopPropagation();toggleCheck('m2-10')"></div></div>
+          <div class="article-row" onclick="openArticle('m2-11')"><div class="art-dot"></div><div class="art-title">带领即兴团队的方法 —— 从演员到带领者的角色转变</div><span class="art-badge">高阶</span><div class="art-check" id="check-m2-11" onclick="event.stopPropagation();toggleCheck('m2-11')"></div></div>
+          <div class="article-row" onclick="openArticle('m2-12')"><div class="art-dot"></div><div class="art-title">即兴与剧本创作的交叉 —— 用即兴方法开发剧本与角色</div><span class="art-badge">高阶</span><div class="art-check" id="check-m2-12" onclick="event.stopPropagation();toggleCheck('m2-12')"></div></div>
+        </div>
+      </div>
+    </section>
   </section>
 
-  <!-- ==================== 模块三（新增）：即兴游戏库 ==================== -->
+  <!-- ==================== 模块三：即兴游戏库 ==================== -->
   <section class="view" id="view-module3">
-    <div class="back-link" onclick="navTo('home')">← 返回首页</div>
-    <div class="list-header">
-      <h2>即兴游戏库</h2>
-      <p class="list-subtitle">113 个即兴游戏，按能力分类，每个游戏附训练目标与教学提示</p>
-    </div>
-
-    <div class="game-filters" id="game-filters">
-      <span class="filter-label">类型：</span>
-      <button class="filter-btn active" data-filter="all">全部</button>
-      <button class="filter-btn" data-filter="热身">🔥 热身</button>
-      <button class="filter-btn" data-filter="接纳">🤝 接纳</button>
-      <button class="filter-btn" data-filter="角色">🎭 角色</button>
-      <button class="filter-btn" data-filter="场景">📖 场景</button>
-      <button class="filter-btn" data-filter="地位情绪">⚡ 地位情绪</button>
-      <button class="filter-btn" data-filter="竞技">🏆 竞技</button>
-      <button class="filter-btn" data-filter="语言">📝 语言</button>
-      <button class="filter-btn" data-filter="长即兴">📐 长即兴</button>
-    </div>
-    <div class="game-filters" style="margin-bottom:6px;">
-      <span class="filter-label">人数：</span>
-      <select class="filter-select" id="filter-players" onchange="renderGameList()">
-        <option value="all">不限人数</option>
-        <option value="2">2 人</option>
-        <option value="3-5">3-5 人</option>
-        <option value="6-10">6-10 人</option>
-        <option value="10+">10 人以上</option>
-      </select>
-      <span class="filter-label">难度：</span>
-      <select class="filter-select" id="filter-difficulty" onchange="renderGameList()">
-        <option value="all">不限难度</option>
-        <option value="1">★☆☆ 入门</option>
-        <option value="2">★★☆ 进阶</option>
-        <option value="3">★★★ 挑战</option>
-      </select>
-      <span class="filter-label">用途：</span>
-      <select class="filter-select" id="filter-usage" onchange="renderGameList()">
-        <option value="all">全部用途</option>
-        <option value="performance">🎪 适合演出</option>
-        <option value="training">🎯 训练专用</option>
-        <option value="warmup">🔥 热身破冰</option>
-      </select>
-      <span class="filter-divider"></span>
-      <input type="text" id="game-search" placeholder="🔍 搜索游戏名..." style="width:170px;padding:10px 14px;border-radius:20px;border:1px solid var(--card-border);background:var(--card);color:var(--text);font-size:0.78rem;font-family:var(--font);outline:none;transition:border-color 0.2s;" oninput="renderGameList()">
-      <button class="gen-btn-sm" onclick="randomGame()" style="font-size:0.78rem;padding:6px 14px;">🎲 随机</button>
-    </div>
-    <div class="active-tags" id="active-tags"></div>
-
-    <div class="toolbar-row" style="margin-bottom:8px;">
-      <span class="gen-result-inline" id="gen-result" style="font-size:0.78rem;"></span>
-    </div>
-
-    <div id="game-list"></div>
+    <section class="projects-section">
+      <div class="container px-4 px-lg-5">
+        <div class="back-link" onclick="navTo('home')">← 返回首页</div>
+        <div class="list-header">
+          <h2>即兴游戏库</h2>
+          <p class="list-subtitle">113 个即兴游戏，按能力分类，每个游戏附训练目标与教学提示</p>
+        </div>
+        <div class="game-filters" id="game-filters">
+          <span class="filter-label">类型：</span>
+          <button class="filter-btn active" data-filter="all">全部</button>
+          <button class="filter-btn" data-filter="热身">🔥 热身</button>
+          <button class="filter-btn" data-filter="接纳">🤝 接纳</button>
+          <button class="filter-btn" data-filter="角色">🎭 角色</button>
+          <button class="filter-btn" data-filter="场景">📖 场景</button>
+          <button class="filter-btn" data-filter="地位情绪">⚡ 地位情绪</button>
+          <button class="filter-btn" data-filter="竞技">🏆 竞技</button>
+          <button class="filter-btn" data-filter="语言">📝 语言</button>
+          <button class="filter-btn" data-filter="长即兴">📐 长即兴</button>
+        </div>
+        <div class="game-filters" style="margin-bottom:6px;">
+          <span class="filter-label">人数：</span>
+          <select class="filter-select" id="filter-players" onchange="renderGameList()">
+            <option value="all">不限人数</option>
+            <option value="2">2 人</option>
+            <option value="3-5">3-5 人</option>
+            <option value="6-10">6-10 人</option>
+            <option value="10+">10 人以上</option>
+          </select>
+          <span class="filter-label">难度：</span>
+          <select class="filter-select" id="filter-difficulty" onchange="renderGameList()">
+            <option value="all">不限难度</option>
+            <option value="1">★☆☆ 入门</option>
+            <option value="2">★★☆ 进阶</option>
+            <option value="3">★★★ 挑战</option>
+          </select>
+          <span class="filter-label">用途：</span>
+          <select class="filter-select" id="filter-usage" onchange="renderGameList()">
+            <option value="all">全部用途</option>
+            <option value="performance">🎪 适合演出</option>
+            <option value="training">🎯 训练专用</option>
+            <option value="warmup">🔥 热身破冰</option>
+          </select>
+          <span class="filter-divider"></span>
+          <input type="text" id="game-search" placeholder="🔍 搜索游戏名..." style="width:170px;padding:0.6rem 0.85rem;border-radius:20px;border:1px solid #1A1A3A;background:#0D0D22;color:#C8C8D8;font-size:0.76rem;font-family:var(--bs-font-sans-serif);outline:none;" oninput="renderGameList()">
+          <button class="gen-btn-sm" onclick="randomGame()" style="font-size:0.76rem;padding:0.35rem 0.85rem;">🎲 随机</button>
+        </div>
+        <div class="active-tags" id="active-tags"></div>
+        <div class="toolbar-row" style="margin-bottom:0.5rem;">
+          <span class="gen-result-inline" id="gen-result" style="font-size:0.76rem;"></span>
+        </div>
+        <div id="game-list"></div>
+      </div>
+    </section>
   </section>
 
-  <!-- ==================== 模块四（原模块三扩展）：资源与演出 ==================== -->
+  <!-- ==================== 模块四：资源与演出 ==================== -->
   <section class="view" id="view-module4">
-    <div class="back-link" onclick="navTo('home')">← 返回首页</div>
-    <div class="list-header">
-      <h2>资源与演出</h2>
-      <p class="list-subtitle">练习库、演出准备指南、共学工具与推荐资源</p>
-      <p class="list-hint">点击右侧 ○ 标记已读</p>
-    </div>
-
-    <div class="subtopic-group">
-      <div class="subtopic-title">专项练习（A 类）—— 针对单一技能的精准训练</div>
-      <div class="article-row" onclick="openArticle('m4-1')"><div class="art-dot"></div><div class="art-title">专项练习全集 —— Yes And / 聆听 / 角色 / 空间 / 情绪 / 地位 专项练习</div><span class="art-badge">练习</span><div class="art-check" id="check-m4-1" onclick="event.stopPropagation();toggleCheck('m4-1')"></div></div>
-    </div>
-
-    <div class="subtopic-group">
-      <div class="subtopic-title">融合练习（B 类）—— 综合运用多项技能的场景练习</div>
-      <div class="article-row" onclick="openArticle('m4-2')"><div class="art-dot"></div><div class="art-title">融合练习全集 —— 短场景与长即兴的综合练习方法</div><span class="art-badge">练习</span><div class="art-check" id="check-m4-2" onclick="event.stopPropagation();toggleCheck('m4-2')"></div></div>
-    </div>
-
-    <div class="subtopic-group">
-      <div class="subtopic-title">单人日常练习</div>
-      <div class="article-row" onclick="openArticle('m4-3')"><div class="art-dot"></div><div class="art-title">单人每日练习 —— 不需要伙伴也能提升即兴能力的 6 个方法</div><span class="art-badge">练习</span><div class="art-check" id="check-m4-3" onclick="event.stopPropagation();toggleCheck('m4-3')"></div></div>
-    </div>
-
-    <div class="subtopic-group">
-      <div class="subtopic-title">共学功能</div>
-      <div class="article-row" onclick="openArticle('m4-5')"><div class="art-dot"></div><div class="art-title">小组练习组织指南 —— 如何发起、筹备、带领一次即兴练习局</div><span class="art-badge">工具</span><div class="art-check" id="check-m4-5" onclick="event.stopPropagation();toggleCheck('m4-5')"></div></div>
-      <div class="article-row" onclick="openArticle('m4-6')"><div class="art-dot"></div><div class="art-title">每周练习计划模板 —— 可直接套用的 4 周训练计划</div><span class="art-badge">工具</span><div class="art-check" id="check-m4-6" onclick="event.stopPropagation();toggleCheck('m4-6')"></div></div>
-    </div>
-
-    <div class="subtopic-group">
-      <div class="subtopic-title">演出提示词</div>
-      <div class="article-row" onclick="openArticle('m4-13')"><div class="art-dot"></div><div class="art-title">即兴演出提示词全指南 —— 好提示词 vs 坏提示词，让观众帮你创作</div><span class="art-badge">指南</span><div class="art-check" id="check-m4-13" onclick="event.stopPropagation();toggleCheck('m4-13')"></div></div>
-    </div>
-
-    <div class="subtopic-group">
-      <div class="subtopic-title">演出准备</div>
-      <div class="article-row" onclick="openArticle('m4-7')"><div class="art-dot"></div><div class="art-title">一场即兴演出的准备工作 —— 场地、团队、排练、宣传与心态</div><span class="art-badge">演出</span><div class="art-check" id="check-m4-7" onclick="event.stopPropagation();toggleCheck('m4-7')"></div></div>
-      <div class="article-row" onclick="openArticle('m4-8')"><div class="art-dot"></div><div class="art-title">即兴演出的结构与节奏 —— 从开场到收束的能量曲线设计</div><span class="art-badge">演出</span><div class="art-check" id="check-m4-8" onclick="event.stopPropagation();toggleCheck('m4-8')"></div></div>
-      <div class="article-row" onclick="openArticle('m4-9')"><div class="art-dot"></div><div class="art-title">即兴演出的主持技巧 —— MC 角色、串场与观众互动</div><span class="art-badge">演出</span><div class="art-check" id="check-m4-9" onclick="event.stopPropagation();toggleCheck('m4-9')"></div></div>
-      <div class="article-row" onclick="openArticle('m4-10')"><div class="art-dot"></div><div class="art-title">如何策划一场拼盘演出 —— 游戏混搭、演员轮换与时间管理</div><span class="art-badge">演出</span><div class="art-check" id="check-m4-10" onclick="event.stopPropagation();toggleCheck('m4-10')"></div></div>
-    </div>
-
-    <div class="subtopic-group">
-      <div class="subtopic-title">复盘方法</div>
-      <div class="article-row" onclick="openArticle('m4-14')"><div class="art-dot"></div><div class="art-title">排练与演出的复盘方法论 —— 如何用结构化复盘持续提升</div><span class="art-badge">方法</span><div class="art-check" id="check-m4-14" onclick="event.stopPropagation();toggleCheck('m4-14')"></div></div>
-    </div>
-
-    <div class="subtopic-group">
-      <div class="subtopic-title">推荐资源</div>
-      <div class="article-row" onclick="openArticle('m4-11')"><div class="art-dot"></div><div class="art-title">书单、视频频道与播客 —— 即兴戏剧优质学习资源推荐</div><span class="art-badge">资源</span><div class="art-check" id="check-m4-11" onclick="event.stopPropagation();toggleCheck('m4-11')"></div></div>
-    </div>
-
-    <div class="subtopic-group">
-      <div class="subtopic-title">行动清单</div>
-      <div class="article-row" onclick="openArticle('m4-12')"><div class="art-dot"></div><div class="art-title">每日 15 分钟计划 + 加入社群指南 —— 从今天开始行动</div><span class="art-badge">行动</span><div class="art-check" id="check-m4-12" onclick="event.stopPropagation();toggleCheck('m4-12')"></div></div>
-    </div>
-
-    <div class="card generator" style="margin-top: 28px;">
-      <h3 style="color:var(--text-bright);margin-bottom:6px;">🎲 今日练习随机生成器</h3>
-      <p style="color:var(--text-dim);font-size:0.88rem;margin-bottom:16px;">不知道今天练什么？点一下随机推荐一个练习</p>
-      <button class="gen-btn" onclick="randomPractice()">随机抽取</button>
-      <div class="gen-result" id="gen-result2">点击按钮获取练习建议 →</div>
-    </div>
+    <section class="projects-section">
+      <div class="container px-4 px-lg-5">
+        <div class="back-link" onclick="navTo('home')">← 返回首页</div>
+        <div class="list-header">
+          <h2>资源与演出</h2>
+          <p class="list-subtitle">练习库、演出准备指南、共学工具与推荐资源</p>
+          <p class="list-hint">点击右侧 ○ 标记已读</p>
+        </div>
+        <div class="subtopic-group">
+          <div class="subtopic-title">专项练习（A 类）—— 针对单一技能的精准训练</div>
+          <div class="article-row" onclick="openArticle('m4-1')"><div class="art-dot"></div><div class="art-title">专项练习全集 —— Yes And / 聆听 / 角色 / 空间 / 情绪 / 地位 专项练习</div><span class="art-badge">练习</span><div class="art-check" id="check-m4-1" onclick="event.stopPropagation();toggleCheck('m4-1')"></div></div>
+        </div>
+        <div class="subtopic-group">
+          <div class="subtopic-title">融合练习（B 类）—— 综合运用多项技能的场景练习</div>
+          <div class="article-row" onclick="openArticle('m4-2')"><div class="art-dot"></div><div class="art-title">融合练习全集 —— 短场景与长即兴的综合练习方法</div><span class="art-badge">练习</span><div class="art-check" id="check-m4-2" onclick="event.stopPropagation();toggleCheck('m4-2')"></div></div>
+        </div>
+        <div class="subtopic-group">
+          <div class="subtopic-title">单人日常练习</div>
+          <div class="article-row" onclick="openArticle('m4-3')"><div class="art-dot"></div><div class="art-title">单人每日练习 —— 不需要伙伴也能提升即兴能力的 6 个方法</div><span class="art-badge">练习</span><div class="art-check" id="check-m4-3" onclick="event.stopPropagation();toggleCheck('m4-3')"></div></div>
+        </div>
+        <div class="subtopic-group">
+          <div class="subtopic-title">共学功能</div>
+          <div class="article-row" onclick="openArticle('m4-5')"><div class="art-dot"></div><div class="art-title">小组练习组织指南 —— 如何发起、筹备、带领一次即兴练习局</div><span class="art-badge">工具</span><div class="art-check" id="check-m4-5" onclick="event.stopPropagation();toggleCheck('m4-5')"></div></div>
+          <div class="article-row" onclick="openArticle('m4-6')"><div class="art-dot"></div><div class="art-title">每周练习计划模板 —— 可直接套用的 4 周训练计划</div><span class="art-badge">工具</span><div class="art-check" id="check-m4-6" onclick="event.stopPropagation();toggleCheck('m4-6')"></div></div>
+        </div>
+        <div class="subtopic-group">
+          <div class="subtopic-title">演出提示词</div>
+          <div class="article-row" onclick="openArticle('m4-13')"><div class="art-dot"></div><div class="art-title">即兴演出提示词全指南 —— 好提示词 vs 坏提示词，让观众帮你创作</div><span class="art-badge">指南</span><div class="art-check" id="check-m4-13" onclick="event.stopPropagation();toggleCheck('m4-13')"></div></div>
+        </div>
+        <div class="subtopic-group">
+          <div class="subtopic-title">演出准备</div>
+          <div class="article-row" onclick="openArticle('m4-7')"><div class="art-dot"></div><div class="art-title">一场即兴演出的准备工作 —— 场地、团队、排练、宣传与心态</div><span class="art-badge">演出</span><div class="art-check" id="check-m4-7" onclick="event.stopPropagation();toggleCheck('m4-7')"></div></div>
+          <div class="article-row" onclick="openArticle('m4-8')"><div class="art-dot"></div><div class="art-title">即兴演出的结构与节奏 —— 从开场到收束的能量曲线设计</div><span class="art-badge">演出</span><div class="art-check" id="check-m4-8" onclick="event.stopPropagation();toggleCheck('m4-8')"></div></div>
+          <div class="article-row" onclick="openArticle('m4-9')"><div class="art-dot"></div><div class="art-title">即兴演出的主持技巧 —— MC 角色、串场与观众互动</div><span class="art-badge">演出</span><div class="art-check" id="check-m4-9" onclick="event.stopPropagation();toggleCheck('m4-9')"></div></div>
+          <div class="article-row" onclick="openArticle('m4-10')"><div class="art-dot"></div><div class="art-title">如何策划一场拼盘演出 —— 游戏混搭、演员轮换与时间管理</div><span class="art-badge">演出</span><div class="art-check" id="check-m4-10" onclick="event.stopPropagation();toggleCheck('m4-10')"></div></div>
+        </div>
+        <div class="subtopic-group">
+          <div class="subtopic-title">复盘方法</div>
+          <div class="article-row" onclick="openArticle('m4-14')"><div class="art-dot"></div><div class="art-title">排练与演出的复盘方法论 —— 如何用结构化复盘持续提升</div><span class="art-badge">方法</span><div class="art-check" id="check-m4-14" onclick="event.stopPropagation();toggleCheck('m4-14')"></div></div>
+        </div>
+        <div class="subtopic-group">
+          <div class="subtopic-title">推荐资源</div>
+          <div class="article-row" onclick="openArticle('m4-11')"><div class="art-dot"></div><div class="art-title">书单、视频频道与播客 —— 即兴戏剧优质学习资源推荐</div><span class="art-badge">资源</span><div class="art-check" id="check-m4-11" onclick="event.stopPropagation();toggleCheck('m4-11')"></div></div>
+        </div>
+        <div class="subtopic-group">
+          <div class="subtopic-title">行动清单</div>
+          <div class="article-row" onclick="openArticle('m4-12')"><div class="art-dot"></div><div class="art-title">每日 15 分钟计划 + 加入社群指南 —— 从今天开始行动</div><span class="art-badge">行动</span><div class="art-check" id="check-m4-12" onclick="event.stopPropagation();toggleCheck('m4-12')"></div></div>
+        </div>
+        <div class="card generator" style="margin-top: 1.75rem;">
+          <h3 style="color:#F0F0F8;margin-bottom:0.35rem;">🎲 今日练习随机生成器</h3>
+          <p style="color:#8080A0;font-size:0.86rem;margin-bottom:1rem;">不知道今天练什么？点一下随机推荐一个练习</p>
+          <button class="gen-btn" onclick="randomPractice()">随机抽取</button>
+          <div class="gen-result" id="gen-result2">点击按钮获取练习建议 →</div>
+        </div>
+      </div>
+    </section>
   </section>
 
   <!-- ==================== 能力测评 ==================== -->
   <section class="view" id="view-assess">
-    <div class="back-link" onclick="navTo('home')">← 返回首页</div>
-    <div class="assess-intro">
-      <h2>🧠 即兴能力评估</h2>
-      <p>8 个维度 · 30 道题 · 约 5 分钟 · 数据仅存于你的浏览器</p>
-    </div>
-
-    <div style="background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius-sm);padding:14px 20px;margin-bottom:20px;text-align:center;">
-      <p style="font-size:0.82rem;color:var(--text-dim);margin-bottom:8px;">📏 评分指引：请根据每句话<strong>与你的符合程度</strong>打分</p>
-      <div style="display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;font-size:0.8rem;">
-        <span style="padding:6px 12px;color:#e06060;">① 完全不符合</span>
-        <span style="color:var(--text-dim);">→</span>
-        <span style="padding:6px 12px;color:#e08860;">② 不太符合</span>
-        <span style="color:var(--text-dim);">→</span>
-        <span style="padding:6px 12px;color:#e8b860;">③ 一般</span>
-        <span style="color:var(--text-dim);">→</span>
-        <span style="padding:6px 12px;color:#a0c860;">④ 比较符合</span>
-        <span style="color:var(--text-dim);">→</span>
-        <span style="padding:6px 12px;color:#60c080;">⑤ 完全符合</span>
-      </div>
-    </div>
-
-    <div id="quiz-container">
-      <div class="quiz-block" id="quiz-block-0"><h3>① 自发性</h3><div class="quiz-desc">不假思索地行动和回应，绕过"内心评判者"的能力</div><div class="quiz-items" id="quiz-items-0"></div></div>
-      <div class="quiz-block" id="quiz-block-1"><h3>② Yes And 接纳力</h3><div class="quiz-desc">接纳他人的提议并在此基础上创造性发展的能力</div><div class="quiz-items" id="quiz-items-1"></div></div>
-      <div class="quiz-block" id="quiz-block-2"><h3>③ 积极聆听</h3><div class="quiz-desc">真正听进对方每一个词、情绪和意图的能力</div><div class="quiz-items" id="quiz-items-2"></div></div>
-      <div class="quiz-block" id="quiz-block-3"><h3>④ 角色塑造</h3><div class="quiz-desc">快速建立和切换不同角色的身体质感、声音和人格的能力</div><div class="quiz-items" id="quiz-items-3"></div></div>
-      <div class="quiz-block" id="quiz-block-4"><h3>⑤ 情绪表达</h3><div class="quiz-desc">情绪范围的广度、表达的真实度和在情绪间切换的灵活性</div><div class="quiz-items" id="quiz-items-4"></div></div>
-      <div class="quiz-block" id="quiz-block-5"><h3>⑥ 空间与身体意识</h3><div class="quiz-desc">用身体创造观众可见的物体和环境、在空间中自如行动的能力</div><div class="quiz-items" id="quiz-items-5"></div></div>
-      <div class="quiz-block" id="quiz-block-6"><h3>⑦ 叙事构建</h3><div class="quiz-desc">在无预设的情况下推进故事、建立有因果关系的场景序列的能力</div><div class="quiz-items" id="quiz-items-6"></div></div>
-      <div class="quiz-block" id="quiz-block-7"><h3>⑧ 失败复原力</h3><div class="quiz-desc">在"错误"发生后快速恢复、将意外转化为创意燃料的能力</div><div class="quiz-items" id="quiz-items-7"></div></div>
-
-      <div class="quiz-submit-wrap">
-        <button id="quiz-submit" onclick="submitAssessment()" disabled>请完成所有题目</button>
-        <p style="color:var(--text-dim);font-size:0.78rem;margin-top:8px;" id="quiz-progress">已答 0 / 30 题</p>
-      </div>
-    </div>
-
-    <div id="result-container" style="display:none;">
-      <div class="result-panel">
-        <h2>你的即兴能力画像</h2>
-        <div class="radar-container" id="radar-chart"></div>
-        <div class="dim-scores" id="dim-scores"></div>
-        <div style="background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius-sm);padding:16px 20px;margin:20px 0;text-align:left;" id="overall-analysis"></div>
-        <div class="result-actions">
-          <button onclick="retakeAssessment()">🔄 重新测评</button>
-          <button onclick="navTo('module1')">📖 开始学习</button>
-          <button onclick="navTo('module3')">🎪 浏览游戏库</button>
+    <section class="projects-section">
+      <div class="container px-4 px-lg-5">
+        <div class="back-link" onclick="navTo('home')">← 返回首页</div>
+        <div class="assess-intro">
+          <h2>🧠 即兴能力评估</h2>
+          <p>8 个维度 · 30 道题 · 约 5 分钟 · 数据仅存于你的浏览器</p>
+        </div>
+        <div style="background:#0D0D22;border:1px solid #1A1A3A;border-radius:0.5rem;padding:0.85rem 1.25rem;margin-bottom:1.25rem;text-align:center;">
+          <p style="font-size:0.8rem;color:#8080A0;margin-bottom:0.5rem;">📏 评分指引：请根据每句话<strong>与你的符合程度</strong>打分</p>
+          <div style="display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;font-size:0.78rem;">
+            <span style="padding:0.35rem 0.75rem;color:#e06060;">① 完全不符合</span>
+            <span style="color:#8080A0;">→</span>
+            <span style="padding:0.35rem 0.75rem;color:#e08860;">② 不太符合</span>
+            <span style="color:#8080A0;">→</span>
+            <span style="padding:0.35rem 0.75rem;color:#e8b860;">③ 一般</span>
+            <span style="color:#8080A0;">→</span>
+            <span style="padding:0.35rem 0.75rem;color:#a0c860;">④ 比较符合</span>
+            <span style="color:#8080A0;">→</span>
+            <span style="padding:0.35rem 0.75rem;color:#60c080;">⑤ 完全符合</span>
+          </div>
+        </div>
+        <div id="quiz-container">
+          <div class="quiz-block" id="quiz-block-0"><h3>① 自发性</h3><div class="quiz-desc">不假思索地行动和回应，绕过"内心评判者"的能力</div><div class="quiz-items" id="quiz-items-0"></div></div>
+          <div class="quiz-block" id="quiz-block-1"><h3>② Yes And 接纳力</h3><div class="quiz-desc">接纳他人的提议并在此基础上创造性发展的能力</div><div class="quiz-items" id="quiz-items-1"></div></div>
+          <div class="quiz-block" id="quiz-block-2"><h3>③ 积极聆听</h3><div class="quiz-desc">真正听进对方每一个词、情绪和意图的能力</div><div class="quiz-items" id="quiz-items-2"></div></div>
+          <div class="quiz-block" id="quiz-block-3"><h3>④ 角色塑造</h3><div class="quiz-desc">快速建立和切换不同角色的身体质感、声音和人格的能力</div><div class="quiz-items" id="quiz-items-3"></div></div>
+          <div class="quiz-block" id="quiz-block-4"><h3>⑤ 情绪表达</h3><div class="quiz-desc">情绪范围的广度、表达的真实度和在情绪间切换的灵活性</div><div class="quiz-items" id="quiz-items-4"></div></div>
+          <div class="quiz-block" id="quiz-block-5"><h3>⑥ 空间与身体意识</h3><div class="quiz-desc">用身体创造观众可见的物体和环境、在空间中自如行动的能力</div><div class="quiz-items" id="quiz-items-5"></div></div>
+          <div class="quiz-block" id="quiz-block-6"><h3>⑦ 叙事构建</h3><div class="quiz-desc">在无预设的情况下推进故事、建立有因果关系的场景序列的能力</div><div class="quiz-items" id="quiz-items-6"></div></div>
+          <div class="quiz-block" id="quiz-block-7"><h3>⑧ 失败复原力</h3><div class="quiz-desc">在"错误"发生后快速恢复、将意外转化为创意燃料的能力</div><div class="quiz-items" id="quiz-items-7"></div></div>
+          <div class="quiz-submit-wrap">
+            <button id="quiz-submit" onclick="submitAssessment()" disabled>请完成所有题目</button>
+            <p style="color:#8080A0;font-size:0.76rem;margin-top:0.5rem;" id="quiz-progress">已答 0 / 30 题</p>
+          </div>
+        </div>
+        <div id="result-container" style="display:none;">
+          <div class="result-panel">
+            <h2>你的即兴能力画像</h2>
+            <div class="radar-container" id="radar-chart"></div>
+            <div class="dim-scores" id="dim-scores"></div>
+            <div style="background:#0D0D22;border:1px solid #1A1A3A;border-radius:0.5rem;padding:1rem 1.25rem;margin:1.25rem 0;text-align:left;" id="overall-analysis"></div>
+            <div class="result-actions">
+              <button onclick="retakeAssessment()">🔄 重新测评</button>
+              <button onclick="navTo('module1')">📖 开始学习</button>
+              <button onclick="navTo('module3')">🎪 浏览游戏库</button>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   </section>
 
-  <!-- ==================== 智能 FAQ 问答 ==================== -->
+  <!-- ==================== FAQ ==================== -->
   <section class="view" id="view-faq">
-    <div class="back-link" onclick="navTo('home')">← 返回首页</div>
-    <div class="assess-intro">
-      <h2>💬 即兴教练 FAQ</h2>
-      <p>输入你的问题，从全站 109 篇文章中智能匹配最相关的内容</p>
-    </div>
-
-    <div style="display:flex;gap:10px;margin-bottom:24px;">
-        <input type="text" id="faq-input" placeholder="例如：什么是 Yes And？如何开始学即兴？怎样克服紧张？..." style="flex:1;padding:12px 18px;border-radius:24px;border:1px solid var(--card-border);background:var(--card);color:var(--text);font-size:0.92rem;font-family:var(--font);outline:none;transition:border-color 0.2s;" onkeydown="if(event.key==='Enter')searchFAQ()">
-        <button onclick="searchFAQ()" style="padding:12px 24px;background:var(--accent);color:var(--bg);border:none;border-radius:24px;font-weight:700;cursor:pointer;font-family:var(--font);font-size:0.92rem;transition:transform 0.2s;white-space:nowrap;">🔍 搜索</button>
+    <section class="projects-section">
+      <div class="container px-4 px-lg-5">
+        <div class="back-link" onclick="navTo('home')">← 返回首页</div>
+        <div class="assess-intro">
+          <h2>💬 即兴教练 FAQ</h2>
+          <p>输入你的问题，从全站 109 篇文章中智能匹配最相关的内容</p>
+        </div>
+        <div style="display:flex;gap:0.6rem;margin-bottom:1.5rem;">
+          <input type="text" id="faq-input" placeholder="例如：什么是 Yes And？如何开始学即兴？怎样克服紧张？..." style="flex:1;padding:0.75rem 1.1rem;border-radius:24px;border:1px solid #1A1A3A;background:#0D0D22;color:#C8C8D8;font-size:0.9rem;font-family:var(--bs-font-sans-serif);outline:none;" onkeydown="if(event.key==='Enter')searchFAQ()">
+          <button onclick="searchFAQ()" style="padding:0.75rem 1.5rem;background:#D4A843;color:#000000;border:none;border-radius:24px;font-weight:700;cursor:pointer;font-family:var(--bs-font-sans-serif);font-size:0.9rem;white-space:nowrap;">🔍 搜索</button>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1.25rem;" id="faq-quick">
+          <span style="font-size:0.76rem;color:#8080A0;margin-right:0.25rem;">快速提问：</span>
+        </div>
+        <div id="faq-results"></div>
       </div>
-
-      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;" id="faq-quick">
-        <span style="font-size:0.78rem;color:var(--text-dim);margin-right:4px;">快速提问：</span>
-      </div>
-
-      <div id="faq-results"></div>
+    </section>
   </section>
 
-  <!-- ==================== 复盘工具 ==================== -->
+  <!-- ==================== 复盘 ==================== -->
   <section class="view" id="view-review">
-    <div class="back-link" onclick="navTo('home')">← 返回首页</div>
-    <div class="list-header">
-      <h2>📋 排练/演出复盘</h2>
-      <p class="list-subtitle">支持 KISS、三问复盘、三点复盘三种复盘模型 —— 每次排练演出都离更好更近一步</p>
-    </div>
-
-    <div id="review-form-panel">
-      <div class="card" style="margin-bottom:28px;">
-        <div class="review-meta-row">
-          <input type="date" id="review-date" class="input" style="flex:0 0 150px;">
-          <input type="text" id="review-title" class="input" placeholder="活动标题（如：周五排练）" style="flex:2;min-width:180px;">
-          <select id="review-type" class="input" style="flex:1;min-width:100px;">
-            <option value="rehearsal">排练</option>
-            <option value="performance">演出</option>
-            <option value="workshop">工作坊</option>
-          </select>
-          <input type="text" id="review-participants" class="input" placeholder="参与人员（逗号分隔）" style="flex:2;min-width:150px;">
+    <section class="projects-section">
+      <div class="container px-4 px-lg-5">
+        <div class="back-link" onclick="navTo('home')">← 返回首页</div>
+        <div class="list-header">
+          <h2>📋 排练/演出复盘</h2>
+          <p class="list-subtitle">支持 KISS、三问复盘、三点复盘三种复盘模型 —— 每次排练演出都离更好更近一步</p>
         </div>
-
-        <div style="margin-bottom:14px;display:flex;align-items:center;gap:8px;">
-          <span style="font-size:0.78rem;color:var(--text-dim);">模型：</span>
-          <select id="review-model" onchange="switchReviewModel()" style="background:var(--bg);border:1px solid var(--card-border);border-radius:var(--radius-sm);color:var(--text);font-family:var(--font);font-size:0.82rem;padding:8px 12px;outline:none;cursor:pointer;">
-            <option value="kiss">KISS（保留·改进·开始·停止）</option>
-            <option value="www">三问复盘（What? So What? Now What?）</option>
-            <option value="quick">⚡ 三点复盘（30秒快速记录）</option>
-          </select>
-        </div>
-
-        <div id="review-kiss-panel">
-          <div class="review-quad-grid">
-            <div class="review-quad keep">
-              <h4>✅ Keep（保留）</h4>
-              <div class="quad-hint">角色塑造、肢体表达、队友配合……哪些让你满意？</div>
-              <textarea id="review-keep" rows="3" placeholder="比如：老太太角色的驼背姿态保持了一整场，队友接住了我的情绪转换……"></textarea>
+        <div id="review-form-panel">
+          <div class="card" style="margin-bottom:1.75rem;">
+            <div class="review-meta-row">
+              <input type="date" id="review-date" style="flex:0 0 150px;">
+              <input type="text" id="review-title" placeholder="活动标题（如：周五排练）" style="flex:2;min-width:180px;">
+              <select id="review-type" style="flex:1;min-width:100px;">
+                <option value="rehearsal">排练</option>
+                <option value="performance">演出</option>
+                <option value="workshop">工作坊</option>
+              </select>
+              <input type="text" id="review-participants" placeholder="参与人员（逗号分隔）" style="flex:2;min-width:150px;">
             </div>
-            <div class="review-quad improve">
-              <h4>🔧 Improve（改进）</h4>
-              <div class="quad-hint">场景转换、节奏把控、情绪层次……哪些还能打磨？</div>
-              <textarea id="review-improve" rows="3" placeholder="比如：第三场场景转换有点拖，可以更干脆地黑场切换……"></textarea>
+            <div style="margin-bottom:0.85rem;display:flex;align-items:center;gap:0.5rem;">
+              <span style="font-size:0.76rem;color:#8080A0;">模型：</span>
+              <select id="review-model" onchange="switchReviewModel()" style="background:#080812;border:1px solid #1A1A3A;border-radius:0.5rem;color:#C8C8D8;font-family:var(--bs-font-sans-serif);font-size:0.8rem;padding:0.5rem 0.75rem;outline:none;cursor:pointer;">
+                <option value="kiss">KISS（保留·改进·开始·停止）</option>
+                <option value="www">三问复盘（What? So What? Now What?）</option>
+                <option value="quick">⚡ 三点复盘（30秒快速记录）</option>
+              </select>
             </div>
-            <div class="review-quad start">
-              <h4>🚀 Start（开始）</h4>
-              <div class="quad-hint">一直想做但还没试的——新角色类型、新表演形式？</div>
-              <textarea id="review-start" rows="3" placeholder="比如：下周想试试无实物表演练习，或者挑战一次反派角色……"></textarea>
+            <div id="review-kiss-panel">
+              <div class="review-quad-grid">
+                <div class="review-quad keep"><h4>✅ Keep（保留）</h4><div class="quad-hint">角色塑造、肢体表达、队友配合……哪些让你满意？</div><textarea id="review-keep" rows="3" placeholder="比如：老太太角色的驼背姿态保持了一整场，队友接住了我的情绪转换……"></textarea></div>
+                <div class="review-quad improve"><h4>🔧 Improve（改进）</h4><div class="quad-hint">场景转换、节奏把控、情绪层次……哪些还能打磨？</div><textarea id="review-improve" rows="3" placeholder="比如：第三场场景转换有点拖，可以更干脆地黑场切换……"></textarea></div>
+                <div class="review-quad start"><h4>🚀 Start（开始）</h4><div class="quad-hint">一直想做但还没试的——新角色类型、新表演形式？</div><textarea id="review-start" rows="3" placeholder="比如：下周想试试无实物表演练习，或者挑战一次反派角色……"></textarea></div>
+                <div class="review-quad stop"><h4>🛑 Stop（停止）</h4><div class="quad-hint">什么习惯/做法在拖后腿？</div><textarea id="review-stop" rows="3" placeholder="比如：开场前过度解释规则，打断队友台词的冲动……"></textarea></div>
+              </div>
             </div>
-            <div class="review-quad stop">
-              <h4>🛑 Stop（停止）</h4>
-              <div class="quad-hint">什么习惯/做法在拖后腿？</div>
-              <textarea id="review-stop" rows="3" placeholder="比如：开场前过度解释规则，打断队友台词的冲动……"></textarea>
+            <div id="review-www-panel" style="display:none;">
+              <div style="display:flex;flex-direction:column;gap:0.85rem;">
+                <div class="review-quad" style="border-left:3px solid #60c080;"><h4 style="color:#60c080 !important;">① What?（发生了什么）</h4><div class="quad-hint">客观描述排练中发生了什么——不评判对错，只是观察</div><textarea id="review-www-what" rows="3" placeholder="比如：今天做了三轮场景练习，第二轮的场景转换特别顺，但第三轮节奏明显拖了……"></textarea></div>
+                <div class="review-quad" style="border-left:3px solid #D4A843;"><h4 style="color:#D4A843 !important;">② So What?（意味着什么）</h4><div class="quad-hint">这对你有什么影响？学到了什么？什么让你意外？</div><textarea id="review-www-sowhat" rows="3" placeholder="比如：我发现热身充分的时候大家更容易进入状态，今天的失误大多是因为太着急……"></textarea></div>
+                <div class="review-quad" style="border-left:3px solid #60a0e0;"><h4 style="color:#60a0e0 !important;">③ Now What?（接下来做什么）</h4><div class="quad-hint">具体做一件不同的事——小到下次排练就能执行</div><textarea id="review-www-nowwhat" rows="3" placeholder="比如：下次排练前 10 分钟开始做身体热身，每个场景练习后留 2 分钟快速回顾……"></textarea></div>
+              </div>
+            </div>
+            <div id="review-quick-panel" style="display:none;">
+              <div style="display:flex;flex-direction:column;gap:0.85rem;">
+                <div class="review-quick highlight"><h4>🌟 亮点时刻</h4><div class="quad-hint">一个让你心头一亮的时刻——自己的、队友的、观众的都可以</div><textarea id="review-quick-highlight" rows="2" placeholder="比如：队友在我忘词时无缝接了一句'天气真好'，全场爆笑……"></textarea></div>
+                <div class="review-quick polish"><h4>⚡ 待打磨</h4><div class="quad-hint">一个下次想做得更好的地方——不用多，一个就好</div><textarea id="review-quick-polish" rows="2" placeholder="比如：S 形走位时总挡住队友，下次注意站位朝向……"></textarea></div>
+                <div class="review-quick trynext"><h4>💡 下次试试</h4><div class="quad-hint">一个新想法、新角色、新形式——小而具体</div><textarea id="review-quick-trynext" rows="2" placeholder="比如：下回想用'拍手接力'的方式做场景转换……"></textarea></div>
+              </div>
+            </div>
+            <div style="margin-top:0.85rem;">
+              <label style="font-size:0.8rem;color:#8080A0;">📝 自由笔记</label>
+              <textarea id="review-notes" rows="3" placeholder="任何额外的观察、想法……" style="width:100%;background:#080812;border:1px solid #1A1A3A;border-radius:0.5rem;color:#C8C8D8;font-family:var(--bs-font-sans-serif);font-size:0.8rem;padding:0.6rem;resize:vertical;outline:none;line-height:1.6;margin-top:0.25rem;"></textarea>
+            </div>
+            <div style="margin-top:0.85rem;display:flex;gap:0.6rem;">
+              <span class="gen-btn-sm" onclick="saveReview()">💾 保存复盘</span>
+              <span class="gen-btn-sm" onclick="clearReviewForm()" style="background:transparent;border:1px solid #1A1A3A;color:#8080A0;">清空表单</span>
             </div>
           </div>
         </div>
-
-        <div id="review-www-panel" style="display:none;">
-          <div style="display:flex;flex-direction:column;gap:14px;">
-            <div class="review-quad" style="border-left:3px solid #60c080;">
-              <h4 style="color:#60c080;">① What?（发生了什么）</h4>
-              <div class="quad-hint">客观描述排练中发生了什么——不评判对错，只是观察</div>
-              <textarea id="review-www-what" rows="3" placeholder="比如：今天做了三轮场景练习，第二轮的场景转换特别顺，但第三轮节奏明显拖了……"></textarea>
-            </div>
-            <div class="review-quad" style="border-left:3px solid var(--accent);">
-              <h4 style="color:var(--accent);">② So What?（意味着什么）</h4>
-              <div class="quad-hint">这对你有什么影响？学到了什么？什么让你意外？</div>
-              <textarea id="review-www-sowhat" rows="3" placeholder="比如：我发现热身充分的时候大家更容易进入状态，今天的失误大多是因为太着急……"></textarea>
-            </div>
-            <div class="review-quad" style="border-left:3px solid #60a0e0;">
-              <h4 style="color:#60a0e0;">③ Now What?（接下来做什么）</h4>
-              <div class="quad-hint">具体做一件不同的事——小到下次排练就能执行</div>
-              <textarea id="review-www-nowwhat" rows="3" placeholder="比如：下次排练前 10 分钟开始做身体热身，每个场景练习后留 2 分钟快速回顾……"></textarea>
-            </div>
+        <div style="margin-top:2rem;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;">
+            <h3 style="color:#F0F0F8;font-size:1.1rem;">📚 复盘历史</h3>
+            <span class="gen-btn-sm" onclick="exportAllReviews()" style="font-size:0.74rem;padding:0.35rem 0.85rem;background:transparent;border:1px solid #D4A843;color:#D4A843;">📋 导出全部</span>
           </div>
-        </div>
-
-        <div id="review-quick-panel" style="display:none;">
-          <div style="display:flex;flex-direction:column;gap:14px;">
-            <div class="review-quick highlight">
-              <h4>🌟 亮点时刻</h4>
-              <div class="quad-hint">一个让你心头一亮的时刻——自己的、队友的、观众的都可以</div>
-              <textarea id="review-quick-highlight" rows="2" placeholder="比如：队友在我忘词时无缝接了一句'天气真好'，全场爆笑……"></textarea>
-            </div>
-            <div class="review-quick polish">
-              <h4>⚡ 待打磨</h4>
-              <div class="quad-hint">一个下次想做得更好的地方——不用多，一个就好</div>
-              <textarea id="review-quick-polish" rows="2" placeholder="比如：S 形走位时总挡住队友，下次注意站位朝向……"></textarea>
-            </div>
-            <div class="review-quick trynext">
-              <h4>💡 下次试试</h4>
-              <div class="quad-hint">一个新想法、新角色、新形式——小而具体</div>
-              <textarea id="review-quick-trynext" rows="2" placeholder="比如：下回想用'拍手接力'的方式做场景转换……"></textarea>
-            </div>
-          </div>
-        </div>
-
-        <div style="margin-top:14px;">
-          <label style="font-size:0.82rem;color:var(--text-dim);">📝 自由笔记</label>
-          <textarea id="review-notes" rows="3" placeholder="任何额外的观察、想法……" style="width:100%;background:var(--bg);border:1px solid var(--card-border);border-radius:var(--radius-sm);color:var(--text);font-family:var(--font);font-size:0.82rem;padding:10px;resize:vertical;outline:none;line-height:1.6;margin-top:4px;"></textarea>
-        </div>
-
-        <div style="margin-top:14px;display:flex;gap:10px;">
-          <span class="gen-btn-sm" onclick="saveReview()">💾 保存复盘</span>
-          <span class="gen-btn-sm" onclick="clearReviewForm()" style="background:transparent;border:1px solid var(--card-border);color:var(--text-dim);">清空表单</span>
+          <div id="review-history-list"></div>
         </div>
       </div>
-    </div>
-
-    <div style="margin-top:32px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-        <h3 style="color:var(--text-bright);font-size:1.1rem;">📚 复盘历史</h3>
-        <span class="gen-btn-sm" onclick="exportAllReviews()" style="font-size:0.76rem;padding:6px 14px;background:transparent;border:1px solid var(--accent);color:var(--accent);">📋 导出全部</span>
-      </div>
-      <div id="review-history-list"></div>
-    </div>
+    </section>
   </section>
 
   <!-- ==================== 关于本站 ==================== -->
   <section class="view" id="view-about">
-    <div class="back-link" onclick="navTo('home')">← 返回首页</div>
-    <div class="list-header">
-      <h2>👤 关于本站</h2>
-      <p class="list-subtitle">由即兴爱好者与 AI 共同搭建的即兴学习参考</p>
-    </div>
-
-    <div class="about-container">
-
-      <!-- 焓暖 -->
-      <div class="about-card personal">
-        <div class="about-header">
-          <div class="about-avatar">焓</div>
-          <div class="about-header-info">
-            <h3>焓暖</h3>
-            <div class="about-role">即兴学习者 · vibe coding 小学生</div>
-          </div>
+    <section class="projects-section">
+      <div class="container px-4 px-lg-5">
+        <div class="back-link" onclick="navTo('home')">← 返回首页</div>
+        <div class="list-header">
+          <h2>👤 关于本站</h2>
+          <p class="list-subtitle">由即兴爱好者与 AI 共同搭建的即兴学习参考</p>
         </div>
-        <p>2022 年学习即兴至今，大大小小参与过<strong>百+场即兴演出</strong>。有份不理想工作非全职做即兴的上台爱好者。</p>
-        <p class="about-motto">即兴水平忽高忽低 (,,ԾㅂԾ,,)</p>
-        <p>做这个网站的初衷很简单：<strong>给各位学习即兴的朋友一个参考</strong>。从零基础入门到高阶技巧，从单个游戏的规则说明到系统的学习路径——如果能帮到你，那就太好了。</p>
-        <div class="about-contact">
-          <span>📱 微信：<strong>hanse1798</strong></span>
-          <span style="margin-left:16px;">💡 有想实现的想法？欢迎联系我</span>
+        <div class="about-container">
+          <div class="about-card personal">
+            <div class="about-header">
+              <div class="about-avatar">焓</div>
+              <div class="about-header-info"><h3>焓暖</h3><div class="about-role">即兴学习者 · vibe coding 小学生</div></div>
+            </div>
+            <p>2022 年学习即兴至今，大大小小参与过<strong>百+场即兴演出</strong>。有份不理想工作非全职做即兴的上台爱好者。</p>
+            <p class="about-motto">即兴水平忽高忽低 (,,ԾㅂԾ,,)</p>
+            <p>做这个网站的初衷很简单：<strong>给各位学习即兴的朋友一个参考</strong>。从零基础入门到高阶技巧，从单个游戏的规则说明到系统的学习路径——如果能帮到你，那就太好了。</p>
+            <div class="about-contact"><span>📱 微信：<strong>hanse1798</strong></span><span style="margin-left:1rem;">💡 有想实现的想法？欢迎联系我</span></div>
+          </div>
+          <div class="about-card brand">
+            <div class="ruby-header">
+              <div class="ruby-logo"><span class="ruby-r">R</span><span class="ruby-u">U</span><span class="ruby-b">B</span><span class="ruby-y">Y</span></div>
+              <div><h3 style="margin:0;color:#F0F0F8;font-size:1.15rem;">红宝石计划 <span style="font-weight:400;color:#8080A0;font-size:0.83rem;">RUBY</span></h3><div style="font-size:0.76rem;color:#8080A0;margin-top:0.1rem;">探索"即兴+生活"的即兴艺术厂牌</div></div>
+            </div>
+            <p style="margin-bottom:0.35rem;font-size:0.8rem;color:#8080A0;letter-spacing:0.06em;"><strong style="color:#d4546a;">R</strong>espect 尊重 · <strong style="color:#e08840;">U</strong>nite 团结 · <strong style="color:#5da8b8;">B</strong>alance 平衡 · <strong style="color:#c0a048;">Y</strong>es, And 接纳给予</p>
+            <p>成员以多样的即兴表演形式传递 RUBY 精神，<strong>即兴喜剧演出百余场</strong>。曾作为演出团队参与<strong>闹即兴戏剧节、青岛里院喜剧节、算个即兴节吧</strong>；主办 <strong>RUBY Land mini 戏剧节</strong>，参与举办<strong>隆福寺酒神节 · 夏至市集</strong>。</p>
+            <div class="about-tags"><span class="about-tag">🎭 百+场演出</span><span class="about-tag">🎪 闹即兴戏剧节</span><span class="about-tag">🏛 青岛里院喜剧节</span><span class="about-tag">🌟 算个即兴节吧</span><span class="about-tag">🎉 RUBY Land 戏剧节</span><span class="about-tag">🍷 隆福寺酒神节</span></div>
+            <p style="margin-top:0.5rem;">现有<strong>红九喜剧盒子</strong>在北京二环定期举办喜剧开放麦活动，欢迎来玩。</p>
+            <div class="about-contact"><span>📱 微信 / 📕 小红书 / 📺 B站：<strong>红宝石计划</strong></span></div>
+          </div>
+          <div class="about-attribution">本站由 <span>焓暖</span> 与 <span>Claude</span> (Anthropic AI) 共同制作 · 对网站有想法或建议？欢迎联系！</div>
         </div>
       </div>
-
-      <!-- 红宝石计划 -->
-      <div class="about-card brand">
-        <div class="ruby-header">
-          <div class="ruby-logo">
-            <span class="ruby-r">R</span>
-            <span class="ruby-u">U</span>
-            <span class="ruby-b">B</span>
-            <span class="ruby-y">Y</span>
-          </div>
-          <div>
-            <h3 style="margin:0;color:var(--text-bright);font-size:1.15rem;">红宝石计划 <span style="font-weight:400;color:var(--text-dim);font-size:0.85rem;">RUBY</span></h3>
-            <div style="font-size:0.78rem;color:var(--text-dim);margin-top:2px;">探索"即兴+生活"的即兴艺术厂牌</div>
-          </div>
-        </div>
-        <p style="margin-bottom:6px;font-size:0.82rem;color:var(--text-dim);letter-spacing:0.06em;">
-          <strong style="color:#d4546a;">R</strong>espect 尊重 · <strong style="color:#e08840;">U</strong>nite 团结 · <strong style="color:#5da8b8;">B</strong>alance 平衡 · <strong style="color:#c0a048;">Y</strong>es, And 接纳给予
-        </p>
-        <p>成员以多样的即兴表演形式传递 RUBY 精神，<strong>即兴喜剧演出百余场</strong>。曾作为演出团队参与<strong>闹即兴戏剧节、青岛里院喜剧节、算个即兴节吧</strong>；主办 <strong>RUBY Land mini 戏剧节</strong>，参与举办<strong>隆福寺酒神节 · 夏至市集</strong>。</p>
-        <div class="about-tags">
-          <span class="about-tag">🎭 百+场演出</span>
-          <span class="about-tag">🎪 闹即兴戏剧节</span>
-          <span class="about-tag">🏛 青岛里院喜剧节</span>
-          <span class="about-tag">🌟 算个即兴节吧</span>
-          <span class="about-tag">🎉 RUBY Land 戏剧节</span>
-          <span class="about-tag">🍷 隆福寺酒神节</span>
-        </div>
-        <p style="margin-top:8px;">现有<strong>红九喜剧盒子</strong>在北京二环定期举办喜剧开放麦活动，欢迎来玩。</p>
-        <div class="about-contact">
-          <span>📱 微信 / 📕 小红书 / 📺 B站：<strong>红宝石计划</strong></span>
-        </div>
-      </div>
-
-      <!-- 致谢 -->
-      <div class="about-attribution">
-        本站由 <span>焓暖</span> 与 <span>Claude</span> (Anthropic AI) 共同制作 · 对网站有想法或建议？欢迎联系！
-      </div>
-
-    </div>
+    </section>
   </section>
 
   <!-- ==================== 文章详情页 ==================== -->
   <section class="view" id="view-article">
-    <div class="article-nav">
-      <button class="nav-btn" id="nav-prev" onclick="navArticle(-1)">← 上一篇</button>
-      <button class="nav-btn" onclick="navTo(currentArticle ? currentArticle.module : 'home')">↑ 返回列表</button>
-      <button class="nav-btn" id="nav-next" onclick="navArticle(1)">下一篇 →</button>
-    </div>
-    <div class="article-header">
-      <div class="art-module-tag" id="art-module-tag"></div>
-      <h1 id="art-title"></h1>
-      <div class="art-meta" id="art-meta"></div>
-    </div>
-    <div class="article-body card" id="art-body"></div>
+    <section class="projects-section">
+      <div class="container px-4 px-lg-5">
+        <div class="article-nav">
+          <button class="nav-btn" id="nav-prev" onclick="navArticle(-1)">← 上一篇</button>
+          <button class="nav-btn" onclick="navTo(currentArticle ? currentArticle.module : 'home')">↑ 返回列表</button>
+          <button class="nav-btn" id="nav-next" onclick="navArticle(1)">下一篇 →</button>
+        </div>
+        <div class="article-header">
+          <div class="art-module-tag" id="art-module-tag"></div>
+          <h1 id="art-title"></h1>
+          <div class="art-meta" id="art-meta"></div>
+        </div>
+        <div class="article-body card" id="art-body"></div>
+      </div>
+    </section>
   </section>
 
 </div>
 
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- 导航栏滚动效果 (Grayscale 原版 JS) -->
+<script>
+window.addEventListener('DOMContentLoaded', function() {
+  const nav = document.getElementById('mainNav');
+  if (!nav) return;
+  function onScroll() {
+    if (window.scrollY > 100) nav.classList.add('navbar-shrink');
+    else nav.classList.remove('navbar-shrink');
+  }
+  window.addEventListener('scroll', onScroll);
+  onScroll();
+});
+function closeNav() {
+  var c = document.getElementById('navbarResponsive');
+  if (c && c.classList.contains('show')) {
+    new bootstrap.Collapse(c).hide();
+  }
+}
+</script>
 <script src="games.js"></script>
 <script>
 // ===== 文章数据 =====
